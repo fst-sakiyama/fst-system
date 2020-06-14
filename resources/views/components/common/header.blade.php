@@ -3,9 +3,9 @@
 <!--
   navbar-fixed-topが機能しない？？
 -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:#ff1493;">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:#87ceeb;">
   <div class="container">
-    <a class="navbar-brand" href="{{asset('/wedding_ring')}}">フェイス・ソリューション・テクノロジーズ株式会社</a>
+    <a class="navbar-brand" href="{{asset('/system-top')}}">フェイス・ソリューション・テクノロジーズ株式会社</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -23,10 +23,11 @@
               </a>
 
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{asset('/classes')}}">分類一覧ページ</a>
-                <a class="dropdown-item" href="{{asset('/subjects')}}">件名一覧ページ</a>
-                <a class="dropdown-item" href="{{asset('/basic_data')}}">基本情報一覧ページ</a>
-                <a class="dropdown-item" href="{{asset('/answers')}}">回答集一覧ページ</a>
+                <a class="dropdown-item" href="">顧客一覧ページ</a>
+                <a class="dropdown-item" href="">案件一覧ページ</a>
+                <a class="dropdown-item" href="">継続案件一覧ページ</a>
+                <a class="dropdown-item" href="">入札案件一覧ページ</a>
+                <a class="dropdown-item" href="">短期案件一覧ページ</a>
                 <div class="dropdown-divider"></div>
 
               </div>

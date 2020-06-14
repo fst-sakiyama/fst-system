@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('top');
 });
+
+Route::get('system-top','SystemTopController@index')->name('top');
