@@ -18,3 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('system-top','SystemTopController@index')->name('top');
+
+Route::get('/master-clients','MasterClinetController@index')->name('master-client');
+
+Route::get('/master-projects','MasterProjectController@index')->name('master-project');

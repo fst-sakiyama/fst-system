@@ -23,8 +23,8 @@
               </a>
 
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="">顧客一覧ページ</a>
-                <a class="dropdown-item" href="">案件一覧ページ</a>
+                <a class="dropdown-item" href="{{asset('/master-clients')}}">顧客一覧ページ</a>
+                <a class="dropdown-item" href="{{asset('/master-projects')}}">案件一覧ページ</a>
                 <a class="dropdown-item" href="">継続案件一覧ページ</a>
                 <a class="dropdown-item" href="">入札案件一覧ページ</a>
                 <a class="dropdown-item" href="">短期案件一覧ページ</a>
