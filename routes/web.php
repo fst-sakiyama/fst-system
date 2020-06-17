@@ -24,3 +24,5 @@ Route::get('/master-clients','MasterClinetController@index')->name('master-clien
 Route::get('/clients-detail','ClientsDetailController@index')->name('client-detail');
 
 Route::get('/master-projects','MasterProjectController@index')->name('master-project');
+
+Route::get('/projects-detail','ProjectsDetailController@index')->name('project-detail');
