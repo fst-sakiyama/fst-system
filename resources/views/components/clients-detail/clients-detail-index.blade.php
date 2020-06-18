@@ -19,8 +19,24 @@
           </thead>
           <tbody>
           @foreach($items as $item)
+            @php
+              $typeOfContract = $item -> typeOfContract;
+              $teamName = $item -> teamName;
+              if($typeOfContract === '継続') {
+                $toc='C';
+              } elseif($typeOfContract === '入札') {
+                $toc='B';
+              } elseif($typeOfContract === '短期') {
+                $toc='S';
+              }
+              if($teamName === '開発') {
+                $tn='K';
+              } elseif($teamName === '運用') {
+                $tn='U';
+              }
+            @endphp
             <tr>
-              <td>@php echo "P".($item->projectId + 1000) @endphp</td>
+              <td>@php echo $toc.$tn.($item->projectId + 1000) @endphp</td>
               <td>{{$item->typeOfContract}}</td>
               <td><a href="{{asset('/projects-detail?id=')}}{{$item->projectId}}">{{$item->projectName}}</td>
               <td>{{$item->teamName}}</td>
