@@ -10,6 +10,7 @@
           <thead>
             <tr>
               <th>コード</th>
+              <th>契約形態</th>
               <th>案件名</th>
               <th>チーム名</th>
               <th>契約開始日</th>
@@ -20,6 +21,7 @@
           @foreach($items as $item)
             <tr>
               <td>@php echo "P".($item->projectId + 1000) @endphp</td>
+              <td>{{$item->typeOfContract}}</td>
               <td><a href="{{asset('/projects-detail?id=')}}{{$item->projectId}}">{{$item->projectName}}</td>
               <td>{{$item->teamName}}</td>
               <td>{{$item->contractStartDate}}</td>
