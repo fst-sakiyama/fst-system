@@ -21,6 +21,6 @@ class ClientsDetailController extends Controller
               ->orderBy('master_project.contractStartDate')
               ->orderBy('master_project.createdAt')
               ->get();
-    return view('clients-detail.index',compact('clientName','items'));
+    return view('clients_detail.index',compact('clientName','items'));
   }
 }

@@ -8,6 +8,6 @@ class SystemTopController extends Controller
 {
     public function index(Request $request)
     {
-      return view('system-top.index');
+      return view('system_top.index');
     }
 }

@@ -19,7 +19,7 @@
           @foreach($items as $item)
             <tr>
               <td>@php echo "C".($item->clientId + 1000) @endphp</td>
-              <td><a href="{{asset('/clients-detail?id=')}}{{$item->clientId}}">{{$item->clientName}}</td>
+              <td><a href="{{asset('/clients_detail?id=')}}{{$item->clientId}}">{{$item->clientName}}</td>
               <td>{{$item->contractStartDate}}</td>
               <td>{{$item->contractEndDate}}</td>
             </tr>

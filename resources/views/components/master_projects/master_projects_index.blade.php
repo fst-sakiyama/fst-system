@@ -2,14 +2,15 @@
 
 <div class="contents">
   <div class="container mt-3">
-		<h1>@include('components.returnButton')</h1>
+    <h1>@include('components.returnButton')</h1>
     <div class="col">
       <div class="card">
-        <h5 class="card-header">{{ $clientName->clientName }}　様　案件一覧</h5>
+        <h5 class="card-header">案件一覧</h5>
         <table class="table">
           <thead>
             <tr>
               <th>コード</th>
+              <th>顧客名</th>
               <th>契約形態</th>
               <th>案件名</th>
               <th>チーム名</th>
@@ -37,9 +38,10 @@
             @endphp
             <tr>
               <td>@php echo $toc.$tn.($item->projectId + 1000) @endphp</td>
-              <td>{{$item->typeOfContract}}</td>
-              <td><a href="{{asset('/projects-detail?id=')}}{{$item->projectId}}">{{$item->projectName}}</td>
-              <td>{{$item->teamName}}</td>
+              <td><a href="{{asset('/clients_detail?id=')}}{{$item->clientId}}">{{$item->clientName}}</td>
+              <td>{{$typeOfContract}}</td>
+              <td><a href="{{asset('/projects_detail?id=')}}{{$item->projectId}}">{{$item->projectName}}</td>
+              <td>{{$teamName}}</td>
               <td>{{$item->contractStartDate}}</td>
               <td>{{$item->contractEndDate}}</td>
             </tr>

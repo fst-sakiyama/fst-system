@@ -17,12 +17,12 @@ Route::get('/', function () {
     return redirect()->route('top');
 });
 
-Route::get('system-top','SystemTopController@index')->name('top');
+Route::get('system_top','SystemTopController@index')->name('top');
 
-Route::get('/master-clients','MasterClinetController@index')->name('master-client');
+Route::get('/master_clients','MasterClinetController@index')->name('master_client');
 
-Route::get('/clients-detail','ClientsDetailController@index')->name('client-detail');
+Route::get('/clients_detail','ClientsDetailController@index')->name('client_detail');
 
-Route::get('/master-projects','MasterProjectController@index')->name('master-project');
+Route::get('/master_projects','MasterProjectController@index')->name('master_project');
 
-Route::get('/projects-detail','ProjectsDetailController@index')->name('project-detail');
+Route::get('/projects_detail','ProjectsDetailController@index')->name('project_detail');

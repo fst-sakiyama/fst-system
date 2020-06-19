@@ -16,6 +16,6 @@ class MasterProjectController extends Controller
               ->orderBy('master_project.contractStartDate')
               ->orderBy('master_project.createdAt')
               ->get();
-    return view('master-projects.index',compact('items'));
+    return view('master_projects.index',compact('items'));
   }
 }

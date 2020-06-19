@@ -1,4 +1,4 @@
-@extends('layouts.system-top')
+@extends('layouts.system_top')
 
 @section('title','トップページ')
 
@@ -6,7 +6,7 @@
 
 @include('components.common.header')
 
-@include('components.clients-detail.clients-detail-index',['clientName'=>$clientName,'items'=>$items])
+@include('components.system_top.system_top_index')
 
 @section('pageJs')
 <script type="text/javascript" src="js/add_jquery.js"></script>
