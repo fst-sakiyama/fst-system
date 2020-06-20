@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSoftdeleteToMasterClientTable extends Migration
+class CreateMasterContractTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,10 @@ class AddSoftdeleteToMasterClientTable extends Migration
      */
     public function up()
     {
-        Schema::table('master_client', function (Blueprint $table) {
+        Schema::create('master_contract_types', function (Blueprint $table) {
+            $table->increments('contractTypeId');
+            $table->string('contractType');
+            $table->timestamps();
             $table->softDeletes();
         });
     }
@@ -25,8 +28,6 @@ class AddSoftdeleteToMasterClientTable extends Migration
      */
     public function down()
     {
-        Schema::table('master_client', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('master_contract_types');
     }
 }

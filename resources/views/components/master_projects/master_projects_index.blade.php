@@ -13,37 +13,19 @@
               <th>顧客名</th>
               <th>契約形態</th>
               <th>案件名</th>
-              <th>チーム名</th>
-              <th>契約開始日</th>
-              <th>契約終了日</th>
+              <th>開始日</th>
+              <th>終了日</th>
             </tr>
           </thead>
           <tbody>
           @foreach($items as $item)
-            @php
-              $typeOfContract = $item -> typeOfContract;
-              $teamName = $item -> teamName;
-              if($typeOfContract === '継続') {
-                $toc='C';
-              } elseif($typeOfContract === '入札') {
-                $toc='B';
-              } elseif($typeOfContract === '短期') {
-                $toc='S';
-              }
-              if($teamName === '開発') {
-                $tn='K';
-              } elseif($teamName === '運用') {
-                $tn='U';
-              }
-            @endphp
             <tr>
-              <td>@php echo $toc.$tn.($item->projectId + 1000) @endphp</td>
-              <td><a href="{{asset('/clients_detail?id=')}}{{$item->clientId}}">{{$item->clientName}}</td>
-              <td>{{$typeOfContract}}</td>
+              <td>@php echo 'P'.($item->projectId + 1000) @endphp</td>
+              <td><a href="{{asset('/clients_detail?id=')}}{{$item->clientId}}">{{$item->client->clientName}}</td>
+              <td>{{$item->contractType->contractType}}</td>
               <td><a href="{{asset('/projects_detail?id=')}}{{$item->projectId}}">{{$item->projectName}}</td>
-              <td>{{$teamName}}</td>
-              <td>{{$item->contractStartDate}}</td>
-              <td>{{$item->contractEndDate}}</td>
+              <td>{{$item->startDate}}</td>
+              <td>{{$item->endDate}}</td>
             </tr>
           @endforeach
           </tbody>

@@ -19,10 +19,10 @@ Route::get('/', function () {
 
 Route::get('system_top','SystemTopController@index')->name('top');
 
-Route::get('/master_clients','MasterClinetController@index')->name('master_client');
+Route::resource('/master_clients', 'MasterClientsController');
 
 Route::get('/clients_detail','ClientsDetailController@index')->name('client_detail');
 
-Route::get('/master_projects','MasterProjectController@index')->name('master_project');
+Route::resource('/master_projects', 'MasterProjectsController');
 
 Route::get('/projects_detail','ProjectsDetailController@index')->name('project_detail');
