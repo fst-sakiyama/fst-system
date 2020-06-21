@@ -20,7 +20,7 @@ class UploaderController extends Controller
       // 第一引数はディレクトリの指定
       // 第二引数はファイル
       // 第三引数はpublickを指定することで、URLによるアクセスが可能となる
-      $path = Storage::putFileAs('/file', $file, $file_name);
+      $path = Storage::disk('s3')->putFile('/', $file, 'public');
       // hogeディレクトリにアップロード
       // $path = Storage::disk('s3')->putFile('/hoge', $file, 'public');
       // ファイル名を指定する場合はputFileAsを利用する
