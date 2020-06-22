@@ -12,6 +12,11 @@ class MasterProject extends Model
   protected $primarykey = 'projectId';
   protected $guarded = array('projectId');
 
+  public function filePosts()
+  {
+    return $this->hasMany('App\Models\filePost','projectId','projectId');
+  }
+
   public function contractType()
   {
     return $this->belongsTo('App\Models\MasterContractType','contractTypeId','contractTypeId');

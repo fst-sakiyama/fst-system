@@ -6,7 +6,7 @@
 
 @include('components.common.header')
 
-@include('components.uploader.upload_index',['masterFileClassifications'=>$masterFileClassifications,'MasterProject'=>$masterProject])
+@include('components.file_posts.file_posts_index',['clientProject'=>$clientProject,'items'=>$items])
 
 @section('pageJs')
 <script type="text/javascript" src="js/add_jquery.js"></script>

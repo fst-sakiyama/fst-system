@@ -16,6 +16,7 @@ class CreateMasterFileClassificationsTable extends Migration
         Schema::create('master_file_classifications', function (Blueprint $table) {
             $table->increments('fileClassificationId');
             $table->string('fileClassification');
+            $table->string('folderName');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +29,7 @@ class CreateMasterFileClassificationsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('file_posts');
         Schema::dropIfExists('master_file_classifications');
     }
 }

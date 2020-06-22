@@ -31,6 +31,7 @@ class CreateMasterClientsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('file_posts');
         Schema::dropIfExists('master_projects');
         Schema::dropIfExists('master_clients');
     }
