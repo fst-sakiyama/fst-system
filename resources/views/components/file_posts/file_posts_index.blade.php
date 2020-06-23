@@ -23,7 +23,7 @@
           @foreach($items as $item)
             <tr>
               <td>{{ $item->fileClassification->fileClassification }}</td>
-              <td>{{ $item->fileName }}</td>
+              <td><a href="{{ $item->fileURL }}" target="_blank">{{ $item->fileName }}</td>
               <td>{{ $item->created_at }}</td>
             </tr>
           @endforeach
