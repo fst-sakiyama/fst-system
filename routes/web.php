@@ -29,5 +29,7 @@ Route::get('/projects_detail','ProjectsDetailController@index')->name('project_d
 
 Route::resource('/file_posts', 'FilePostsController');
 
+Route::get('/file_show', 'FileShowController@show');
+
 Route::get('/upload','UploaderController@index');
 Route::Post('/upload','UploaderController@upload');
