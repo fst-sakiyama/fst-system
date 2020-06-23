@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 
 class FileShowController extends Controller
 {
-    public function show($url,$fileName)
+    public function show(Request $request)
     {
-      return response($url, 200)
+      return response($request->url, 200)
           ->header('Content-Type', 'application/pdf')
-          ->header('Content-Disposition', 'inline; filename="' . $fileName . '"');
+          ->header('Content-Disposition', 'inline; filename="' . $request->fileName . '"');
     }
 }
