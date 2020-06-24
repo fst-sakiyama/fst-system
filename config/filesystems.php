@@ -62,6 +62,12 @@ return [
             'region' => env('AWS_DEFAULT_REGION'),
             'bucket' => env('AWS_BUCKET'),
             /*
+            'options' => [
+              'SSEKMSKeyId' => '67608f3c-3a2f-44eb-9cf6-0708f214e2a9',
+              'ServerSideEncryption' => 'aws:kms'
+            ]
+            */
+            /*
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             */
