@@ -14,7 +14,7 @@ class CreateFilePostsTable extends Migration
     public function up()
     {
         Schema::create('file_posts', function (Blueprint $table) {
-          $table->increments('filePostsId');
+          $table->increments('filePostId');
           $table->integer('projectId')->unsigned();
           $table->integer('fileClassificationId')->unsigned();
           $table->string('fileName');

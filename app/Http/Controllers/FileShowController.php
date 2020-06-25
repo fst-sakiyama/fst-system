@@ -3,31 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\FilePost;
 use Storage;
 
 class FileShowController extends Controller
 {
     public function show(Request $request)
     {
-      $trim_str   =   DIRECTORY_SEPARATOR;
-      $dirName = pathinfo($request->fileURL,PATHINFO_DIRNAME);
+      $filePost = FilePost::where('filePostId',$request->id)
+                  ->first();
+      $trimStr = DIRECTORY_SEPARATOR;
+      $fileURL = $filePost->fileURL;
+      $dirName = pathinfo($fileURL,PATHINFO_DIRNAME);
       $dir = basename($dirName);
-      $fileName = pathinfo($request->fileURL, PATHINFO_BASENAME);
+      $fileRealName = pathinfo($fileURL, PATHINFO_BASENAME);
+      $fileFullName = $dir.$trimStr.$fileRealName;
       $disk = Storage::disk('s3');
-      $contents = $disk->get($dir.$trim_str.$fileName);
-      $mimeType = $disk->mimeType($dir.$trim_str.$fileName);
-      return response($contents)->header('Content-Type', $mimeType);
-/*
-      $headers = ['Content-disposition' => 'inline; filename="$request->fileName"'];
-
-
-
-      return response()->file($request->fileURL, $headers);
-
-
-      return response($request->fileURL, 200)
-    ->header('Content-Type', 'application/pdf')
-    ->header('Content-Disposition', 'inline; filename="' . $request->fileName . '"');
-*/
+      $contents = $disk->get($fileFullName);
+      $mimeType = $disk->mimeType($fileFullName);
+      if($mimeType == 'application/pdf'){
+        return response($contents)->header('Content-Type', $mimeType)
+                ->header('Content-Disposition', 'inline; filename="'.$filePost->fileName.'"');
+      } else {
+        return response($contents)->header('Content-Type', $mimeType)
+                ->header('Content-Disposition', 'attachment; filename="'.$filePost->fileName.'"');
+      }
     }
 }

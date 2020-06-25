@@ -1,6 +1,6 @@
 @extends('layouts.system_top')
 
-@section('title','トップページ')
+@section('title','ファイルアップロード')
 
 @include('components.common.head')
 

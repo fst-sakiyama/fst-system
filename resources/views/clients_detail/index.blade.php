@@ -1,6 +1,6 @@
 @extends('layouts.system_top')
 
-@section('title','トップページ')
+@section('title',$clientName->clientName)
 
 @include('components.common.head')
 

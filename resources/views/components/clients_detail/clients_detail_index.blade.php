@@ -21,7 +21,7 @@
             <tr>
               <td>@php echo 'P'.($item->projectId + 1000) @endphp</td>
               <td>{{$item->contractType->contractType}}</td>
-              <td><a href="{{asset('/projects_detail?id=')}}{{$item->projectId}}">{{$item->projectName}}</td>
+              <td><a href="{{asset('/file_posts?id=')}}{{$item->projectId}}">{{$item->projectName}}</td>
               <td>{{$item->startDate}}</td>
               <td>{{$item->endDate}}</td>
             </tr>

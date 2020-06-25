@@ -1,6 +1,6 @@
 @extends('layouts.system_top')
 
-@section('title','トップページ')
+@section('title','案件一覧')
 
 @include('components.common.head')
 
