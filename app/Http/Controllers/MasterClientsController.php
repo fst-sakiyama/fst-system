@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MasterClient;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Validator;
 
 class MasterClientsController extends Controller
 {
@@ -15,7 +16,7 @@ class MasterClientsController extends Controller
      */
     public function index()
     {
-        $items = MasterClient::paginate(30);
+        $items = MasterClient::orderBy('clientNameKana','asc')->paginate(30);
         return view('master_clients.index',compact('items'));
     }
 
@@ -26,7 +27,7 @@ class MasterClientsController extends Controller
      */
     public function create()
     {
-        //
+        return view('master_clients.create');
     }
 
     /**
@@ -37,7 +38,26 @@ class MasterClientsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $messages = [
+          'clientName.required' => '※顧客名は必須です。',
+          'clientNameKana.required' => '※顧客名の読みは必須です。'
+        ];
+
+        $validator = Validator::make($request->all(),[
+          'clientName' => 'required',
+          'clientNameKana' => 'required',
+        ],$messages);
+
+        if($validator->fails()){
+          return redirect()
+                    ->route('master_clients.create')
+                    ->withErrors($validator)
+                    ->withInput();
+        }
+
+        MasterClient::create($request->all());
+        return redirect()->route('master_clients.index');
     }
 
     /**
@@ -46,9 +66,12 @@ class MasterClientsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+      /*
+        $item = MasterClient::where('clientId',$request->id)->first();
+        return view('master_clients.show',compact('item'));
+      */
     }
 
     /**
@@ -59,7 +82,8 @@ class MasterClientsController extends Controller
      */
     public function edit($id)
     {
-        //
+      $item = MasterClient::where('clientId',$id)->first();
+      return view('master_clients.edit',compact('item'));
     }
 
     /**
@@ -69,9 +93,14 @@ class MasterClientsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      dd($request);
+      MasterClient::where('clientId',$request->clientId)
+        ->fill($request->all)->save();
+
+      $items = MasterClient::orderBy('clientNameKana','asc')->paginate(30);
+      return view('master_clients.index',compact('items'));
     }
 
     /**

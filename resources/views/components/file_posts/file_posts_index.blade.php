@@ -5,10 +5,14 @@
 		<h1>@include('components.returnButton')</h1>
     <div class="col">
       <div class="card">
-        <div class="card-header row">
-          <h5>{{ $clientProject->client->clientName }}　様　{{ $clientProject->projectName }}</h5>
-          <div class="col-sm-6 text-right">
-            <a href="{{asset('/upload?id=')}}{{$clientProject->projectId}}"><button type="button" class="w-50 btn btn-danger">新規登録</button></a>
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md">
+              <h5>{{ $clientProject->client->clientName }}　様　{{ $clientProject->projectName }}</h5>
+            </div>
+            <div class="col-md text-right">
+              <a href="{{asset('/upload?id=')}}{{$clientProject->projectId}}"><button type="button" class="w-50 btn btn-danger">新規登録</button></a>
+            </div>
           </div>
         </div>
         <table class="table">
