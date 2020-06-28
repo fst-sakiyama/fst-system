@@ -19,7 +19,6 @@ class UploaderController extends Controller
 
   public function upload(Request $request)
   {
-      //dd($request->file('file'))
       $projectId = $request -> projectId;
       $fileClassificationId = $request -> fileClassificationId;
       $folderName = MasterFileClassification::where('fileClassificationId',$fileClassificationId)

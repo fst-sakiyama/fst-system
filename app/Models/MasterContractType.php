@@ -9,7 +9,7 @@ class MasterContractType extends Model
 {
   use SoftDeletes;
   protected $connection = 'mysql_one';
-  protected $primarykey = 'contractTypeId';
+  protected $primaryKey = 'contractTypeId';
   protected $guarded = array('contractTypeId');
 
   public function projects()

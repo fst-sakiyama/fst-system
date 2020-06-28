@@ -9,7 +9,7 @@ class MasterProject extends Model
 {
   use SoftDeletes;
   protected $connection = 'mysql_one';
-  protected $primarykey = 'projectId';
+  protected $primaryKey = 'projectId';
   protected $guarded = array('projectId');
 
   public function filePosts()

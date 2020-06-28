@@ -1,10 +1,10 @@
-// $(function() {
-//     $('.correctBtn').on('click', function(){
-//         var id=$(this).attr('name');
-//         var obj=$("#areaBox").find('#' + id);
-//         var str=obj.val();
-//         $("#textarea").val(str);
-//         textarea_height_auto();
-//         alert(obj.val());
-//         $(this).blur();
-//     });
+$('.deleteConf').click(function(){
+    if(!confirm('本当に削除していいですか？')){
+        /* キャンセルの時の処理 */
+        return false;
+    }else{
+        /*　OKの時の処理 */
+        var num=$(this).data('id');
+        $('#form_' + num).submit();
+    }
+});

@@ -9,7 +9,7 @@ class MasterFileClassification extends Model
 {
   use SoftDeletes;
   protected $connection = 'mysql_one';
-  protected $primarykey = 'fileClassificationId';
+  protected $primaryKey = 'fileClassificationId';
   protected $guarded = array('fileClassificationId');
 
   public function filePosts()

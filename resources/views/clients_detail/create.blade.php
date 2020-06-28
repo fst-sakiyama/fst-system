@@ -1,12 +1,12 @@
 @extends('layouts.system_top')
 
-@section('title','顧客一覧 | 顧客情報修正')
+@section('title','案件一覧 | 新規作成')
 
 @include('components.common.head')
 
 @include('components.common.header')
 
-@include('components.master_clients.master_clients_edit',['item'=>$item])
+@include('components.clients_detail.clients_detail_create')
 
 @section('pageJs')
 <script type="text/javascript" src="js/add_jquery.js"></script>

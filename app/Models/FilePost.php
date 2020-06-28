@@ -9,7 +9,7 @@ class FilePost extends Model
 {
   use SoftDeletes;
   protected $connection = 'mysql_one';
-  protected $primarykey = 'filePostId';
+  protected $primaryKey = 'filePostId';
   protected $guarded = array('filePostId');
 
   public function project()

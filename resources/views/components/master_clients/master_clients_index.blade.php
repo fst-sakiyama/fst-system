@@ -11,11 +11,11 @@
               <h5>顧客一覧</h5>
             </div>
             <div class="col-md text-right">
-              <a href="{{asset('/master_clients/create')}}"><button type="button" class="w-50 btn btn-danger">新規登録</button></a>
+              <a href="{{asset('/master_clients/create')}}"><button type="button" class="w-50 btn btn-primary">顧客一覧 | 新規登録</button></a>
             </div>
           </div>
         </div>
-        <table class="table">
+        <table class="table table-hover">
           <thead>
             <tr>
               <th>コード</th>
@@ -33,8 +33,14 @@
               <td><a href="{{asset('/clients_detail?id=')}}{{$item->clientId}}">{{$item->clientName}}</td>
               <td>{{$item->contractStartDate}}</td>
               <td>{{$item->contractEndDate}}</td>
-              <td><a href="{{ route('master_clients.edit',$item->clientId) }}">修正</a></td>
-              <td><a href"">削除</a></td>
+              <td><a href="{{ route('master_clients.edit',$item->clientId) }}" class="btn btn-success">修正</a></td>
+              <td>
+                <form action="{{ route('master_clients.destroy', $item->clientId) }}" id="form_{{ $item->clientId }}" method="post">
+                  {{ csrf_field() }}
+                  {{ method_field('delete') }}
+                  <a href="#" data-id="{{ $item->clientId }}" class="btn btn-danger deleteConf">削除</a>
+                </form>
+              </td>
             </tr>
           @endforeach
           </tbody>

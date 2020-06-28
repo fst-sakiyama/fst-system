@@ -18,10 +18,17 @@ Route::get('/', function () {
 });
 
 Route::get('system_top','SystemTopController@index')->name('top');
+Route::get('/system_top/add','SystemTopController@add')->name('system_top.add');
+Route::post('/system_top/add','SystemTopController@create')->name('system_top.create');
+Route::get('/system_top/dummy','SystemTopController@dummy')->name('system_top.dummy');
+Route::get('/system_top/editPlanComp','SystemTopController@editPlanComp')->name('system_top.editPlanComp');
+Route::get('/system_top/editDoComp','SystemTopController@editDoComp')->name('system_top.editDoComp');
+Route::delete('/system_top/editDelete','SystemTopController@editDelete')->name('system_top.editDelete');
+Route::get('/system_top/restore','SystemTopController@restore')->name('system_top.restore');
 
 Route::resource('/master_clients', 'MasterClientsController');
 
-Route::get('/clients_detail','ClientsDetailController@index')->name('client_detail');
+Route::resource('/clients_detail','ClientsDetailController');
 
 Route::resource('/master_projects', 'MasterProjectsController');
 

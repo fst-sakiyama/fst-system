@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Validator;
 
 class MasterClientsController extends Controller
 {
+  private $messages = [
+    'clientName.required' => '※顧客名は必須です。',
+    'clientNameKana.required' => '※顧客名の読みは必須です。',
+  ];
+  private $rules = [
+    'clientName' => 'required',
+    'clientNameKana' => 'required',
+  ];
     /**
      * Display a listing of the resource.
      *
@@ -38,16 +46,7 @@ class MasterClientsController extends Controller
      */
     public function store(Request $request)
     {
-
-        $messages = [
-          'clientName.required' => '※顧客名は必須です。',
-          'clientNameKana.required' => '※顧客名の読みは必須です。'
-        ];
-
-        $validator = Validator::make($request->all(),[
-          'clientName' => 'required',
-          'clientNameKana' => 'required',
-        ],$messages);
+        $validator = Validator::make($request->all(),$this->rules,$this->messages);
 
         if($validator->fails()){
           return redirect()
@@ -82,7 +81,7 @@ class MasterClientsController extends Controller
      */
     public function edit($id)
     {
-      $item = MasterClient::where('clientId',$id)->first();
+      $item = MasterClient::find($id);
       return view('master_clients.edit',compact('item'));
     }
 
@@ -95,12 +94,18 @@ class MasterClientsController extends Controller
      */
     public function update(Request $request)
     {
-      dd($request);
-      MasterClient::where('clientId',$request->clientId)
-        ->fill($request->all)->save();
+      $validator = Validator::make($request->all(),$this->rules,$this->messages);
 
-      $items = MasterClient::orderBy('clientNameKana','asc')->paginate(30);
-      return view('master_clients.index',compact('items'));
+      if($validator->fails()){
+        return redirect()
+                  ->route('master_clients.edit')
+                  ->withErrors($validator)
+                  ->withInput();
+      }
+
+      MasterClient::find($request->clientId)->fill($request->all())->save();
+
+      return redirect()->route('master_clients.index');
     }
 
     /**
@@ -111,6 +116,7 @@ class MasterClientsController extends Controller
      */
     public function destroy($id)
     {
-        //
+      MasterClient::find($id)->delete();
+      return redirect()->route('master_clients.index');
     }
 }

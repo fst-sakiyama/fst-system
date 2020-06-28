@@ -9,7 +9,7 @@ class MasterClient extends Model
 {
     use SoftDeletes;
     protected $connection = 'mysql_one';
-    protected $primarykey = 'clientId';
+    protected $primaryKey = 'clientId';
     protected $guarded = array('clientId');
 
     public function projects()

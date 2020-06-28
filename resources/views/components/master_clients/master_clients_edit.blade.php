@@ -7,12 +7,10 @@
       <div class="card">
         <h5 class="card-header">顧客一覧</h5>
         <div class="mt-3">
-          <?php dd($item); ?>
           <!--<form action="{{ url('master_clients'.$item->clientId) }}" method="POST">-->
-          {{ Form::open(array('route' => array('master_clients.update', $item->clientId), 'method' => 'PUT')) }}
-            @crsf
           <!--  @method('PUT')-->
-          <!--{{ Form::open(['route'=>'master_clients.update','item->clientId']) }}-->
+          {{ Form::open(array('route' => array('master_clients.update', $item->clientId), 'method' => 'PUT')) }}
+
           <!--{{ Form::open(['method'=>'PUT'] )}}-->
           {{ Form::hidden('clientId', $item->clientId) }}
           <div class="form-group">
