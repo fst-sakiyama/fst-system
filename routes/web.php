@@ -26,6 +26,8 @@ Route::get('/system_top/editDoComp','SystemTopController@editDoComp')->name('sys
 Route::delete('/system_top/editDelete','SystemTopController@editDelete')->name('system_top.editDelete');
 Route::get('/system_top/restore','SystemTopController@restore')->name('system_top.restore');
 
+Route::resource('/progress_detail', 'ProgressDetailController');
+
 Route::resource('/master_clients', 'MasterClientsController');
 
 Route::resource('/clients_detail','ClientsDetailController');
@@ -38,5 +40,5 @@ Route::resource('/file_posts', 'FilePostsController');
 
 Route::get('/file_show', 'FileShowController@show');
 
-Route::get('/upload','UploaderController@index');
+Route::get('/upload','UploaderController@index')->name('upload.index');
 Route::Post('/upload','UploaderController@upload');

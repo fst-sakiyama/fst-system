@@ -1,12 +1,12 @@
 @extends('layouts.system_top')
 
-@section('title','ファイルアップロード')
+@section('title',$fstSystemPlan->fstSystemPlan)
 
 @include('components.common.head')
 
 @include('components.common.header')
 
-@include('components.uploader.upload_index',['masterFileClassifications'=>$masterFileClassifications,'MasterProject'=>$masterProject,'FilePosts'=>$filePosts])
+@include('components.progress_detail.progress_detail_index',['fstSystemPlan'=>$fstSystemPlan,'items'=>$items])
 
 @section('pageJs')
 <script type="text/javascript" src="js/add_jquery.js"></script>

@@ -26,7 +26,7 @@ class SystemTopController extends Controller
                   ->orderBy('planComp')
                   ->get();
     $doCompletes = FstSystemProgress::whereNotNull('doComp')
-                  ->orderBy('doComp')
+                  ->orderBy('doComp','desc')
                   ->get();
     $trashPlans = FstSystemProgress::onlyTrashed()
                   ->orderBy('deleted_at')

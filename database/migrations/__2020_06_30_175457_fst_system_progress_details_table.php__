@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFstSystemProgressTable extends Migration
+class FstSystemProgressDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateFstSystemProgressTable extends Migration
      */
     public function up()
     {
-        Schema::connection('mysql_three')->create('fst_system_progress', function (Blueprint $table) {
-            $table->increments('fstSystemProgressId');
-            $table->text('fstSystemPlan');
-            $table->timestamp('planComp')->nullable();
-            $table->timestamp('doComp')->nullable();
+        Schema::connection('mysql_three')->create('fst_system_progress_details', function (Blueprint $table) {
+            $table->increments('fstSystemProgressDetailId');
+            $table->integer('fstSystemProgressId')->unsigned();
+            $table->text('fstSystemPlanDetail');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -31,6 +29,5 @@ class CreateFstSystemProgressTable extends Migration
     public function down()
     {
         Schema::connection('mysql_three')->dropIfExists('fst_system_progress_details');
-        Schema::connection('mysql_three')->dropIfExists('fst_system_progress');
     }
 }

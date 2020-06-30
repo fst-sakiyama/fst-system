@@ -28,6 +28,8 @@
               <th>案件名</th>
               <th>開始日</th>
               <th>終了日</th>
+              <th>修正</th>
+              <th>削除</th>
             </tr>
           </thead>
           <tbody>
@@ -38,10 +40,21 @@
               <td><a href="{{asset('/file_posts?id=')}}{{$item->projectId}}">{{$item->projectName}}</td>
               <td>{{$item->startDate}}</td>
               <td>{{$item->endDate}}</td>
+              <td><a href="{{ route('clients_detail.edit',$item->clientId) }}" class="btn btn-success btn-sm">修正</a></td>
+              <td>
+                <form action="{{ route('clients_detail.destroy', $item->clientId) }}" id="form_{{ $item->clientId }}" method="post">
+                  {{ csrf_field() }}
+                  {{ method_field('delete') }}
+                  <a href="#" data-id="{{ $item->clientId }}" class="btn btn-danger deleteConf btn-sm">削除</a>
+                </form>
+              </td>
             </tr>
           @endforeach
           </tbody>
         </table>
+        <div class="card-footer d-flex justify-content-center align-middle">
+          {{ $items->links() }}
+        </div>
       </div>
     </div>
   </div>

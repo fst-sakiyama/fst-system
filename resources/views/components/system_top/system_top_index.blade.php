@@ -2,6 +2,10 @@
 
 @php
 	$now = date("Y/m/d");
+	$cntNowProgress = count($nowProgress);
+	$cntMakePlans = count($makePlans);
+	$cntDoCompletes = count($doCompletes);
+	$cntTrashPlans = count($trashPlans);
 @endphp
 
 <div class="contents">
@@ -35,7 +39,7 @@
 					@foreach($nowProgress as $item)
 						<tr class="d-flex">
 							<td class="col-1">{{ $item->fstSystemProgressId }}</td>
-							<td class="col-6">{{ $item->fstSystemPlan }}</td>
+							<td class="col-6"><a href="{{ route('progress_detail.index',['id'=>$item->fstSystemProgressId]) }}">{{ $item->fstSystemPlan }}</a></td>
 							<td class="col-3">{{ $item->planComp }}</td>
 							<td class="col-1"><a href="{{ route('system_top.editDoComp',['id'=>$item->fstSystemProgressId]) }}" class="btn btn-success btn-sm">終了</a></td>
               <td class="col-1">
@@ -49,6 +53,9 @@
 					@endforeach
 					</tbody>
 				</table>
+				<div class="card-footer text-right">
+					<small class="text-mute">現在進行中の作業 {{ $cntNowProgress }} 件</small>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -86,6 +93,9 @@
 					@endforeach
 					</tbody>
 				</table>
+				<div class="card-footer text-right">
+					<small class="text-mute">今後行われる作業 {{ $cntMakePlans }} 件</small>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -113,6 +123,9 @@
 					@endforeach
 					</tbody>
 				</table>
+				<div class="card-footer text-right">
+					<small class="text-mute">終了した作業 {{ $cntDoCompletes }} 件</small>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -142,6 +155,9 @@
 					@endforeach
 					</tbody>
 				</table>
+				<div class="card-footer text-right">
+					<small class="text-mute">中止された作業 {{ $cntTrashPlans }} 件</small>
+				</div>
 			</div>
 		</div>
 	</div>

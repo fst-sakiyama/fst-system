@@ -33,22 +33,22 @@
               <td><a href="{{asset('/clients_detail?id=')}}{{$item->clientId}}">{{$item->clientName}}</td>
               <td>{{$item->contractStartDate}}</td>
               <td>{{$item->contractEndDate}}</td>
-              <td><a href="{{ route('master_clients.edit',$item->clientId) }}" class="btn btn-success">修正</a></td>
+              <td><a href="{{ route('master_clients.edit',$item->clientId) }}" class="btn btn-success btn-sm">修正</a></td>
               <td>
                 <form action="{{ route('master_clients.destroy', $item->clientId) }}" id="form_{{ $item->clientId }}" method="post">
                   {{ csrf_field() }}
                   {{ method_field('delete') }}
-                  <a href="#" data-id="{{ $item->clientId }}" class="btn btn-danger deleteConf">削除</a>
+                  <a href="#" data-id="{{ $item->clientId }}" class="btn btn-danger deleteConf btn-sm">削除</a>
                 </form>
               </td>
             </tr>
           @endforeach
           </tbody>
         </table>
+        <div class="card-footer d-flex justify-content-center align-middle">
+          {{ $items->links() }}
+        </div>
       </div>
-    </div>
-    <div class="mt-3 d-flex justify-content-center">
-      {{ $items->links() }}
     </div>
   </div>
 </div>

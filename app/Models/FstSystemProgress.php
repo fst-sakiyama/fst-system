@@ -12,4 +12,9 @@ class FstSystemProgress extends Model
     protected $table = 'fst_system_progress';
     protected $primaryKey = 'fstSystemProgressId';
     protected $guarded = array('fstSystemProgressId');
+
+    public function progressDetails()
+    {
+      return $this->hasMany('App\Models\FstSystemProgressDetail','fstSystemProgressId','fstSystemProgressId');
+    }
 }

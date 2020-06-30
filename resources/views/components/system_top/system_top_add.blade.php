@@ -17,7 +17,7 @@
             <span class="mr-2">：</span>
             {{ Form::text('fstSystemPlan',null,['placeholder'=>'課題','class'=>'col-md-4','id'=>'fstSystemPlan']) }}
             @error('fstSystemPlan')
-              <span class="ml-2">{{ $message }}</span>
+              <span class="ml-2 text-danger">{{ $message }}</span>
             @enderror
           </div>
           <div class="form-group text-center">
