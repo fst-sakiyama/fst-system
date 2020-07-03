@@ -20,6 +20,7 @@ class MasterFileClassificationsTableSeeder extends Seeder
         ['fileClassification'=>'仕様書','folderName'=>'specification','created_at'=>$now,'updated_at'=>$now,],
         ['fileClassification'=>'見積書','folderName'=>'estimates','created_at'=>$now,'updated_at'=>$now,],
         ['fileClassification'=>'注文書','folderName'=>'purchase','created_at'=>$now,'updated_at'=>$now,],
+        ['fileClassification'=>'その他','folderName'=>'other','created_at'=>$now,'updated_at'=>$now,],
       ]);
     }
 }
