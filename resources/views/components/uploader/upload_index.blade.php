@@ -6,10 +6,10 @@
     <div class="col">
       <div class="card">
         <div class="card-header">
-          <h5>{{ $masterProject -> projectName }}</h5>
+          <h5>{{ $masterProject -> projectName }} | ファイルの新規作成・ファイル名変更・削除</h5>
         </div>
         <div class="card-body">
-          <form action="{{action('UploaderController@upload')}}" method="post" enctype="multipart/form-data">
+          <form action="{{route('upload.store')}}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
             <input type="hidden" name = "projectId" value="{{ $masterProject->projectId }}">
             <div class="form-group">
@@ -42,14 +42,22 @@
               <th>分類</th>
               <th>ファイル名</th>
               <th>保存日</th>
+              <th>削除</th>
             </tr>
           </thead>
           <tbody>
           @foreach($filePosts as $item)
             <tr>
               <td>{{ $item->fileClassification->fileClassification }}</td>
-              <td><a href="{{ asset('/file_show?id=') }}{{ $item->filePostId }}" target="_blank" rel="noopener noreferrer">{{ $item->fileName }}</td>
+              <td><a href="{{ route('upload.edit',$item->filePostId) }}">{{ $item->fileName }}</td>
               <td>{{ $item->created_at }}</td>
+              <td>
+                <form action="{{ route('upload.destroy', $item->filePostId) }}" id="form_{{ $item->filePostId }}" method="post">
+                  {{ csrf_field() }}
+                  {{ method_field('delete') }}
+                  <a href="#" data-id="{{ $item->filePostId }}" class="btn btn-danger deleteConf btn-sm">削除</a>
+                </form>
+              </td>
             </tr>
           @endforeach
           </tbody>

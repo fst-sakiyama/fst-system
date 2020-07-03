@@ -40,5 +40,4 @@ Route::resource('/file_posts', 'FilePostsController');
 
 Route::get('/file_show', 'FileShowController@show');
 
-Route::get('/upload','UploaderController@index')->name('upload.index');
-Route::Post('/upload','UploaderController@upload');
+Route::resource('/upload','UploaderController');
