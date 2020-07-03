@@ -16,7 +16,7 @@
               <h5>{{ $clientName }} | 案件一覧</h5>
             </div>
             <div class="col-md text-right">
-              <a href="{{asset('/clients_detail/create')}}"><button type="button" class="w-50 btn btn-primary">{{ $clientName_str }} | 新規登録</button></a>
+              <a href="{{asset('/clients_detail/create?id=')}}{{$clientId}}"><button type="button" class="w-50 btn btn-primary">{{ $clientName_str }} | 新規登録</button></a>
             </div>
           </div>
         </div>
@@ -40,12 +40,12 @@
               <td><a href="{{asset('/file_posts?id=')}}{{$item->projectId}}">{{$item->projectName}}</td>
               <td>{{$item->startDate}}</td>
               <td>{{$item->endDate}}</td>
-              <td><a href="{{ route('clients_detail.edit',$item->clientId) }}" class="btn btn-success btn-sm">修正</a></td>
+              <td><a href="{{ route('clients_detail.edit',$item->projectId) }}" class="btn btn-success btn-sm">修正</a></td>
               <td>
-                <form action="{{ route('clients_detail.destroy', $item->clientId) }}" id="form_{{ $item->clientId }}" method="post">
+                <form action="{{ route('clients_detail.destroy', $item->projectId) }}" id="form_{{ $item->projectId }}" method="post">
                   {{ csrf_field() }}
                   {{ method_field('delete') }}
-                  <a href="#" data-id="{{ $item->clientId }}" class="btn btn-danger deleteConf btn-sm">削除</a>
+                  <a href="#" data-id="{{ $item->projectId }}" class="btn btn-danger deleteConf btn-sm">削除</a>
                 </form>
               </td>
             </tr>

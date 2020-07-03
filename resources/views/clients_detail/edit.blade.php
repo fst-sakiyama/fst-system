@@ -6,7 +6,7 @@
 
 @include('components.common.header')
 
-@include('components.clients_detail.clients_detail_edit',['item'=>$item])
+@include('components.clients_detail.clients_detail_edit',['item'=>$item,'masterContractTypes'=>$masterContractTypes])
 
 @section('pageJs')
 <script type="text/javascript" src="js/add_jquery.js"></script>

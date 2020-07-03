@@ -1,12 +1,12 @@
 @extends('layouts.system_top')
 
-@section('title',$clientName->clientName)
+@section('title',$fstSystemPlan->fstSystemPlan)
 
 @include('components.common.head')
 
 @include('components.common.header')
 
-@include('components.clients_detail.clients_detail_index',['clientId'=>$clientId,'clientName'=>$clientName,'items'=>$items])
+@include('components.progress_detail.progress_detail_create')
 
 @section('pageJs')
 <script type="text/javascript" src="js/add_jquery.js"></script>

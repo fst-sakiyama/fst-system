@@ -7,13 +7,21 @@
       <div class="card">
         <h5 class="card-header">案件一覧</h5>
         <div class="mt-3">
-          {{ Form::open(array('route' => array('clients_detail.update', $item->clientId), 'method' => 'PUT')) }}
+          {{ Form::open(array('route' => array('clients_detail.update', $item->projectId), 'method' => 'PUT')) }}
           {{ Form::hidden('clientId', $item->clientId) }}
           <div class="form-group">
-            {{ Form::label('clientName','顧客名',['class'=>'col-md-2']) }}
+            {{ Form::label('contractTypeId','契約形態を選択',['class'=>'col-md-2']) }}
             <span class="mr-2">：</span>
-            {{ Form::text('clientName',$item->clientName,['placeholder'=>'顧客名を入力','class'=>'col-md-4','id'=>'clientName']) }}
-            @error('clientName')
+            {{ Form::select('contractTypeId',$masterContractTypes,$item->contractTypeId,['class'=>'col-md-4'])}}
+            @error('contractTypeId')
+              <span class="ml-2 text-danger">{{ $message }}</span>
+            @enderror
+          </div>
+          <div class="form-group">
+            {{ Form::label('projectName','案件名',['class'=>'col-md-2']) }}
+            <span class="mr-2">：</span>
+            {{ Form::text('projectName',$item->projectName,['placeholder'=>'案件名を入力','class'=>'col-md-4','id'=>'clientName']) }}
+            @error('projectName')
               <span class="ml-2 text-danger">{{ $message }}</span>
             @enderror
           </div>

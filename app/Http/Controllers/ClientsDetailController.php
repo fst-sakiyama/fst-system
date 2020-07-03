@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MasterClient;
 use App\Models\MasterProject;
+use App\Models\MasterContractType;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
@@ -12,9 +13,12 @@ class ClientsDetailController extends Controller
 {
   private $messages = [
     'projectName.required' => '※案件名は必須です。',
+    'contractTypeId.exists' => '※契約形態を選択してください。'
   ];
   private $rules = [
     'projectName' => 'required',
+    'clientId'=>'required|exists:master_clients,clientId,deleted_at,NULL',
+    'contractTypeId'=>'required|exists:master_contract_types,contractTypeId,deleted_at,NULL',
   ];
     /**
      * Display a listing of the resource.
@@ -23,12 +27,13 @@ class ClientsDetailController extends Controller
      */
     public function index(Request $request)
     {
+      $clientId = $request->id;
       $clientName = MasterClient::select('clientName')
-                  ->where('clientId',$request->id)
+                  ->where('clientId',$clientId)
                   ->first();
-      $items = MasterProject::where('clientId',$request->id)
+      $items = MasterProject::where('clientId',$clientId)
                 ->paginate(30);
-      return view('clients_detail.index',compact('clientName','items'));
+      return view('clients_detail.index',compact('clientId','clientName','items'));
     }
 
     /**
@@ -36,9 +41,12 @@ class ClientsDetailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-      return view('clients_detail.create');
+      $clientId = $request->id;
+      $masterContractTypes = MasterContractType::select('contractTypeId','contractType')->get();
+      $masterContractTypes = $masterContractTypes->pluck('contractType','contractTypeId');
+      return view('clients_detail.create',compact('clientId','masterContractTypes'));
     }
 
     /**
@@ -59,7 +67,7 @@ class ClientsDetailController extends Controller
       }
 
       MasterProject::create($request->all());
-      return redirect()->route('clients_detail.index');
+      return redirect()->route('clients_detail.index',['id'=>$request->clientId]);
     }
 
     /**
@@ -82,7 +90,9 @@ class ClientsDetailController extends Controller
     public function edit($id)
     {
       $item = MasterProject::find($id);
-      return view('clients_detail.edit',compact('item'));
+      $masterContractTypes = MasterContractType::select('contractTypeId','contractType')->get();
+      $masterContractTypes = $masterContractTypes->pluck('contractType','contractTypeId');
+      return view('clients_detail.edit',compact('item','masterContractTypes'));
     }
 
     /**
@@ -92,7 +102,7 @@ class ClientsDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
       $validator = Validator::make($request->all(),$this->rules,$this->messages);
 
@@ -103,9 +113,8 @@ class ClientsDetailController extends Controller
                   ->withInput();
       }
 
-      MasterProject::find($request->clientId)->fill($request->all())->save();
-
-      return redirect()->route('clients_detail.index');
+      MasterProject::find($id)->fill($request->all())->save();
+      return redirect()->route('clients_detail.index',['id'=>$request->clientId]);
     }
 
     /**
@@ -117,6 +126,6 @@ class ClientsDetailController extends Controller
     public function destroy($id)
     {
       MasterProject::find($id)->delete();
-      return redirect()->route('clients_detail.index');
+      return redirect()->back();
     }
 }

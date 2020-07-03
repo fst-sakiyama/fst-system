@@ -79,7 +79,7 @@
 					@foreach($makePlans as $item)
 						<tr class="d-flex">
 							<td class="col-1">{{ $item->fstSystemProgressId }}</td>
-							<td class="col-6">{{ $item->fstSystemPlan }}</td>
+							<td class="col-6"><a href="{{ route('progress_detail.index',['id'=>$item->fstSystemProgressId]) }}">{{ $item->fstSystemPlan }}</a></td>
 							<td class="col-3">{{ $item->created_at }}</td>
 							<td class="col-1"><a href="{{ route('system_top.editPlanComp',['id'=>$item->fstSystemProgressId]) }}" class="btn btn-success btn-sm">開始</a></td>
               <td class="col-1">
@@ -117,7 +117,7 @@
 					@foreach($doCompletes as $item)
 						<tr class="d-flex">
 							<td class="col-1">{{ $item->fstSystemProgressId }}</td>
-							<td class="col-6">{{ $item->fstSystemPlan }}</td>
+							<td class="col-6"><a href="{{ route('progress_detail.index',['id'=>$item->fstSystemProgressId]) }}">{{ $item->fstSystemPlan }}</a></td>
 							<td class="col-3">{{ $item->doComp }}</td>
 						</tr>
 					@endforeach

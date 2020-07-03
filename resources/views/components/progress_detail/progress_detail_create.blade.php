@@ -5,19 +5,10 @@
 		<h1>@include('components.returnButton')</h1>
     <div class="col">
       <div class="card">
-        <h5 class="card-header">案件一覧</h5>
+        <h5 class="card-header">課題詳細</h5>
         <div class="card-body">
           <div class="mt-3">
-            {{ Form::open(['route'=>'clients_detail.store']) }}
-            {{ Form::hidden('clientId',$clientId) }}
-            <div class="form-group">
-              {{ Form::label('contractTypeId','契約形態を選択',['class'=>'col-md-2']) }}
-              <span class="mr-2">：</span>
-              {{ Form::select('contractTypeId',$masterContractTypes,null,['class'=>'col-md-4'])}}
-              @error('contractTypeId')
-                <span class="ml-2 text-danger">{{ $message }}</span>
-              @enderror
-            </div>
+            {{ Form::open(['route'=>'progress_detail.store']) }}
             <div class="form-group">
               {{ Form::label('projectName','案件名',['class'=>'col-md-2']) }}
               <span class="mr-2">：</span>
