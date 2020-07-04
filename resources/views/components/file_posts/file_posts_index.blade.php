@@ -15,7 +15,7 @@
             </div>
           </div>
         </div>
-        <table class="table table-hover">
+        <table class="table mb-0 table-hover">
           <thead>
             <tr>
               <th>分類</th>

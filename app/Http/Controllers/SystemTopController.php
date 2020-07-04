@@ -6,6 +6,7 @@ use App\Models\FstSystemProgress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SystemTopController extends Controller
 {
@@ -27,7 +28,7 @@ class SystemTopController extends Controller
                   ->get();
     $doCompletes = FstSystemProgress::whereNotNull('doComp')
                   ->orderBy('doComp','desc')
-                  ->get();
+                  ->paginate(10);
     $trashPlans = FstSystemProgress::onlyTrashed()
                   ->orderBy('deleted_at')
                   ->get();

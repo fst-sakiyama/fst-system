@@ -20,7 +20,7 @@
             </div>
           </div>
         </div>
-        <table class="table">
+        <table class="table mb-0 table-hover">
           <thead>
             <tr>
               <th>コード</th>
@@ -42,11 +42,9 @@
               <td>{{$item->endDate}}</td>
               <td><a href="{{ route('clients_detail.edit',$item->projectId) }}" class="btn btn-success btn-sm">修正</a></td>
               <td>
-                <form action="{{ route('clients_detail.destroy', $item->projectId) }}" id="form_{{ $item->projectId }}" method="post">
-                  {{ csrf_field() }}
-                  {{ method_field('delete') }}
-                  <a href="#" data-id="{{ $item->projectId }}" class="btn btn-danger deleteConf btn-sm">削除</a>
-                </form>
+                {{Form::open(['route'=>['clients_detail.destroy',$item->projectId],'method'=>'DELETE','id'=>'form_'.$item->projectId])}}
+                {{Form::submit('削除',['class' => 'btn btn-danger btn-sm deleteConf','data-id'=>$item->projectId])}}
+                {{Form::close()}}
               </td>
             </tr>
           @endforeach

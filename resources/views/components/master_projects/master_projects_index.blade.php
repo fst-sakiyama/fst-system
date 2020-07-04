@@ -6,7 +6,7 @@
     <div class="col">
       <div class="card">
         <h5 class="card-header">案件一覧</h5>
-        <table class="table">
+        <table class="table mb-0 table-hover">
           <thead>
             <tr>
               <th>コード</th>

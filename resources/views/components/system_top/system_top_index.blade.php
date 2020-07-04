@@ -25,7 +25,7 @@
 				<div class="card-header">
 					<h3>現在進行中の作業</h3>
 				</div>
-				<table class="table table-hover">
+				<table class="table mb-0 table-hover">
 					<thead>
 						<tr class="d-flex">
 							<th class="col-1">No</th>
@@ -65,7 +65,7 @@
 				<div class="card-header">
 					<h3>今後行われる作業</h3>
 				</div>
-				<table class="table table-hover">
+				<table class="table mb-0 table-hover">
 					<thead>
 						<tr class="d-flex">
 							<th class="col-1">No</th>
@@ -105,7 +105,7 @@
 				<div class="card-header">
 					<h3>終了した作業</h3>
 				</div>
-				<table class="table table-hover">
+				<table class="table mb-0 table-hover">
 					<thead>
 						<tr class="d-flex">
 							<th class="col-1">No</th>
@@ -123,8 +123,8 @@
 					@endforeach
 					</tbody>
 				</table>
-				<div class="card-footer text-right">
-					<small class="text-mute">終了した作業 {{ $cntDoCompletes }} 件</small>
+				<div class="card-footer d-flex justify-content-center align-middle">
+					{{ $doCompletes->links() }}
 				</div>
 			</div>
 		</div>
@@ -135,7 +135,7 @@
 				<div class="card-header">
 					<h3>中止された作業</h3>
 				</div>
-				<table class="table table-hover">
+				<table class="table mb-0 table-hover">
 					<thead>
 						<tr class="d-flex">
 							<th class="col-1">No</th>
