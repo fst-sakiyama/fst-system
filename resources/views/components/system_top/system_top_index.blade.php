@@ -1,5 +1,11 @@
 @section('content')
 
+@if (session('flashMessage'))
+	@php
+		echo "<script type='text/javascript'>alert('".session('flashMessage')."');</script>";
+	@endphp
+@endif
+
 @php
 	$now = date("Y/m/d");
 	$cntNowProgress = count($nowProgress);

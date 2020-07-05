@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FstSystemProgress;
+use App\Models\FstSystemProgressDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -66,6 +67,14 @@ class SystemTopController extends Controller
 
   public function editDoComp(Request $request)
   {
+    $cnt = FstSystemProgressDetail::where('fstSystemProgressId',$request->id)
+            ->whereNull('doComp')->count();
+
+    if($cnt<>0){
+      return redirect()->route('top')
+              ->with('flashMessage','完了していない課題が存在します');
+    }
+
     $now = Carbon::now();
     $item = FstSystemProgress::find($request->id);
     $item->doComp = $now;

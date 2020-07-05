@@ -6,6 +6,7 @@ use App\Models\FstSystemProgress;
 use App\Models\FstSystemProgressDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class ProgressDetailController extends Controller
 {
@@ -105,6 +106,15 @@ class ProgressDetailController extends Controller
       }
 
       FstSystemProgressDetail::find($id)->fill($request->all())->save();
+      return redirect()->route('progress_detail.index',['id'=>$request->fstSystemProgressId]);
+    }
+
+    public function editDoComp(Request $request)
+    {
+      $now = Carbon::now();
+      $item = FstSystemProgressDetail::find($request->id);
+      $item->doComp = $now;
+      $item->save();
       return redirect()->route('progress_detail.index',['id'=>$request->fstSystemProgressId]);
     }
 

@@ -26,6 +26,7 @@ Route::get('/system_top/editDoComp','SystemTopController@editDoComp')->name('sys
 Route::delete('/system_top/editDelete','SystemTopController@editDelete')->name('system_top.editDelete');
 Route::get('/system_top/restore','SystemTopController@restore')->name('system_top.restore');
 
+Route::get('/progress_detail/editDoComp','ProgressDetailController@editDoComp')->name('progress_detail.editDoComp');
 Route::resource('/progress_detail', 'ProgressDetailController');
 
 Route::resource('/master_clients', 'MasterClientsController');

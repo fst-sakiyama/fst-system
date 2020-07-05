@@ -9,6 +9,7 @@ class FstSystemProgressDetail extends Model
   protected $connection = 'mysql_three';
   protected $primaryKey = 'fstSystemProgressDetailId';
   protected $guarded = array('fstSystemProgressDetailId');
+  protected $dates = ['doComp'];
 
   public function progress()
   {

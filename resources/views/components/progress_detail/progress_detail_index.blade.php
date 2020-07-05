@@ -18,20 +18,38 @@
         <div class="row">
           @foreach($items as $item)
           <div class="col-sm-4">
-            <div class="card card-body">
-              <p class="card-text">
-                {{ $item->fstSystemPlanDetail }}
-              </p>
-              <div class="row mt-3 d-flex">
-                <div class="mr-2 ml-auto">
-                  <a href="{{ route('progress_detail.edit',$item->fstSystemProgressDetailId) }}" class="btn btn-success btn-sm">修正</a>
+            <div class="card card-body h-100">
+              @empty($item->doComp)
+                <h6 class="card-title mb-3">
+                  更新時刻：{{ $item->updated_at->format('Y年m月d日 H時i分') }}
+                </h6>
+                <p class="card-text">
+                  {{ $item->fstSystemPlanDetail }}
+                </p>
+                <div class="row mt-3 d-flex">
+                  <div class="ml-2">
+                    <a href="{{ route('progress_detail.editDoComp',['id'=>$item->fstSystemProgressDetailId,'fstSystemProgressId'=>$item->fstSystemProgressId]) }}" class="btn btn-primary btn-sm" onclick="return confirm('本当に完了にして良いですか？')">完了</a>
+                  </div>
+                  <div class="mr-2 ml-auto">
+                    <a href="{{ route('progress_detail.edit',$item->fstSystemProgressDetailId) }}" class="btn btn-success btn-sm">修正</a>
+                  </div>
+                  <div class="mr-2">
+                    {{Form::open(['route'=>['progress_detail.destroy',$item->fstSystemProgressDetailId],'method'=>'DELETE','id'=>'form_'.$item->fstSystemProgressDetailId])}}
+                    {{Form::submit('削除',['class' => 'btn btn-danger btn-sm deleteConf','data-id'=>$item->fstSystemProgressDetailId])}}
+                    {{Form::close()}}
+                  </div>
                 </div>
-                <div class="mr-2">
-                  {{Form::open(['route'=>['progress_detail.destroy',$item->fstSystemProgressDetailId],'method'=>'DELETE','id'=>'form_'.$item->fstSystemProgressDetailId])}}
-                  {{Form::submit('削除',['class' => 'btn btn-danger btn-sm deleteConf','data-id'=>$item->fstSystemProgressDetailId])}}
-                  {{Form::close()}}
+              @else
+                <img class="img-fluid mx-auto d-block" alt='ロゴ' src="{{ asset( 'images/doComp.png' ) }}" width="">
+                <div class="card-img-overlay">
+                  <h6 class="card-title mb-3">
+                    完了時刻：{{ $item->doComp->format('Y年m月d日 H時i分') }}
+                  </h6>
+                  <p class="card-text">
+                    {{ $item->fstSystemPlanDetail }}
+                  </p>
                 </div>
-              </div>
+              @endempty
             </div>
           </div>
           @endforeach
