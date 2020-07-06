@@ -35,8 +35,11 @@
 					<thead>
 						<tr class="d-flex">
 							<th class="col-1">No</th>
-							<th class="col-6">進行中の作業</th>
-							<th class="col-3">作業開始日</th>
+							<th class="col-4">進行中の作業</th>
+							<th class="col-1">子課題</th>
+							<th class="col-1">残課題</th>
+							<th class="col-1">済課題</th>
+							<th class="col-2">作業開始日</th>
 							<th class="col-1">終了</th>
 							<th class="col-1">中止</th>
 						</tr>
@@ -45,8 +48,11 @@
 					@foreach($nowProgress as $item)
 						<tr class="d-flex">
 							<td class="col-1">{{ $item->fstSystemProgressId }}</td>
-							<td class="col-6"><a href="{{ route('progress_detail.index',['id'=>$item->fstSystemProgressId]) }}">{{ $item->fstSystemPlan }}</a></td>
-							<td class="col-3">{{ $item->planComp }}</td>
+							<td class="col-4"><a href="{{ route('progress_detail.index',['id'=>$item->fstSystemProgressId]) }}">{{ $item->fstSystemPlan }}</a></td>
+							<td class="col-1">{{ $item->progressDetails()->count() }}</td>
+							<td class="col-1">{{ $item->progressDetails()->whereNull('doComp')->count() }}</td>
+							<td class="col-1">{{ $item->progressDetails()->whereNotNull('doComp')->count() }}</td>
+							<td class="col-2">{{ $item->planComp }}</td>
 							<td class="col-1"><a href="{{ route('system_top.editDoComp',['id'=>$item->fstSystemProgressId]) }}" class="btn btn-success btn-sm">終了</a></td>
               <td class="col-1">
                 <form action="{{ route('system_top.editDelete', ['id'=>$item->fstSystemProgressId]) }}" id="form_{{ $item->fstSystemProgressId }}" method="post">
@@ -75,8 +81,11 @@
 					<thead>
 						<tr class="d-flex">
 							<th class="col-1">No</th>
-							<th class="col-6">今後行われる作業</th>
-							<th class="col-3">作業設定日</th>
+							<th class="col-4">今後行われる作業</th>
+							<th class="col-1">子課題</th>
+							<th class="col-1">残課題</th>
+							<th class="col-1">済課題</th>
+							<th class="col-2">作業設定日</th>
 							<th class="col-1">開始</th>
 							<th class="col-1">中止</th>
 						</tr>
@@ -85,8 +94,11 @@
 					@foreach($makePlans as $item)
 						<tr class="d-flex">
 							<td class="col-1">{{ $item->fstSystemProgressId }}</td>
-							<td class="col-6"><a href="{{ route('progress_detail.index',['id'=>$item->fstSystemProgressId]) }}">{{ $item->fstSystemPlan }}</a></td>
-							<td class="col-3">{{ $item->created_at }}</td>
+							<td class="col-4"><a href="{{ route('progress_detail.index',['id'=>$item->fstSystemProgressId]) }}">{{ $item->fstSystemPlan }}</a></td>
+							<td class="col-1">{{ $item->progressDetails()->count() }}</td>
+							<td class="col-1">{{ $item->progressDetails()->whereNull('doComp')->count() }}</td>
+							<td class="col-1">{{ $item->progressDetails()->whereNotNull('doComp')->count() }}</td>
+							<td class="col-2">{{ $item->created_at }}</td>
 							<td class="col-1"><a href="{{ route('system_top.editPlanComp',['id'=>$item->fstSystemProgressId]) }}" class="btn btn-success btn-sm">開始</a></td>
               <td class="col-1">
                 <form action="{{ route('system_top.editDelete', ['id'=>$item->fstSystemProgressId]) }}" id="form_{{ $item->fstSystemProgressId }}" method="post">
@@ -115,16 +127,22 @@
 					<thead>
 						<tr class="d-flex">
 							<th class="col-1">No</th>
-							<th class="col-6">終了した作業</th>
-							<th class="col-3">作業完了日</th>
+							<th class="col-4">終了した作業</th>
+							<th class="col-1">子課題</th>
+							<th class="col-1">残課題</th>
+							<th class="col-1">済課題</th>
+							<th class="col-2">作業完了日</th>
 						</tr>
 					</thead>
 					<tbody>
 					@foreach($doCompletes as $item)
 						<tr class="d-flex">
 							<td class="col-1">{{ $item->fstSystemProgressId }}</td>
-							<td class="col-6"><a href="{{ route('progress_detail.index',['id'=>$item->fstSystemProgressId]) }}">{{ $item->fstSystemPlan }}</a></td>
-							<td class="col-3">{{ $item->doComp }}</td>
+							<td class="col-4"><a href="{{ route('progress_detail.index',['id'=>$item->fstSystemProgressId]) }}">{{ $item->fstSystemPlan }}</a></td>
+							<td class="col-1">{{ $item->progressDetails()->count() }}</td>
+							<td class="col-1">{{ $item->progressDetails()->whereNull('doComp')->count() }}</td>
+							<td class="col-1">{{ $item->progressDetails()->whereNotNull('doComp')->count() }}</td>
+							<td class="col-2">{{ $item->doComp }}</td>
 						</tr>
 					@endforeach
 					</tbody>

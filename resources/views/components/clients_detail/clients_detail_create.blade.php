@@ -13,7 +13,7 @@
             <div class="form-group">
               {{ Form::label('contractTypeId','契約形態を選択',['class'=>'col-md-2']) }}
               <span class="mr-2">：</span>
-              {{ Form::select('contractTypeId',$masterContractTypes,null,['class'=>'col-md-4'])}}
+              {{ Form::select('contractTypeId',$masterContractTypes,null,['placeholder'=>'---契約形態を選択してください---','class'=>'col-md-4'])}}
               @error('contractTypeId')
                 <span class="ml-2 text-danger">{{ $message }}</span>
               @enderror

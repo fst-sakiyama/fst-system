@@ -13,7 +13,7 @@
           <div class="form-group">
             {{ Form::label('fileClassificationId','分類',['class'=>'col-md-2']) }}
             <span class="mr-2">：</span>
-            {{ Form::select('fileClassificationId',$masterFileClassifications,$item->fileClassificationId,['class'=>'col-md-4'])}}
+            {{ Form::select('fileClassificationId',$masterFileClassifications,$item->fileClassificationId,['placeholder'=>'---分類を選択してください---','class'=>'col-md-4'])}}
             @error('fileClassificationId')
               <span class="ml-2 text-danger">{{ $message }}</span>
             @enderror
