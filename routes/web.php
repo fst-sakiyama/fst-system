@@ -42,3 +42,5 @@ Route::resource('/file_posts', 'FilePostsController');
 Route::get('/file_show', 'FileShowController@show');
 
 Route::resource('/upload','UploaderController');
+
+Route::resource('/dummy','dummyController');
