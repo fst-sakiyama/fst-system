@@ -10,6 +10,14 @@
           {{ Form::open(array('route' => array('clients_detail.update', $item->projectId), 'method' => 'PUT')) }}
           {{ Form::hidden('clientId', $item->clientId) }}
           <div class="form-group">
+            {{ Form::label('projectCode','案件コード',['class'=>'col-md-2']) }}
+            <span class="mr-2">：</span>
+            {{ Form::text('projectCode',$item->projectCode,['placeholder'=>'案件コードを入力','class'=>'col-md-4','id'=>'projectCode']) }}
+            @error('projectCode')
+              <span class="ml-2 text-danger">{{ $message }}</span>
+            @enderror
+          </div>
+          <div class="form-group">
             {{ Form::label('contractTypeId','契約形態を選択',['class'=>'col-md-2']) }}
             <span class="mr-2">：</span>
             {{ Form::select('contractTypeId',$masterContractTypes,$item->contractTypeId,['placeholder'=>'---契約形態を選択してください---','class'=>'col-md-4'])}}

@@ -13,6 +13,7 @@ class ClientsDetailController extends Controller
 {
   private $messages = [
     'projectName.required' => '※案件名は必須です。',
+    'contractTypeId.required' => '※契約形態を選択してください。',
     'contractTypeId.exists' => '※契約形態を選択してください。'
   ];
   private $rules = [

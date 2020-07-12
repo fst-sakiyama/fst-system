@@ -20,7 +20,13 @@
           <tbody>
           @foreach($items as $item)
             <tr>
-              <td>@php echo 'P'.($item->projectId + 1000) @endphp</td>
+              <td>
+                @php
+                  if(null !== ($item->projectCode)){
+                    echo 'P'.sprintf('%03d',$item->projectCode);
+                  }
+                @endphp
+              </td>
               <td><a href="{{asset('/clients_detail?id=')}}{{$item->clientId}}">{{$item->client->clientName}}</td>
               <td>{{$item->contractType->contractType}}</td>
               <td><a href="{{asset('/file_posts?id=')}}{{$item->projectId}}">{{$item->projectName}}</td>

@@ -10,6 +10,14 @@
           <div class="mt-3">
             {{ Form::open(['route'=>'master_clients.store']) }}
             <div class="form-group">
+              {{ Form::label('clientCode','顧客コード',['class'=>'col-md-2']) }}
+              <span class="mr-2">：</span>
+              {{ Form::text('clientCode',null,['placeholder'=>'顧客コードを入力','class'=>'col-md-4','id'=>'clientCode']) }}
+              @error('clientCode')
+                <span class="ml-2 text-danger">{{ $message }}</span>
+              @enderror
+            </div>
+            <div class="form-group">
               {{ Form::label('clientName','顧客名',['class'=>'col-md-2']) }}
               <span class="mr-2">：</span>
               {{ Form::text('clientName',null,['placeholder'=>'顧客名を入力','class'=>'col-md-4','id'=>'clientName']) }}

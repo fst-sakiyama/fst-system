@@ -11,6 +11,14 @@
             {{ Form::open(['route'=>'clients_detail.store']) }}
             {{ Form::hidden('clientId',$clientId) }}
             <div class="form-group">
+              {{ Form::label('projectCode','案件コード',['class'=>'col-md-2']) }}
+              <span class="mr-2">：</span>
+              {{ Form::text('projectCode',null,['placeholder'=>'案件コードを入力','class'=>'col-md-4','id'=>'projectCode']) }}
+              @error('projectCode')
+                <span class="ml-2 text-danger">{{ $message }}</span>
+              @enderror
+            </div>
+            <div class="form-group">
               {{ Form::label('contractTypeId','契約形態を選択',['class'=>'col-md-2']) }}
               <span class="mr-2">：</span>
               {{ Form::select('contractTypeId',$masterContractTypes,null,['placeholder'=>'---契約形態を選択してください---','class'=>'col-md-4'])}}
