@@ -30,7 +30,8 @@
                 <a class="dropdown-item" href="">短期案件一覧ページ</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{asset('/dummy')}}">テスト用ダミーページ</a>
-
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{asset('/dev_confirm')}}">開発者用進捗確認ページ</a>
               </div>
           </li>
 

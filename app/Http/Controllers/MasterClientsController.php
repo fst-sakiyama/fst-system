@@ -11,11 +11,12 @@ class MasterClientsController extends Controller
 {
   private $messages = [
     'clientName.required' => '※顧客名は必須です。',
-    'clientNameKana.required' => '※顧客名の読みは必須です。',
+    'clientCode.unique' => '※すでに使用されています。',
+    'clientCode.max' => '※0～999の範囲で入力してください。',
   ];
   private $rules = [
     'clientName' => 'required',
-    'clientNameKana' => 'required',
+    'clientCode' => 'unique:master_clients,clientCode|integer|nullable|max:999',
   ];
     /**
      * Display a listing of the resource.
@@ -24,7 +25,10 @@ class MasterClientsController extends Controller
      */
     public function index()
     {
-        $items = MasterClient::orderBy('clientNameKana','asc')->paginate(30);
+        $items = MasterClient::orderByRaw('clientCode IS NULL asc')
+                  ->orderBy('clientCode')
+                  ->orderBy('updated_at')
+                  ->paginate(30);
         return view('master_clients.index',compact('items'));
     }
 
@@ -98,7 +102,7 @@ class MasterClientsController extends Controller
 
       if($validator->fails()){
         return redirect()
-                  ->route('master_clients.edit')
+                  ->route('master_clients.edit',$request->clientId)
                   ->withErrors($validator)
                   ->withInput();
       }

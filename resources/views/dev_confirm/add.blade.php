@@ -6,7 +6,7 @@
 
 @include('components.common.header')
 
-@include('components.system_top.system_top_add')
+@include('components.dev_confirm.dev_confirm_add')
 
 @section('pageJs')
 <script type="text/javascript" src="js/add_jquery.js"></script>

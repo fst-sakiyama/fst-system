@@ -2,107 +2,83 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FstSystemProgress;
-use App\Models\FstSystemProgressDetail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class SystemTopController extends Controller
 {
-  private $messages = [
-    'fstSystemPlan.required' => '※課題は必須です。',
-  ];
-  private $rules = [
-    'fstSystemPlan' => 'required',
-  ];
-
-  public function index()
-  {
-    $makePlans = FstSystemProgress::whereNull('planComp')
-                  ->orderBy('created_at')
-                  ->get();
-    $nowProgress = FstSystemProgress::whereNull('doComp')
-                  ->whereNotNull('planComp')
-                  ->orderBy('planComp')
-                  ->get();
-    $doCompletes = FstSystemProgress::whereNotNull('doComp')
-                  ->orderBy('doComp','desc')
-                  ->paginate(10);
-    $trashPlans = FstSystemProgress::onlyTrashed()
-                  ->orderBy('deleted_at')
-                  ->get();
-    return view('system_top.index',compact('makePlans','nowProgress','doCompletes','trashPlans'));
-  }
-
-  public function add(Request $request)
-  {
-    return view('system_top.add');
-  }
-
-  public function create(Request $request)
-  {
-    $validator = Validator::make($request->all(),$this->rules,$this->messages);
-
-    if($validator->fails()){
-      return redirect()
-                ->route('system_top.add')
-                ->withErrors($validator)
-                ->withInput();
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('system_top.index');
     }
 
-    FstSystemProgress::create($request->all());
-    return redirect()->route('top');
-  }
-
-  public function editPlanComp(Request $request)
-  {
-    $now = Carbon::now();
-    $item = FstSystemProgress::find($request->id);
-    $item->planComp = $now;
-    $item->save();
-    return redirect()->route('top');
-  }
-
-  public function editDoComp(Request $request)
-  {
-    $cnt = FstSystemProgressDetail::where('fstSystemProgressId',$request->id)
-            ->whereNull('doComp')->count();
-
-    if($cnt<>0){
-      return redirect()->route('top')
-              ->with('flashMessage','完了していない課題が存在します');
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
-    $now = Carbon::now();
-    $item = FstSystemProgress::find($request->id);
-    $item->doComp = $now;
-    $item->save();
-    return redirect()->route('top');
-  }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
 
-  public function editDelete(Request $request)
-  {
-    FstSystemProgress::find($request->id)
-      ->delete();
-    return redirect()->route('top');
-  }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
-  public function restore(Request $request)
-  {
-    $item = FstSystemProgress::withTrashed()
-            ->find($request->id)->restore();
-    $item = FstSystemProgress::find($request->id);
-    $item->planComp = null;
-    $item->doComp = null;
-    $item->save();
-    return redirect()->route('top');
-  }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
 
-  public function dummy($id)
-  {
-    return redirect()->route('top');
-  }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
 }

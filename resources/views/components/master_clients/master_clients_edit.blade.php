@@ -10,6 +10,14 @@
           {{ Form::open(array('route' => array('master_clients.update', $item->clientId), 'method' => 'PUT')) }}
           {{ Form::hidden('clientId', $item->clientId) }}
           <div class="form-group">
+            {{ Form::label('clientCode','顧客コード',['class'=>'col-md-2']) }}
+            <span class="mr-2">：</span>
+            {{ Form::text('clientCode',$item->clientCode,['placeholder'=>'顧客コードを入力','class'=>'col-md-4','id'=>'clientCode']) }}
+            @error('clientCode')
+              <span class="ml-2 text-danger">{{ $message }}</span>
+            @enderror
+          </div>
+          <div class="form-group">
             {{ Form::label('clientName','顧客名',['class'=>'col-md-2']) }}
             <span class="mr-2">：</span>
             {{ Form::text('clientName',$item->clientName,['placeholder'=>'顧客名を入力','class'=>'col-md-4','id'=>'clientName']) }}

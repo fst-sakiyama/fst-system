@@ -2,14 +2,14 @@
 
 <div class="contents">
   <div class="container mt-3">
-    <h1>@include('components.returnButton')</h1>
+    <h1>@include('components.returnLinkButton',['item'=>'/dev_confirm'])</h1>
     <div class="col">
       <div class="card">
         <h5 class="card-header">課題の登録</h5>
         <div class="mt-3">
-          {{ Form::open(['route'=>'system_top.add','method'=>'post']) }}
+          {{ Form::open(['route'=>'dev_confirm.add','method'=>'post']) }}
           <!--
-          <form action="/system_top/add" method="post">
+          <form action="/dev_confirm/add" method="post">
           {{csrf_field()}}
           -->
           <div class="form-group">

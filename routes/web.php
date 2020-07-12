@@ -17,14 +17,7 @@ Route::get('/', function () {
     return redirect()->route('top');
 });
 
-Route::get('system_top','SystemTopController@index')->name('top');
-Route::get('/system_top/add','SystemTopController@add')->name('system_top.add');
-Route::post('/system_top/add','SystemTopController@create')->name('system_top.create');
-Route::get('/system_top/dummy','SystemTopController@dummy')->name('system_top.dummy');
-Route::get('/system_top/editPlanComp','SystemTopController@editPlanComp')->name('system_top.editPlanComp');
-Route::get('/system_top/editDoComp','SystemTopController@editDoComp')->name('system_top.editDoComp');
-Route::delete('/system_top/editDelete','SystemTopController@editDelete')->name('system_top.editDelete');
-Route::get('/system_top/restore','SystemTopController@restore')->name('system_top.restore');
+Route::resource('/system_top','SystemTopController',['names' => ['index' => 'top']]);
 
 Route::get('/progress_detail/editDoComp','ProgressDetailController@editDoComp')->name('progress_detail.editDoComp');
 Route::resource('/progress_detail', 'ProgressDetailController');
@@ -42,5 +35,14 @@ Route::resource('/file_posts', 'FilePostsController');
 Route::get('/file_show', 'FileShowController@show');
 
 Route::resource('/upload','UploaderController');
+
+Route::get('dev_confirm','DevConfirmController@index')->name('dev_confirm.top');
+Route::get('/dev_confirm/add','DevConfirmController@add')->name('dev_confirm.add');
+Route::post('/dev_confirm/add','DevConfirmController@create')->name('dev_confirm.create');
+Route::get('/dev_confirm/dummy','DevConfirmController@dummy')->name('dev_confirm.dummy');
+Route::get('/dev_confirm/editPlanComp','DevConfirmController@editPlanComp')->name('dev_confirm.editPlanComp');
+Route::get('/dev_confirm/editDoComp','DevConfirmController@editDoComp')->name('dev_confirm.editDoComp');
+Route::delete('/dev_confirm/editDelete','DevConfirmController@editDelete')->name('dev_confirm.editDelete');
+Route::get('/dev_confirm/restore','DevConfirmController@restore')->name('dev_confirm.restore');
 
 Route::resource('/dummy','dummyController');
