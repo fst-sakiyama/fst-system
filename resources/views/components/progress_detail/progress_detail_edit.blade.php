@@ -2,7 +2,7 @@
 
 <div class="contents">
   <div class="container mt-3">
-		<h1>@include('components.returnButton')</h1>
+		<h1>@include('components.returnLinkButton',['item'=>'/progress_detail'])</h1>
     <div class="col">
       <div class="card">
         <h5 class="card-header">課題詳細修正</h5>
