@@ -36,6 +36,8 @@ Route::get('/file_show', 'FileShowController@show');
 
 Route::resource('/upload','UploaderController');
 
+Route::resource('/take_over','TakeOverTheOperationController');
+
 Route::get('dev_confirm','DevConfirmController@index')->name('dev_confirm.top');
 Route::get('/dev_confirm/add','DevConfirmController@add')->name('dev_confirm.add');
 Route::post('/dev_confirm/add','DevConfirmController@create')->name('dev_confirm.create');

@@ -9,7 +9,7 @@
 @include('components.dev_confirm.dev_confirm_add')
 
 @section('pageJs')
-<script type="text/javascript" src="js/add_jquery.js"></script>
+<script type="text/javascript" src="{{asset('js/add_jquery.js')}}"></script>
 @endsection
 
 @include('components.common.footer')

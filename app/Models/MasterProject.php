@@ -17,6 +17,11 @@ class MasterProject extends Model
     return $this->hasMany('App\Models\filePost','projectId','projectId');
   }
 
+  public function TakeOverTheOperations()
+  {
+    return $this->hasMany('App\Models\TakeOverTheOperation','projectId','projectId');
+  }
+
   public function contractType()
   {
     return $this->belongsTo('App\Models\MasterContractType','contractTypeId','contractTypeId');

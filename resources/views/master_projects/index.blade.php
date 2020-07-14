@@ -9,7 +9,7 @@
 @include('components.master_projects.master_projects_index',['items'=>$items])
 
 @section('pageJs')
-<script type="text/javascript" src="js/add_jquery.js"></script>
+<script type="text/javascript" src="{{asset('js/add_jquery.js')}}"></script>
 @endsection
 
 @include('components.common.footer')
