@@ -27,7 +27,7 @@
                     更新時刻：{{ $item->updated_at->format('Y年m月d日 H時i分') }}
                   </h6>
                   <p class="card-text">
-                    {{ $item->fstSystemPlanDetail }}
+                    {!! nl2br(e($item->fstSystemPlanDetail)) !!}
                   </p>
                   <div class="row d-flex mb-2">
                     <div class="ml-2">
@@ -50,7 +50,7 @@
                     完了時刻：{{ $item->doComp->format('Y年m月d日 H時i分') }}
                   </h6>
                   <p class="card-text">
-                    {{ $item->fstSystemPlanDetail }}
+                    {!! nl2br(e($item->fstSystemPlanDetail)) !!}
                   </p>
                 </div>
               @endempty
