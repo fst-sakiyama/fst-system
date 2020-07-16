@@ -5,6 +5,7 @@
   $w = $week[date('w',$dispDate)];
   $dt = Carbon\Carbon::createFromTimestamp($dispDate);
   $prevDate = $dt->copy()->subDay();
+  $todayDate = Carbon\Carbon::now();
   $nextDate = $dt->copy()->addDay();
 @endphp
 
@@ -15,7 +16,7 @@
         <div class="card-header">
           <div class="row d-flex justify-content-between">
             <a href="{{asset('/take_over?dispDate=')}}{{$prevDate->timestamp}}"><button type="button" class="btn btn-outline-success">{{ $prevDate->format('Y年m月d日').'＜' }}</button></a>
-            <h3 class="text-center">{{ $dt->format('Y年m月d日')." ".$w."曜日"}}</h3>
+            <a href="{{asset('/take_over?dispDate=')}}{{$todayDate->timestamp}}"><button type="button" class="btn-lg btn-outline-success" title="今日に戻る">{{ $dt->format('Y年m月d日')." ".$w."曜日"}}</button></a>
             <a href="{{asset('/take_over?dispDate=')}}{{$nextDate->timestamp}}"><button type="button" class="btn btn-outline-success">{{ '＞'.$nextDate->format('Y年m月d日') }}</button></a>
           </div>
         </div>

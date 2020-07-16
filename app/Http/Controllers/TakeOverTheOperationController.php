@@ -17,7 +17,7 @@ class TakeOverTheOperationController extends Controller
      */
     public function index(Request $request)
     {
-      $items = TakeOverTheOperation::all();
+      $items = TakeOverTheOperation::whereDate('timeLimit',Carbon::createFromTimestamp($request->dispDate))->get();
       $dispDate = $request->dispDate;
       return view('take_over.index',compact('items','dispDate'));
     }
