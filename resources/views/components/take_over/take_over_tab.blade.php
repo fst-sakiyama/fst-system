@@ -3,7 +3,7 @@
     <div class="col-sm-4">
       <div class="card">
         <div class="card-header">
-          {{ $item->created_at->format('Y.m.d') }} - {{ mb_substr($item->project->projectName,0.10) }}_{{ mb_substr($item->project->client->clientName,0,5) }}
+          {{ $item->created_at->format('Y.m.d') }} - {{ mb_substr($item->project->projectName,0,15) }}
         </div>
         @empty($item->doComp)
           <div class="card-body w-100">
@@ -34,6 +34,9 @@
                   {{Form::submit('削除',['class' => 'btn btn-danger btn-sm deleteConf','data-id'=>$item->projectId])}}
                   {{Form::close()}}
                 </div>
+              </div>
+              <div class="text-right small">
+                {{ $item->project->client->clientName }}
               </div>
             </div>
           </div>

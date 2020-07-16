@@ -2,15 +2,10 @@
 
 @php
   $week = array('日', '月', '火', '水', '木', '金', '土');
-  if(empty($dispDate)){
-    $dispDate = date('Y年m月d日');
-    $w = $week[date('w')];
-  }else{
-    $dispDate = date('Y年m月d日',strtotime($dispDate));
-    $w = $week[date('w',strtotime($dispDate))];
-  }
-  $prevDate = strtotime('-1 day'.strtotime($dispDate));
-  $nextDate = strtotime('+1 day'.strtotime($dispDate));
+  $w = $week[date('w',$dispDate)];
+  $dt = Carbon\Carbon::createFromTimestamp($dispDate);
+  $prevDate = $dt->copy()->subDay();
+  $nextDate = $dt->copy()->addDay();
 @endphp
 
 <div class="contents">
@@ -19,9 +14,9 @@
       <div class="card">
         <div class="card-header">
           <div class="row d-flex justify-content-between">
-            <a href=""><button type="button" class="btn btn-outline-success">{{ date('Y年m月d日',$prevDate).'＜' }}</button></a>
-            <h3 class="text-center">{{ $dispDate." ".$w."曜日"}}</h3>
-            <a href=""><button type="button" class="btn btn-outline-success">{{ '＞'.date('Y年m月d日',$nextDate) }}</button></a>
+            <a href="{{asset('/take_over?dispDate=')}}{{$prevDate->timestamp}}"><button type="button" class="btn btn-outline-success">{{ $prevDate->format('Y年m月d日').'＜' }}</button></a>
+            <h3 class="text-center">{{ $dt->format('Y年m月d日')." ".$w."曜日"}}</h3>
+            <a href="{{asset('/take_over?dispDate=')}}{{$nextDate->timestamp}}"><button type="button" class="btn btn-outline-success">{{ '＞'.$nextDate->format('Y年m月d日') }}</button></a>
           </div>
         </div>
         <div class="row">

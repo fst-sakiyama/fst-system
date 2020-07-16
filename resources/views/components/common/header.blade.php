@@ -1,5 +1,8 @@
 @section('header')
 
+@php
+  $dispDate = new Carbon\Carbon(now());
+@endphp
 <!--
   navbar-fixed-topが機能しない？？
 -->
@@ -23,7 +26,7 @@
               </a>
 
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{asset('/take_over')}}">監視引継ぎページ</a>
+                <a class="dropdown-item" href="{{asset('/take_over?dispDate=')}}{{$dispDate->timestamp}}">監視引継ぎページ</a>
                 <a class="dropdown-item" href="{{asset('/master_clients')}}">顧客一覧ページ</a>
                 <a class="dropdown-item" href="{{asset('/master_projects')}}">案件一覧ページ</a>
                 <a class="dropdown-item" href="">継続案件一覧ページ</a>

@@ -15,10 +15,11 @@ class TakeOverTheOperationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
       $items = TakeOverTheOperation::all();
-      return view('take_over.index',compact('items'));
+      $dispDate = $request->dispDate;
+      return view('take_over.index',compact('items','dispDate'));
     }
 
     /**
