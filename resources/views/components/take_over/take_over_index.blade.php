@@ -37,7 +37,36 @@
         </div>
         <div class="tab-content" id="myTab-content">
           <div class="tab-pane fade show active" id="takeOver" role="tabpanel" aria-labelledby="takeOver-tab">
-            @include('components.take_over.take_over_tab',['items'=>$items])
+            <div class="row mt-1 mb-1">
+              @foreach($takeOvers as $item)
+              <div class="col-sm-4">
+                <div class="card">
+                  @include('components.take_over.take_over_tab',['item'=>$item])
+                </div>
+              </div>
+              @endforeach
+            </div>
+            <div class="row mt-1 mb-1">
+              @foreach($takeOversTimeLimit as $item)
+              <div class="col-sm-4">
+                <div class="card">
+                  @include('components.take_over.take_over_tab_time_limit',['item'=>$item])
+                </div>
+              </div>
+              @endforeach
+            </div>
+            <div class="row mt-1 mb-1">
+              @foreach($takeOversTrashToday as $item)
+              <div class="col-sm-4">
+                <div class="card">
+                  @include('components.take_over.take_over_tab_trash_today',['item'=>$item])
+                </div>
+              </div>
+              @endforeach
+            </div>
+            <div class="card-footer text-right">
+              <small class="text-mute">タブ1枚目</small>
+            </div>
           </div>
           <div class="tab-pane fade" id="wellKnown" role="tabpanel" aria-labelledby="wellKnown-tab">
             2枚目のタブ<br>

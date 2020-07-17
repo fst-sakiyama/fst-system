@@ -17,9 +17,32 @@ class TakeOverTheOperationController extends Controller
      */
     public function index(Request $request)
     {
-      $items = TakeOverTheOperation::whereDate('timeLimit',Carbon::createFromTimestamp($request->dispDate))->get();
       $dispDate = $request->dispDate;
-      return view('take_over.index',compact('items','dispDate'));
+      $dt = Carbon::createFromTimestamp($dispDate);
+      $takeOvers = TakeOverTheOperation::whereNull('wellKnown')
+                    ->whereNull('timeLimit')
+                    ->whereDate('created_at','<=',$dt)
+                    ->get();
+      $takeOversTimeLimit = TakeOverTheOperation::whereNull('wellKnown')
+                            ->whereNotNull('timeLimit')
+                            ->whereDate('created_at','<=',$dt)
+                            ->get();
+      $takeOversTrashToday = TakeOverTheOperation::onlyTrashed()
+                              ->whereNull('wellKnown')
+                              ->whereDate('deleted_at',$dt)
+                              ->get();
+      $wellKnowns = TakeOverTheOperation::whereNotNull('wellKnown')
+                    ->whereDate('created_at','<=',$dt)
+                    ->get();
+      $takeOversTrash = TakeOverTheOperation::onlyTrashed()
+                          ->whereNull('wellKnown')
+                          ->whereDate('deleted_at','<',$dt)
+                          ->get();
+      $wellKnownsTrash = TakeOverTheOperation::onlyTrashed()
+                          ->whereNotNull('wellKnown')
+                          ->whereDate('created_at','<=',$dt)
+                          ->get();
+      return view('take_over.index',compact('dispDate','takeOvers','takeOversTimeLimit','takeOversTrashToday','wellKnowns','takeOversTrash','wellKnownsTrash'));
     }
 
     /**

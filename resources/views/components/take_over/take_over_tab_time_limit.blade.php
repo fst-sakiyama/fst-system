@@ -5,6 +5,7 @@
   <img class="img-fluid mx-auto d-block" alt='済' src="{{ asset( 'images/brownCat.png' ) }}" width="">
   <div class="card-img-overlay">
     <div class="card-text mt-5">
+      <span class="mark font-weight-bold text-danger">期限：{{ date('Y.m.d',strtotime($item->timeLimit)) }}</span><br>
       <div class="mt-3">
         {!! nl2br(e($item->takeOverContent)) !!}
       </div>
