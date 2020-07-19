@@ -147,6 +147,12 @@ class TakeOverTheOperationController extends Controller
                   ->withInput();
       }
 
+      if(empty($request->wellKnown)){
+        $item = TakeOverTheOperation::find($id);
+        $item->wellKnown = null;
+        $item->save();
+      }
+
       $dispDate = $request->dispDate;
       $request->request->remove('dispDate');
       $request->request->remove('clientId');
