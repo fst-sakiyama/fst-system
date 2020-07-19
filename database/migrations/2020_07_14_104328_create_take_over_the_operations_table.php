@@ -18,7 +18,7 @@ class CreateTakeOverTheOperationsTable extends Migration
             $table->integer('projectId')->unsigned();
             $table->text('takeOverContent');
             $table->date('timeLimit')->nullable();
-            $table->timestamp('wellKnown')->nullable();
+            $table->date('wellKnown')->nullable();
             $table->timestamp('doComp')->nullable();
             $table->timestamps();
             $table->softDeletes();

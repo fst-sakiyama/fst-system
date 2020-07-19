@@ -36,6 +36,7 @@ Route::get('/file_show', 'FileShowController@show');
 
 Route::resource('/upload','UploaderController');
 
+Route::get('/take_over/doEdit','TakeOverTheOperationController@doEdit')->name('take_over.doEdit');
 Route::resource('/take_over','TakeOverTheOperationController');
 
 Route::get('dev_confirm','DevConfirmController@index')->name('dev_confirm.top');

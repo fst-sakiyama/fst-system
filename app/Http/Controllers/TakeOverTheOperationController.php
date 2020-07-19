@@ -7,9 +7,20 @@ use App\Models\MasterClient;
 use App\Models\MasterProject;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Validator;
 
 class TakeOverTheOperationController extends Controller
 {
+  private $messages = [
+    'projectId.required' => '※顧客名、案件名の選択は必須です。',
+    'takeOverContent.required' => '※内容の入力は必須です。',
+  ];
+  private $rules = [
+    'projectId' => 'required',
+    'takeOverContent' => 'required',
+  ];
+
     /**
      * Display a listing of the resource.
      *
@@ -22,10 +33,13 @@ class TakeOverTheOperationController extends Controller
       $takeOvers = TakeOverTheOperation::whereNull('wellKnown')
                     ->whereNull('timeLimit')
                     ->whereDate('created_at','<=',$dt)
+                    ->orderBy('created_at')
                     ->get();
       $takeOversTimeLimit = TakeOverTheOperation::whereNull('wellKnown')
                             ->whereNotNull('timeLimit')
                             ->whereDate('created_at','<=',$dt)
+                            ->orderBy('timeLimit')
+                            ->orderBy('created_at')
                             ->get();
       $takeOversTrashToday = TakeOverTheOperation::onlyTrashed()
                               ->whereNull('wellKnown')
@@ -50,11 +64,12 @@ class TakeOverTheOperationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+      $dispDate = $request->dispDate;
       $masterClients = MasterClient::all();
       $masterProjects = MasterProject::all();
-      return view('take_over.create',compact('masterClients','masterProjects'));
+      return view('take_over.create',compact('dispDate','masterClients','masterProjects'));
     }
 
     /**
@@ -65,12 +80,23 @@ class TakeOverTheOperationController extends Controller
      */
     public function store(Request $request)
     {
+      $validator = Validator::make($request->all(),$this->rules,$this->messages);
+
+      if($validator->fails()){
+        return redirect()
+                  ->route('take_over.create')
+                  ->withErrors($validator)
+                  ->withInput();
+      }
+
       if(!empty($request->wellKnown)){
         $request->wellKnown = Carbon::now();
       }
+      $dispDate = $request->dispDate;
+      $request->request->remove('dispDate');
       $request->request->remove('clientId');
       TakeOverTheOperation::create($request->all());
-      return redirect()->route('take_over.index');
+      return redirect()->route('take_over.index',['dispDate'=>$dispDate]);
     }
 
     /**
@@ -90,11 +116,19 @@ class TakeOverTheOperationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
         //
     }
 
+    public function doEdit(Request $request)
+    {
+      $dispDate = $request->dispDate;
+      $masterClients = MasterClient::all();
+      $masterProjects = MasterProject::all();
+      $takeOverTheOperation = TakeOverTheOperation::find($request->id);
+      return view('take_over.edit',compact('dispDate','masterClients','masterProjects','takeOverTheOperation'));
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -102,9 +136,22 @@ class TakeOverTheOperationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$id)
     {
-        //
+      $validator = Validator::make($request->all(),$this->rules,$this->messages);
+
+      if($validator->fails()){
+        return redirect()
+                  ->route('take_over.doEdit',['id'=>$id,'dispDate'=>$request->dispDate])
+                  ->withErrors($validator)
+                  ->withInput();
+      }
+
+      $dispDate = $request->dispDate;
+      $request->request->remove('dispDate');
+      $request->request->remove('clientId');
+      TakeOverTheOperation::find($id)->fill($request->all())->save();
+      return redirect()->route('take_over.index',['dispDate'=>$dispDate]);
     }
 
     /**

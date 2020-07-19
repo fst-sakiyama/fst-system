@@ -2,7 +2,7 @@
   {{ $item->created_at->format('Y.m.d') }} - {{ mb_substr($item->project->projectName,0,15) }}
 </div>
 <div class="card-body w-100">
-  <img class="img-fluid mx-auto d-block" alt='猫' src="{{ asset( 'images/brownCat.png' ) }}" width="">
+  <img class="img-fluid mx-auto d-block" alt='周知事項' src="{{ asset( 'images/wellKnown.png' ) }}" width="">
   <div class="card-img-overlay">
     <div class="card-text mt-5">
       {{ $item->takeOverId }}<br>
@@ -16,19 +16,6 @@
       <div class="mt-3 small text-mute text-right">
         最終更新日：{{ date('Y.m.d',strtotime($d)) }}
       </div>
-      @empty(!($item->timeLimit))
-      <span
-      @php $dt_tl = new Carbon\Carbon($item->timeLimit); @endphp
-      @if($dt->eq($dt_tl))
-      class="mark font-weight-bold text-danger h5"
-      @elseif($dt->gt($dt_tl))
-      class="mark font-weight-bold text-danger h4"
-      @else
-      class="mark font-weight-bold text-danger"
-      @endif
-      >
-      期限：{{ date('Y.m.d',strtotime($item->timeLimit)) }}</span><br>
-      @endempty
       <div class="mt-3">
         {!! nl2br(e($item->takeOverContent)) !!}
       </div>
