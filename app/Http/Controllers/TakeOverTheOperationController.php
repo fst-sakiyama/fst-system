@@ -147,16 +147,15 @@ class TakeOverTheOperationController extends Controller
                   ->withInput();
       }
 
-      if(empty($request->wellKnown)){
-        $item = TakeOverTheOperation::find($id);
-        $item->wellKnown = null;
-        $item->save();
-      }
-
       $dispDate = $request->dispDate;
       $request->request->remove('dispDate');
       $request->request->remove('clientId');
-      TakeOverTheOperation::find($id)->fill($request->all())->save();
+      $item = TakeOverTheOperation::find($id);
+      $item->fill($request->all());
+      if(empty($request->wellKnown)){
+        $item->wellKnown = null;
+      }
+      $item->save();
       return redirect()->route('take_over.index',['dispDate'=>$dispDate]);
     }
 
