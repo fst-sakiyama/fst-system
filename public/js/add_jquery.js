@@ -37,3 +37,7 @@ $('.parent').change(function() {
   }
 
 });
+
+$(document).ready(function(){
+  $('.parent').trigger('change');
+});

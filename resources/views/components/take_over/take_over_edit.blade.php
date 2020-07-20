@@ -33,8 +33,8 @@ if(empty($takeOverTheOperation->wellKnown)){
 
             <div class="form-group mt-3 form-inline">
               {{ Form::label('projectId','案件名',['class'=>'col-md-2']) }}
-              <select class="children form-control col-md-6" name='projectId' disabled>
-                <option value="" selected="selected">---案件名を選択してください---</option>
+              <select class="children form-control col-md-6" name='projectId' @if(empty($takeOverTheOperation->project->clientId) && empty(old('clientId'))) disabled @endif>
+                <option value=""  @if(empty($takeOverTheOperation->project->clientId) && empty(old('clientId'))) selected @endif>---案件名を選択してください---</option>
                 @foreach($masterProjects as $item)
                   <option value="{{ $item->projectId }}" data-val="{{ $item->clientId }}" @if($takeOverTheOperation->project->projectId ==$item->projectId || old('projectId')==$item->projectId) selected @endif>{{ $item->projectName }}</option>
                 @endforeach

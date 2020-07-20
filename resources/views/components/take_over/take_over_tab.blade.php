@@ -13,23 +13,27 @@
           $d = $item->created_at;
         }
       @endphp
-      <div class="mt-3 small text-mute text-right">
-        最終更新日：{{ date('Y.m.d',strtotime($d)) }}
+      <div class="col">
+        <div class="small text-mute text-right">
+          最終更新日：{{ date('Y.m.d',strtotime($d)) }}
+        </div>
       </div>
       @empty(!($item->timeLimit))
-      <span
-      @php $dt_tl = new Carbon\Carbon($item->timeLimit); @endphp
-      @if($dt->eq($dt_tl))
-      class="mark font-weight-bold text-danger h5"
-      @elseif($dt->gt($dt_tl))
-      class="mark font-weight-bold text-danger h4"
-      @else
-      class="mark font-weight-bold text-danger"
-      @endif
-      >
-      期限：{{ date('Y.m.d',strtotime($item->timeLimit)) }}</span><br>
+      <div class="col mt-2">
+        <span
+        @php $dt_tl = new Carbon\Carbon($item->timeLimit); @endphp
+        @if($dt->eq($dt_tl))
+        class="mark font-weight-bold text-danger h5"
+        @elseif($dt->gt($dt_tl))
+        class="mark font-weight-bold text-danger h4"
+        @else
+        class="mark font-weight-bold text-danger"
+        @endif
+        >
+        期限：{{ date('Y.m.d',strtotime($item->timeLimit)) }}</span>
+      </div>
       @endempty
-      <div class="mt-3">
+      <div class="col mt-3">
         {!! nl2br(e($item->takeOverContent)) !!}
       </div>
     </div>

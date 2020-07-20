@@ -13,10 +13,12 @@
           $d = $item->created_at;
         }
       @endphp
-      <div class="mt-3 small text-mute text-right">
-        最終更新日：{{ date('Y.m.d',strtotime($d)) }}
+      <div class="col">
+        <div class="mt-3 small text-mute text-right">
+          最終更新日：{{ date('Y.m.d',strtotime($d)) }}
+        </div>
       </div>
-      <div class="mt-3">
+      <div class="col mt-3">
         {!! nl2br(e($item->takeOverContent)) !!}
       </div>
     </div>
