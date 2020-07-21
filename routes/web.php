@@ -37,6 +37,9 @@ Route::get('/file_show', 'FileShowController@show');
 Route::resource('/upload','UploaderController');
 
 Route::get('/take_over/doEdit','TakeOverTheOperationController@doEdit')->name('take_over.doEdit');
+Route::get('/take_over/doWellKnown','TakeOverTheOperationController@doWellKnown')->name('take_over.doWellKnown');
+Route::get('/take_over/rmWellKnown','TakeOverTheOperationController@rmWellKnown')->name('take_over.rmWellKnown');
+Route::get('/take_over/restore','TakeOverTheOperationController@restore')->name('take_over.restore');
 Route::resource('/take_over','TakeOverTheOperationController');
 
 Route::get('dev_confirm','DevConfirmController@index')->name('dev_confirm.top');

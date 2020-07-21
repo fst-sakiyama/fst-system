@@ -2,7 +2,7 @@
   {{ $item->created_at->format('Y.m.d') }} - {{ mb_substr($item->project->projectName,0,12) }}
 </div>
 <div class="card-body w-100">
-  <img class="img-fluid mx-auto d-block" alt='猫' src="{{ asset( 'images/brownCat.png' ) }}" width="">
+  <img class="img-fluid mx-auto d-block" alt='済' src="{{ asset( 'images/doComp.png' ) }}" width="">
   <div class="card-img-overlay">
     <div class="card-text mt-5">
       {{ $item->takeOverId }}<br>
@@ -19,21 +19,6 @@
           最終更新日：{{ date('Y.m.d',strtotime($d)) }}
         </div>
       </div>
-      @empty(!($item->timeLimit))
-      <div class="col mt-2">
-        <span
-        @php $dt_tl = new Carbon\Carbon($item->timeLimit); @endphp
-        @if($dt->eq($dt_tl))
-        class="mark font-weight-bold text-danger h5"
-        @elseif($dt->gt($dt_tl))
-        class="mark font-weight-bold text-danger h4"
-        @else
-        class="mark font-weight-bold text-danger"
-        @endif
-        >
-        期限：{{ date('Y.m.d',strtotime($item->timeLimit)) }}</span>
-      </div>
-      @endempty
       <div class="col mt-3">
         {!! nl2br(e($item->takeOverContent)) !!}
       </div>
@@ -44,7 +29,7 @@
   <div class="container-fluid">
     <div class="row mb-0 justify-content-between">
       <div class="">
-        <a href="{{ route('take_over.doEdit',['id'=>$item->takeOverId,'dispDate'=>$dispDate]) }}" class="btn btn-primary btn-sm">修正</a>
+        <a href="{{ route('take_over.restore',['id'=>$item->takeOverId]) }}" class="btn btn-primary btn-sm">戻す</a>
       </div>
       <div class="">
         <a href="{{ route('take_over.doWellKnown',['id'=>$item->takeOverId,'dispDate'=>$dispDate]) }}" class="btn btn-success btn-sm">＞周知事項へ＜</a>

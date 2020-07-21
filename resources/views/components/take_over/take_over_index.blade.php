@@ -65,7 +65,7 @@
               @foreach($takeOversTrashToday as $item)
               <div class="col-sm-4">
                 <div class="card mt-1">
-                  @include('components.take_over.take_over_tab_trash_today',['item'=>$item])
+                  @include('components.take_over.take_over_tab_trash_today',['item'=>$item,'dt'=>$dt])
                 </div>
               </div>
               @endforeach

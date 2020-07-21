@@ -159,6 +159,23 @@ class TakeOverTheOperationController extends Controller
       return redirect()->route('take_over.index',['dispDate'=>$dispDate]);
     }
 
+    public function doWellKnown(Request $request)
+    {
+      $item = TakeOverTheOperation::find($request->id);
+      $item->wellKnown = date('Y-m-d');
+      $item->save();
+      $dispDate = $request->dispDate;
+      return redirect()->route('take_over.index',['dispDate'=>$dispDate]);
+    }
+
+    public function rmWellKnown(Request $request)
+    {
+      $item = TakeOverTheOperation::find($request->id);
+      $item->wellKnown = null;
+      $item->save();
+      $dispDate = $request->dispDate;
+      return redirect()->route('take_over.index',['dispDate'=>$dispDate]);
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -167,6 +184,13 @@ class TakeOverTheOperationController extends Controller
      */
     public function destroy($id)
     {
-        //
+      TakeOverTheOperation::find($id)->delete();
+      return redirect()->back();
+    }
+
+    public function restore(Request $request)
+    {
+      TakeOverTheOperation::onlyTrashed()->find($request->id)->restore();
+      return redirect()->back();
     }
 }
