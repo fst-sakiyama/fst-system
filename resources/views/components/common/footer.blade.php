@@ -10,6 +10,7 @@
 <!--JS -->
 <!-- jQuery読み込み -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <!-- PopperのJS読み込み -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <!-- BootstrapのJS読み込み -->

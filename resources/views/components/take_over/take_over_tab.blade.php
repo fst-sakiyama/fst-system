@@ -5,7 +5,6 @@
   <img class="img-fluid mx-auto d-block" alt='猫' src="{{ asset( 'images/brownCat.png' ) }}" width="">
   <div class="card-img-overlay">
     <div class="card-text mt-5">
-      {{ $item->takeOverId }}<br>
       <div class="col">
         <div
         @if(($item->created_at) != ($item->updated_at))
@@ -16,7 +15,7 @@
           class="small text-mute text-right"
         @endif
         >
-          最終更新日：{{ date('Y.m.d',strtotime($d)) }}
+          最終更新日：{{ $d->format('Y.m.d') }}
         </div>
       </div>
       @empty(!($item->timeLimit))
@@ -31,7 +30,7 @@
         class="mark font-weight-bold text-danger"
         @endif
         >
-        期限：{{ date('Y.m.d',strtotime($item->timeLimit)) }}</span>
+        期限：{{ $item->timeLimit->format('Y.m.d') }}</span>
       </div>
       @endempty
       <div class="col mt-3">
@@ -47,7 +46,7 @@
         <a href="{{ route('take_over.doEdit',['id'=>$item->takeOverId,'dispDate'=>$dispDate]) }}" class="btn btn-primary btn-sm">修正</a>
       </div>
       <div class="">
-        <a href="{{ route('take_over.doWellKnown',['id'=>$item->takeOverId,'dispDate'=>$dispDate]) }}" class="btn btn-success btn-sm">＞周知事項へ＜</a>
+        <a href="{{ route('take_over.doWellKnown',['id'=>$item->takeOverId,'dispDate'=>$dispDate]) }}" class="btn btn-success btn-sm">周知事項へ--＞</a>
       </div>
       <div class="">
         {{Form::open(['route'=>['take_over.destroy',$item->takeOverId],'method'=>'DELETE','id'=>'form_'.$item->takeOverId])}}

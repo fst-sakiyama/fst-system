@@ -41,3 +41,18 @@ $('.parent').change(function() {
 $(document).ready(function(){
   $('.parent').trigger('change');
 });
+
+$('#modalTable1,#modalTable2').on('show.bs.modal',function(event){
+  var button = $(event.relatedTarget);
+  var val = button.data('whatever');
+  var array = [];
+  var modal = $(this);
+  $('#'+val).find('a').each(function() {
+    array.push($(this).data('val'));
+  });
+  var modal = $(this);
+  modal.find('.modalHeader').text(array[1]+'-'+array[3]);
+  modal.find('.modalBody').html(array[4]);
+  modal.find('.modalFooter').text(array[5]);
+
+});

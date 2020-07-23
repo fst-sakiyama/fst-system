@@ -35,6 +35,9 @@
               <li class="nav-item">
                 <a class="nav-link" id="wellKnownTrash-tab" data-toggle="tab" href="#wellKnownTrash" role="tab" aria-controls="wellKnownTrash">【済】周知事項</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" id="searchPanel-tab" data-toggle="tab" href="#searchPanel" role="tab" aria-controls="searchPanel">検索</a>
+              </li>
             </ul>
           </div>
           <div class="col d-flex justify-content-end align-self-center mr-5">
@@ -89,27 +92,27 @@
             </div>
           </div>
           <div class="tab-pane fade" id="takeOverTrash" role="tabpanel" aria-labelledby="takeOverTrash-tab">
-            <div class="row mt-2 mb-2">
-              <div class="col-sm-4">
-                <div class="card mt-1">
-                  @include('components.take_over.take_over_trash_tab',['takeOversTrash'=>$takeOversTrash])
-                </div>
-              </div>
+            <div class="card">
+              @include('components.take_over.take_over_trash_tab',['takeOversTrash'=>$takeOversTrash])
             </div>
-            <div class="card-footer text-right">
-              <small class="text-mute">タブ3枚目</small>
+            <div class="card-footer d-flex justify-content-center align-middle">
+                  {{ $takeOversTrash->links() }}
             </div>
           </div>
           <div class="tab-pane fade" id="wellKnownTrash" role="tabpanel" aria-labelledby="wellKnownTrash-tab">
-            <div class="row mt-1 mb-1">
-              <div class="col-sm-4">
-                <div class="card">
-                  @include('components.take_over.well_known_trash_tab',['wellKnownsTrash'=>$wellKnownsTrash])
-                </div>
-              </div>
+            <div class="card">
+              @include('components.take_over.well_known_trash_tab',['wellKnownsTrash'=>$wellKnownsTrash])
             </div>
-            <div class="card-footer text-right">
-              <small class="text-mute">タブ4枚目</small>
+            <div class="card-footer d-flex justify-content-center align-middle">
+                  {{ $wellKnownsTrash->links() }}
+            </div>
+          </div>
+          <div class="tab-pane fade" id="searchPanel" role="tabpanel" aria-labelledby="searchPanel-tab">
+            <div class="card">
+
+            </div>
+            <div class="card-footer d-flex justify-content-center align-middle">
+              検索
             </div>
           </div>
         </div>

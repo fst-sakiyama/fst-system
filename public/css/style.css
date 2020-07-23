@@ -11,3 +11,9 @@ tbody {
   height: 800px;
 }
 */
+
+a.modaltable {
+   display: block;       /* リンクをブロックレベル化して表示 */
+   padding: 0.6em 0em;   /* 内側の余白量を上下に0.6文字分＆左右に1文字分にする */
+   cursor: pointer;
+}

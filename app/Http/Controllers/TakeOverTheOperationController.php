@@ -41,21 +41,32 @@ class TakeOverTheOperationController extends Controller
                             ->orderBy('timeLimit')
                             ->orderBy('created_at')
                             ->get();
+/*
+*      $takeOversTrashToday = TakeOverTheOperation::onlyTrashed()
+*                              ->whereNull('wellKnown')
+*                              ->whereDate('deleted_at',$dt)
+*                              ->get();
+*/
       $takeOversTrashToday = TakeOverTheOperation::onlyTrashed()
                               ->whereNull('wellKnown')
-                              ->whereDate('deleted_at',$dt)
+                              ->whereDate('created_at','<=',$dt)
+                              ->whereRaw('deleted_at >= NOW() - INTERVAL 1 DAY')
                               ->get();
       $wellKnowns = TakeOverTheOperation::whereNotNull('wellKnown')
                     ->whereDate('created_at','<=',$dt)
                     ->get();
+/*
+*      $takeOversTrash = TakeOverTheOperation::onlyTrashed()
+*                          ->whereNull('wellKnown')
+*                          ->whereDate('deleted_at','<',$dt)
+*                          ->get();
+*/
       $takeOversTrash = TakeOverTheOperation::onlyTrashed()
                           ->whereNull('wellKnown')
-                          ->whereDate('deleted_at','<',$dt)
-                          ->get();
+                          ->paginate(20);
       $wellKnownsTrash = TakeOverTheOperation::onlyTrashed()
                           ->whereNotNull('wellKnown')
-                          ->whereDate('created_at','<=',$dt)
-                          ->get();
+                          ->paginate(20);
       return view('take_over.index',compact('dispDate','takeOvers','takeOversTimeLimit','takeOversTrashToday','wellKnowns','takeOversTrash','wellKnownsTrash'));
     }
 
