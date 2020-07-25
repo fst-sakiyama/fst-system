@@ -1,6 +1,7 @@
 <table class="table mb-0 table-hover">
 	<thead>
 		<tr class="d-flex">
+			<th class="col-1">分類</th>
 			<th class="col">作成日</th>
 			<th class="col">完了日</th>
 			<th class="col-2">案件名</th>
@@ -11,6 +12,7 @@
 	<tbody>
 	@foreach($items as $item)
 		<tr class="d-flex">
+			<td class="col"><a class="searchTable" data-class = "{{'item_'.$item->takeOverId}}" style="cursor:pointer;">@empty($item->wellKnown) 引継 @else 周知 @endempty</a></td>
 			<td class="col"><a class="searchTable" data-class = "{{'item_'.$item->takeOverId}}" style="cursor:pointer;">{{ $item->created_at->format('Y.m.d') }}</a></td>
 			<td class="col"><a class="searchTable" data-class = "{{'item_'.$item->takeOverId}}" style="cursor:pointer;">@if(!(empty($item->deleted_at))){{ $item->deleted_at->format('Y.m.d') }} @endif</a></td>
 			<td class="col-2"><a class="searchTable" data-class = "{{'item_'.$item->takeOverId}}" style="cursor:pointer;">{{ mb_substr($item->project->projectName,0,12) }}</a></td>
