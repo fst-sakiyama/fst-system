@@ -19,6 +19,11 @@ class TakeOverTheOperation extends Model
     return $this->belongsTo('App\Models\MasterProject','projectId','projectId');
   }
 
+  public function takeOverTheOperations()
+  {
+    return $this->hasMany('App\Models\AddTakeOverTheOperation','takeOverId','takeOverId');
+  }
+
 /**
 *  public function setWellKnownAttribute($value) {
 *    dd($value);

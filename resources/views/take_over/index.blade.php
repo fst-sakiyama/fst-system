@@ -6,7 +6,7 @@
 
 @include('components.common.header')
 
-@include('components.take_over.take_over_index',['dispDate'=>$dispDate,'takeOvers'=>$takeOvers,'takeOversTimeLimit'=>$takeOversTimeLimit,'takeOversTrashToday'=>$takeOversTrashToday,'wellKnowns'=>$wellKnowns,'takeOversTrash'=>$takeOversTrash,'wellKnownsTrash'=>$wellKnownsTrash])
+@include('components.take_over.take_over_index',['dispDate'=>$dispDate,'takeOvers'=>$takeOvers,'takeOversTimeLimit'=>$takeOversTimeLimit,'takeOversTrashToday'=>$takeOversTrashToday,'wellKnowns'=>$wellKnowns,'takeOversTrash'=>$takeOversTrash,'wellKnownsTrash'=>$wellKnownsTrash,'masterClients'=>$masterClients,'masterProjects'=>$masterProjects])
 
 @section('pageJs')
 <script type="text/javascript" src="{{asset('js/add_jquery.js')}}"></script>

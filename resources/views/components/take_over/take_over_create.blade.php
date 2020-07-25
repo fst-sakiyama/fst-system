@@ -10,7 +10,7 @@
           <div class="mt-3">
             {{ Form::open(['route'=>'take_over.store']) }}
             {{ Form::hidden('dispDate',$dispDate) }}
-            
+
             <div class="form-group mt-3 form-inline">
               {{ Form::label('clientId','顧客名',['class'=>'col-md-2']) }}
               <select class="parent form-control col-md-6" name="clientId">
@@ -49,7 +49,8 @@
               {{ Form::date('timeLimit',null,['class'=>'col-md-6','id'=>'timeLimit']) }}
             </div>
 
-            <div class="form-group mt-5 form-inline justify-content-center">
+            <div class="form-group mt-5 form-inline">
+              {{ Form::label('','',['class'=>'col-md-2']) }}
               {{ Form::checkbox('wellKnown',\Carbon\Carbon::now(),false,['id'=>'check-id','class'=>'circle','style'=>'transform:scale(1.5)']) }}
               {{ Form::label('check-id','周知事項に入れる',['class'=>'form-check-label ml-3']) }}
             </div>

@@ -42,6 +42,10 @@ Route::get('/take_over/rmWellKnown','TakeOverTheOperationController@rmWellKnown'
 Route::get('/take_over/restore','TakeOverTheOperationController@restore')->name('take_over.restore');
 Route::resource('/take_over','TakeOverTheOperationController');
 
+Route::resource('/add_take_over','AddTakeOverTheOperationController');
+
+Route::post('/search_result','TakeOverSearchController@search')->name('search_result.search');
+
 Route::get('dev_confirm','DevConfirmController@index')->name('dev_confirm.top');
 Route::get('/dev_confirm/add','DevConfirmController@add')->name('dev_confirm.add');
 Route::post('/dev_confirm/add','DevConfirmController@create')->name('dev_confirm.create');

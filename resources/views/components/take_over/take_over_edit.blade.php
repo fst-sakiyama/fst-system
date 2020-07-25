@@ -57,7 +57,8 @@ if(empty($takeOverTheOperation->wellKnown)){
               {{ Form::date('timeLimit',$takeOverTheOperation->timeLimit,['class'=>'col-md-6','id'=>'timeLimit']) }}
             </div>
 
-            <div class="form-group mt-5 form-inline justify-content-center">
+            <div class="form-group mt-5 form-inline">
+              {{ Form::label('','',['class'=>'col-md-2']) }}
               {{ Form::checkbox('wellKnown',\Carbon\Carbon::now(),$key,['id'=>'check-id','class'=>'circle','style'=>'transform:scale(1.5)']) }}
               {{ Form::label('check-id','周知事項に入れる',['class'=>'form-check-label ml-3']) }}
             </div>

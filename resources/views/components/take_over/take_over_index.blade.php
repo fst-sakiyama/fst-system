@@ -53,6 +53,13 @@
                   @include('components.take_over.take_over_tab',['item'=>$item,'dt'=>$dt])
                 </div>
               </div>
+                @foreach($item->takeOverTheOperations()->get() as $addItem)
+                <div class="col-sm-4 addCard takeOver_{{$item->takeOverId}}" style="display:none;">
+                  <div class="card mt-1">
+                  @include('components.take_over.temp_add_take_over_card',['item'=>$addItem])
+                  </div>
+                </div>
+                @endforeach
               @endforeach
             </div>
             <div class="row mt-2">
@@ -62,6 +69,13 @@
                   @include('components.take_over.take_over_tab',['item'=>$item,'dt'=>$dt])
                 </div>
               </div>
+                @foreach($item->takeOverTheOperations()->get() as $addItem)
+                <div class="col-sm-4 addCard takeOver_{{$item->takeOverId}}" style="display:none;">
+                  <div class="card mt-1">
+                  @include('components.take_over.temp_add_take_over_card',['item'=>$addItem])
+                  </div>
+                </div>
+                @endforeach
               @endforeach
             </div>
             <div class="row mt-2 mb-2">
@@ -85,6 +99,13 @@
                   @include('components.take_over.well_known_tab',['item'=>$item])
                 </div>
               </div>
+                @foreach($item->takeOverTheOperations()->get() as $addItem)
+                <div class="col-sm-4 addCard takeOver_{{$item->takeOverId}}" style="display:none;">
+                  <div class="card mt-1">
+                  @include('components.take_over.temp_add_take_over_card',['item'=>$addItem])
+                  </div>
+                </div>
+                @endforeach
               @endforeach
             </div>
             <div class="card-footer text-right">
@@ -93,6 +114,22 @@
           </div>
           <div class="tab-pane fade" id="takeOverTrash" role="tabpanel" aria-labelledby="takeOverTrash-tab">
             <div class="card">
+              <div class="row mt-2 mb-2 cardItemClose">
+                @foreach($takeOversTrash as $item)
+                <div class="col-sm-4 cardItem card_item_{{$item->takeOverId}}" style="display:none;">
+                  <div class="card mt-1">
+                    @include('components.take_over.temp_take_over_trash_card',['item'=>$item,'dt'=>$dt])
+                  </div>
+                </div>
+                  @foreach($item->takeOverTheOperations()->get() as $addItem)
+                  <div class="col-sm-4 cardItem card_item_{{$item->takeOverId}}" style="display:none;">
+                    <div class="card mt-1">
+                    @include('components.take_over.temp_add_take_over_trash_card',['item'=>$addItem])
+                    </div>
+                  </div>
+                  @endforeach
+                @endforeach
+              </div>
               @include('components.take_over.take_over_trash_tab',['takeOversTrash'=>$takeOversTrash])
             </div>
             <div class="card-footer d-flex justify-content-center align-middle">
@@ -101,6 +138,22 @@
           </div>
           <div class="tab-pane fade" id="wellKnownTrash" role="tabpanel" aria-labelledby="wellKnownTrash-tab">
             <div class="card">
+              <div class="row mt-2 mb-2 wellKnownCardItemClose">
+                @foreach($wellKnownsTrash as $item)
+                <div class="col-sm-4 wellKnownCardItem wellKnownCard_item_{{$item->takeOverId}}" style="display:none;">
+                  <div class="card mt-1">
+                    @include('components.take_over.temp_take_over_trash_card',['item'=>$item,'dt'=>$dt])
+                  </div>
+                </div>
+                  @foreach($item->takeOverTheOperations()->get() as $addItem)
+                  <div class="col-sm-4 wellKnownCardItem wellKnownCard_item_{{$item->takeOverId}}" style="display:none;">
+                    <div class="card mt-1">
+                    @include('components.take_over.temp_add_take_over_trash_card',['item'=>$addItem])
+                    </div>
+                  </div>
+                  @endforeach
+                @endforeach
+              </div>
               @include('components.take_over.well_known_trash_tab',['wellKnownsTrash'=>$wellKnownsTrash])
             </div>
             <div class="card-footer d-flex justify-content-center align-middle">
@@ -109,6 +162,8 @@
           </div>
           <div class="tab-pane fade" id="searchPanel" role="tabpanel" aria-labelledby="searchPanel-tab">
             <div class="card">
+
+              @include('components.take_over.search_tab')
 
             </div>
             <div class="card-footer d-flex justify-content-center align-middle">

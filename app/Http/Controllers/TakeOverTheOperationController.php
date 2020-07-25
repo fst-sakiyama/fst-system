@@ -67,7 +67,9 @@ class TakeOverTheOperationController extends Controller
       $wellKnownsTrash = TakeOverTheOperation::onlyTrashed()
                           ->whereNotNull('wellKnown')
                           ->paginate(20);
-      return view('take_over.index',compact('dispDate','takeOvers','takeOversTimeLimit','takeOversTrashToday','wellKnowns','takeOversTrash','wellKnownsTrash'));
+      $masterClients = MasterClient::all();
+      $masterProjects = MasterProject::all();
+      return view('take_over.index',compact('dispDate','takeOvers','takeOversTimeLimit','takeOversTrashToday','wellKnowns','takeOversTrash','wellKnownsTrash','masterClients','masterProjects'));
     }
 
     /**

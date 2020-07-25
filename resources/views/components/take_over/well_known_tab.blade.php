@@ -24,11 +24,21 @@
     </div>
   </div>
 </div>
+<div class="row mb-2" style="position:relative;">
+  @empty(!($item->takeOverTheOperations()->first()))
+    <div class="col ml-4" style="position:relative;">
+      <small class="text-primary"><a id="takeOver_{{$item->takeOverId}}" class="openAddCard" style="cursor:pointer;">追記を開く...</a></small>
+    </div>
+  @endempty
+  <div class="col text-right mr-3">
+    <a href="{{ route('take_over.doEdit',['id'=>$item->takeOverId,'dispDate'=>$dispDate]) }}" class="btn btn-warning btn-sm">修正</a>
+  </div>
+</div>
 <div class="card-footer" style="position:relative;">
   <div class="container-fluid">
     <div class="row mb-0 justify-content-between">
       <div class="">
-        <a href="{{ route('take_over.doEdit',['id'=>$item->takeOverId,'dispDate'=>$dispDate]) }}" class="btn btn-primary btn-sm">修正</a>
+        <a href="{{ route('add_take_over.create',['id'=>$item->takeOverId,'dispDate'=>$dispDate]) }}" class="btn btn-primary btn-sm">追記</a>
       </div>
       <div class="">
         <a href="{{ route('take_over.rmWellKnown',['id'=>$item->takeOverId,'dispDate'=>$dispDate]) }}" class="btn btn-success btn-sm">＜--引き継ぎへ</a>
