@@ -88,7 +88,7 @@
               @endforeach
             </div>
             <div class="card-footer text-right">
-              <small class="text-mute">タブ1枚目</small>
+              <small class="text-mute">引き継ぎ事項</small>
             </div>
           </div>
           <div class="tab-pane fade" id="wellKnown" role="tabpanel" aria-labelledby="wellKnown-tab">
@@ -109,7 +109,7 @@
               @endforeach
             </div>
             <div class="card-footer text-right">
-              <small class="text-mute">タブ2枚目</small>
+              <small class="text-mute">周知事項</small>
             </div>
           </div>
           <div class="tab-pane fade" id="takeOverTrash" role="tabpanel" aria-labelledby="takeOverTrash-tab">
