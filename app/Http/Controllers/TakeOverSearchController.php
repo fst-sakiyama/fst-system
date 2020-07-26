@@ -53,11 +53,13 @@ class TakeOverSearchController extends Controller
     }
 
     if(!(empty($takeOverKeyWord))) {
-      $query->where('takeOverContent','like','%'.$takeOverKeyWord.'%');
+      $query->whereHas('takeOverTheOperations',function($q) use($takeOverKeyWord){
+        $q->where('addTakeOverContent','like','%'.$takeOverKeyWord.'%');
+      });
+      $query->orwhere('takeOverContent','like','%'.$takeOverKeyWord.'%');
     }
 
     $items = $query->paginate(20);
-
     return view('take_over.search_result',compact('items'));
   }
 }
