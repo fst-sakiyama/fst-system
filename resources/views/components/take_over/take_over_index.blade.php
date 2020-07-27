@@ -102,7 +102,7 @@
                 @foreach($item->takeOverTheOperations()->get() as $addItem)
                 <div class="col-sm-4 addCard takeOver_{{$item->takeOverId}}" style="display:none;">
                   <div class="card mt-1">
-                  @include('components.take_over.temp_add_take_over_card',['item'=>$addItem])
+                  @include('components.take_over.temp_take_over_wellKnown_card',['item'=>$addItem])
                   </div>
                 </div>
                 @endforeach

@@ -2,7 +2,7 @@
   {{ $item->created_at->format('Y.m.d') }}-【追記】
 </div>
 <div class="card-body w-100">
-  <img class="img-fluid mx-auto d-block" alt='走る猫' src="{{ asset( 'images/runningCat.png' ) }}" width="">
+  <img class="img-fluid mx-auto d-block" alt='走る検索猫' src="{{ asset( 'images/runningCatSearch.png' ) }}" width="">
   <div class="card-img-overlay">
     <div class="card-text mt-5">
       <div class="col">

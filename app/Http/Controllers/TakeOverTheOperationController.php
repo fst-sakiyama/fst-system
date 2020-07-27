@@ -51,9 +51,13 @@ class TakeOverTheOperationController extends Controller
                               ->whereNull('wellKnown')
                               ->whereDate('created_at','<=',$dt)
                               ->whereRaw('deleted_at >= NOW() - INTERVAL 1 DAY')
+                              ->orderBy('deleted_at')
+                              ->orderBy('created_at')
                               ->get();
       $wellKnowns = TakeOverTheOperation::whereNotNull('wellKnown')
                     ->whereDate('created_at','<=',$dt)
+                    ->orderBy('wellKnown')
+                    ->orderBy('created_at')
                     ->get();
 /*
 *      $takeOversTrash = TakeOverTheOperation::onlyTrashed()
@@ -63,9 +67,15 @@ class TakeOverTheOperationController extends Controller
 */
       $takeOversTrash = TakeOverTheOperation::onlyTrashed()
                           ->whereNull('wellKnown')
+                          ->whereDate('created_at','<=',$dt)
+                          ->orderBy('deleted_at')
+                          ->orderBy('created_at')
                           ->paginate(20);
       $wellKnownsTrash = TakeOverTheOperation::onlyTrashed()
                           ->whereNotNull('wellKnown')
+                          ->whereDate('created_at','<=',$dt)
+                          ->orderBy('deleted_at')
+                          ->orderBy('created_at')
                           ->paginate(20);
       $masterClients = MasterClient::all();
       $masterProjects = MasterProject::all();
