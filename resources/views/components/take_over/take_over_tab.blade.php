@@ -36,6 +36,11 @@
       <div class="col mt-3">
         {!! nl2br(e($item->takeOverContent)) !!}
       </div>
+
+      <div class="col mt-3" style="position:relative;">
+        <a href="https://google.com" target="_blank">テスト</a>
+      </div>
+
     </div>
   </div>
 </div>

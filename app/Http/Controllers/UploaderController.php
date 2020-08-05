@@ -7,6 +7,7 @@ use App\Models\MasterFileClassification;
 use App\Models\MasterProject;
 use App\Models\FilePost;
 use Storage;
+use File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -97,6 +98,7 @@ class UploaderController extends Controller
     public function edit($id)
     {
       $item = FilePost::find($id);
+      dd(File::extension($item->fileName));
       $masterFileClassifications = MasterFileClassification::select('fileClassificationId','fileClassification')->get();
       $masterFileClassifications = $masterFileClassifications->pluck('fileClassification','fileClassificationId');
       return view('uploader.edit',compact('item','masterFileClassifications'));
