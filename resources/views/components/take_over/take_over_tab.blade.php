@@ -38,7 +38,7 @@
       </div>
 
       <div class="col mt-3" style="position:relative;">
-        <a href="https://google.com" target="_blank">テスト</a>
+        <a href="\\\192.168.11.10\shares\verso\60_個人用\﨑山\雑多\テンプレメール作成マクロ.xlsm" target="_blank">テスト</a>
       </div>
 
     </div>

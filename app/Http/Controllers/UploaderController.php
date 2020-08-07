@@ -98,7 +98,13 @@ class UploaderController extends Controller
     public function edit($id)
     {
       $item = FilePost::find($id);
-      dd(File::extension($item->fileName));
+      $items = Storage::disk('s3')->files('nothing');
+      dd($items);
+      dd($item->fileURL);
+      /**
+      *拡張子のみ表示
+      *dd(File::extension($item->fileName));
+      **/
       $masterFileClassifications = MasterFileClassification::select('fileClassificationId','fileClassification')->get();
       $masterFileClassifications = $masterFileClassifications->pluck('fileClassification','fileClassificationId');
       return view('uploader.edit',compact('item','masterFileClassifications'));
