@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\MasterClient;
 use App\Models\MasterProject;
 use App\Models\FilePost;
+use App\Models\MasterFileClassification;
+use Storage;
 
 class FilePostsController extends Controller
 {
@@ -78,6 +80,13 @@ class FilePostsController extends Controller
         //
     }
 
+    public function restore(Request $request)
+    {
+      FilePost::onlyTrashed()->find($request->id)->restore();
+
+      return redirect()->back();
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -86,6 +95,14 @@ class FilePostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $item = FilePost::onlyTrashed()
+                  ->find($id);
+      $filename = pathinfo($item->fileURL,PATHINFO_BASENAME);
+      $folderName = MasterFileClassification::where('fileClassificationId',$item->fileClassificationId)
+                      ->first();
+      Storage::disk('s3')->delete('/'.$folderName->folderName.'/'.$filename);
+      $item->forceDelete();
+
+      return redirect()->back();
     }
 }

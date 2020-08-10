@@ -33,6 +33,7 @@ class ClientsDetailController extends Controller
                   ->where('clientId',$clientId)
                   ->first();
       $items = MasterProject::where('clientId',$clientId)
+                ->orderBy('projectCode')
                 ->paginate(30);
       return view('clients_detail.index',compact('clientId','clientName','items'));
     }

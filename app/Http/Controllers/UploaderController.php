@@ -75,7 +75,7 @@ class UploaderController extends Controller
       $filePost->fileURL = Storage::disk('s3')->url($path);
       $filePost->save();
 
-      return redirect('file_posts?id='.$projectId);
+      return redirect()->back();
     }
 
     /**
@@ -98,10 +98,10 @@ class UploaderController extends Controller
     public function edit($id)
     {
       $item = FilePost::find($id);
-      $items = Storage::disk('s3')->files('nothing');
-      dd($items);
-      dd($item->fileURL);
       /**
+      *$items = Storage::disk('s3')->files('nothing');
+      *dd($items);
+      *dd($item->fileURL);
       *拡張子のみ表示
       *dd(File::extension($item->fileName));
       **/
@@ -119,8 +119,13 @@ class UploaderController extends Controller
      */
     public function update(Request $request, $id)
     {
-      FilePost::find($id)->fill($request->all())->save();
-
+      /**
+      *FilePost::find($id)->fill($request->all())->save();
+      **/
+      $item = FilePost::find($id);
+      $item->fileClassificationId = $request->fileClassificationId;
+      $item->fileName = ($request->fileName).'.'.($request->extension);
+      $item->save();
       return redirect()->route('upload.index',['id'=>$request->projectId]);
     }
 

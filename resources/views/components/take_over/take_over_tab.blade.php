@@ -1,7 +1,7 @@
 <div class="card-header">
   {{ $item->created_at->format('Y.m.d') }} - {{ mb_substr($item->project->projectName,0,12) }}
 </div>
-<div class="card-body w-100">
+<div class="card-body">
   <img class="img-fluid mx-auto d-block" alt='猫' src="{{ asset( 'images/brownCat.png' ) }}" width="">
   <div class="card-img-overlay">
     <div class="card-text mt-5">
@@ -36,11 +36,6 @@
       <div class="col mt-3">
         {!! nl2br(e($item->takeOverContent)) !!}
       </div>
-
-      <div class="col mt-3" style="position:relative;">
-        <a href="\\\192.168.11.10\shares\verso\60_個人用\﨑山\雑多\テンプレメール作成マクロ.xlsm" target="_blank">テスト</a>
-      </div>
-
     </div>
   </div>
 </div>

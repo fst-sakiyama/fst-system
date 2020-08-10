@@ -24,6 +24,8 @@ class FileShowController extends Controller
       if($mimeType == 'application/pdf'){
         return response($contents)->header('Content-Type', $mimeType)
                 ->header('Content-Disposition', 'inline; filename="'.$filePost->fileName.'"');
+      } elseif($mimeType == 'text/plain') {
+        echo nl2br("\n".$contents);
       } else {
         return response($contents)->header('Content-Type', $mimeType)
                 ->header('Content-Disposition', 'attachment; filename="'.$filePost->fileName.'"');

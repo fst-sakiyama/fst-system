@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MasterProject;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class MasterProjectsController extends Controller
 {
@@ -14,7 +15,7 @@ class MasterProjectsController extends Controller
      */
     public function index()
     {
-      $items = MasterProject::all();
+      $items = MasterProject::orderBy('projectCode')->paginate(20);
       return view('master_projects.index',compact('items'));
     }
 

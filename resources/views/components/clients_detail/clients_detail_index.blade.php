@@ -7,7 +7,7 @@
 
 <div class="contents">
   <div class="container mt-3">
-		<h1>@include('components.returnButton')</h1>
+		<h1>@include('components.returnLinkButton',['item'=>'/master_projects'])</h1>
     <div class="col">
       <div class="card">
         <div class="card-header">

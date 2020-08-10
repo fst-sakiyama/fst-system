@@ -30,6 +30,7 @@ Route::resource('/master_projects', 'MasterProjectsController');
 
 Route::get('/projects_detail','ProjectsDetailController@index')->name('project_detail');
 
+Route::get('/file_posts/restore','FilePostsController@restore')->name('file_posts.restore');
 Route::resource('/file_posts', 'FilePostsController');
 
 Route::get('/file_show', 'FileShowController@show');
@@ -45,6 +46,8 @@ Route::resource('/take_over','TakeOverTheOperationController');
 Route::resource('/add_take_over','AddTakeOverTheOperationController');
 
 Route::post('/search_result','TakeOverSearchController@search')->name('search_result.search');
+
+Route::get('dev_deleted_items','DevDeletedItemsController@index')->name('dev_deleted_items.index');
 
 Route::get('dev_confirm','DevConfirmController@index')->name('dev_confirm.top');
 Route::get('/dev_confirm/add','DevConfirmController@add')->name('dev_confirm.add');

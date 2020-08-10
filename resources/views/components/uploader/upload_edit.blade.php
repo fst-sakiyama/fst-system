@@ -2,7 +2,7 @@
 
 <div class="contents">
   <div class="container mt-3">
-    <h1>@include('components.returnLinkButton',['item'=>'/upload'])</h1>
+    <h1>@include('components.returnLinkButton',['item'=>'/upload?id='.$item->projectId])</h1>
     <div class="col">
       <div class="card">
         <h5 class="card-header">ファイル情報修正</h5>
@@ -21,7 +21,9 @@
           <div class="form-group">
             {{ Form::label('fileName','ファイル名',['class'=>'col-md-2']) }}
             <span class="mr-2">：</span>
-            {{ Form::text('fileName',$item->fileName,['placeholder'=>'ファイル名を入力','class'=>'col-md-4','id'=>'fileName']) }}
+            {{ Form::text('fileName',pathinfo($item->fileName,PATHINFO_FILENAME),['placeholder'=>'ファイル名を入力','class'=>'col-md-4','id'=>'fileName']) }}
+            .{{ pathinfo($item->fileURL,PATHINFO_EXTENSION) }}
+            {{ Form::hidden('extension',pathinfo($item->fileURL,PATHINFO_EXTENSION)) }}
             @error('fileName')
               <span class="ml-2 text-danger">{{ $message }}</span>
             @enderror
