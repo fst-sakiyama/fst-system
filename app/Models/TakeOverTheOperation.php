@@ -24,6 +24,11 @@ class TakeOverTheOperation extends Model
     return $this->hasMany('App\Models\AddTakeOverTheOperation','takeOverId','takeOverId');
   }
 
+  public function files()
+  {
+    return $this->belongsToMany('App\Models\FilePost');
+  }
+
 /**
 *  public function setWellKnownAttribute($value) {
 *    dd($value);

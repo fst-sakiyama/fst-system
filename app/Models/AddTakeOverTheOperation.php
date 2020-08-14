@@ -16,4 +16,9 @@ class AddTakeOverTheOperation extends Model
   {
     return $this->belongsTo('App\Models\TakeOverTheOperation','takeOverId','takeOverId');
   }
+
+  public function files()
+  {
+    return $this->belongsToMany('App\Models\FilePost');
+  }
 }
