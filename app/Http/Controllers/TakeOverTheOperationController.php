@@ -103,6 +103,7 @@ class TakeOverTheOperationController extends Controller
      */
     public function store(Request $request)
     {
+      dd($request);
       $validator = Validator::make($request->all(),$this->rules,$this->messages);
 
       if($validator->fails()){

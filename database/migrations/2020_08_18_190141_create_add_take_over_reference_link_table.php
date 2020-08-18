@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAddTakeOverFilePostTable extends Migration
+class CreateAddTakeOverReferenceLinkTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,20 @@ class CreateAddTakeOverFilePostTable extends Migration
      */
     public function up()
     {
-      Schema::create('add_take_over_file_post', function (Blueprint $table) {
+        Schema::create('add_take_over_reference_link', function (Blueprint $table) {
           $table->integer('addTakeOverId')->unsigned();
-          $table->integer('filePostId')->unsigned();
-          $table->primary(['addTakeOverId','filePostId']);
+          $table->integer('linkId')->unsigned();
+          $table->primary(['addTakeOverId','linkId']);
 
           $table->foreign('addTakeOverId')
                 ->references('addTakeOverId')->on('add_take_over_the_operations')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-          $table->foreign('filePostId')
-                ->references('filePostId')->on('file_posts')
+          $table->foreign('linkId')
+                ->references('linkId')->on('reference_links')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-      });
+        });
     }
 
     /**
@@ -36,10 +36,10 @@ class CreateAddTakeOverFilePostTable extends Migration
      */
     public function down()
     {
-      Schema::table('add_take_over_file_post', function (Blueprint $table) {
-        $table->dropForeign('add_take_over_file_post_addTakeOverId_foreign');
-        $table->dropForeign('add_take_over_file_post_filePostId_foreign');
-      });
-      Schema::dropIfExists('add_take_over_file_post');
+        Schema::table('add_take_over_reference_link', function (Blueprint $table) {
+          $table->dropForeign('add_take_over_reference_link_addTakeOverId_foreign');
+          $table->dropForeign('add_take_over_reference_link_linkId_foreign');
+        });
+        Schema::dropIfExists('add_take_over_reference_link');
     }
 }

@@ -15,15 +15,15 @@ class CreateTakeOverFilePostTable extends Migration
     {
         Schema::create('take_over_file_post', function (Blueprint $table) {
             $table->integer('takeOverId')->unsigned();
-            $table->integer('filePostId')->unsigned();
-            $table->primary(['takeOverId','filePostId']);
+            $table->integer('addFilePostId')->unsigned();
+            $table->primary(['takeOverId','addFilePostId']);
 
             $table->foreign('takeOverId')
                   ->references('takeOverId')->on('take_over_the_operations')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
-            $table->foreign('filePostId')
-                  ->references('filePostId')->on('file_posts')
+            $table->foreign('addFilePostId')
+                  ->references('addFilePostId')->on('add_file_posts')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
         });
@@ -38,7 +38,7 @@ class CreateTakeOverFilePostTable extends Migration
     {
         Schema::table('take_over_file_post', function (Blueprint $table) {
           $table->dropForeign('take_over_file_post_takeOverId_foreign');
-          $table->dropForeign('take_over_file_post_filePostId_foreign');
+          $table->dropForeign('take_over_file_post_addFilePostId_foreign');
         });
         Schema::dropIfExists('take_over_file_post');
     }

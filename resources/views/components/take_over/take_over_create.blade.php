@@ -8,7 +8,7 @@
         <h5 class="card-header">引き継ぎ・周知事項の作成</h5>
         <div class="card-body">
           <div class="mt-3">
-            {{ Form::open(['route'=>'take_over.store']) }}
+            {{ Form::open(['route'=>'take_over.store','enctype'=>'multipart/form-data']) }}
             {{ Form::hidden('dispDate',$dispDate) }}
 
             <div class="form-group mt-3 form-inline">
@@ -42,6 +42,19 @@
               @error('takeOverContent')
                 <span class="ml-2 text-danger">{{ $message }}</span>
               @enderror
+            </div>
+
+            <div class="form-group mt-3 form-inline">
+              {{ Form::label('filePosts','添付ファイル',['class'=>'col-md-2']) }}
+              <div class="input-group col-md-6">
+                  <div class="custom-file">
+                      {{ Form::file('file',['class'=>'custom-file-input','id'=>'customFile','multiple'=>'multiple','name'=>'files[]']) }}
+                      {{ Form::label('file','ファイル選択...',['class'=>'custom-file-label','for'=>'customFile','data-browse'=>'参照']) }}
+                  </div>
+                  <div class="input-group-append">
+                      {{ Form::button('取消',['class'=>'btn btn-outline-secondary reset']) }}
+                  </div>
+              </div>
             </div>
 
             <div class="form-group mt-3 form-inline">

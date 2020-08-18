@@ -26,7 +26,12 @@ class TakeOverTheOperation extends Model
 
   public function files()
   {
-    return $this->belongsToMany('App\Models\FilePost');
+    return $this->belongsToMany('App\Models\AddFilePost');
+  }
+
+  public function links()
+  {
+    return $this->belongsToMany('App\Models\ReferenceLink');
   }
 
 /**

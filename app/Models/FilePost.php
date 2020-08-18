@@ -22,13 +22,4 @@ class FilePost extends Model
     return $this->belongsTo('App\Models\MasterFileClassification','fileClassificationId','fileClassificationId');
   }
 
-  public function operations()
-  {
-    return $this->belongsToMany('App\Models\TakeOverTheOperation')
-  }
-
-  public function addOperations()
-  {
-    return $this->belongsToMany('App\Models\AddTakeOverTheOperation')
-  }
 }
