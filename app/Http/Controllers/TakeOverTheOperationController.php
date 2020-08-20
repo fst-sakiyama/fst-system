@@ -103,7 +103,16 @@ class TakeOverTheOperationController extends Controller
      */
     public function store(Request $request)
     {
-      dd($request);
+      dd($request->referenceLinkURL);
+      for($i=0; $i<count($request->referenceLinkURL); $i++){
+        if($request->referenceLinkURL[$i])
+        {
+
+        } else {
+          dd($i.':なし');
+        }
+      }
+      dd('終了');
       $validator = Validator::make($request->all(),$this->rules,$this->messages);
 
       if($validator->fails()){

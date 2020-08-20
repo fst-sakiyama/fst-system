@@ -62,16 +62,22 @@
             </div>
 
             <div class="mt-5">
-            <div class="form-group mt-3 form-inline">
-              {{ Form::label('referenceLinkURL','参考URL',['class'=>'col-md-2']) }}
-              <span class="badge badge-primary mr-1">空白可</span>
-              {{ Form::url('referenceLinkURL','',['placeholder'=>'参考URLを入力','class'=>'col-md-6']) }}
-            </div>
-            <div class="form-group mt-3 form-inline">
-              {{ Form::label('remarks','説明',['class'=>'col-md-2']) }}
-              <span class="badge badge-primary mr-1">空白可</span>
-              {{ Form::text('remarks','',['placeholder'=>'参考URLの説明を入力','class'=>'col-md-6']) }}
-            </div>
+              <div class="box" data-boxno="0">
+                <div class="form-group mt-4 form-inline">
+                  {{ Form::label('referenceLinkURL','参考URL',['class'=>'col-md-2']) }}
+                  <span class="badge badge-primary mr-1">空白可</span>
+                  {{ Form::url('referenceLinkURL','',['placeholder'=>'参考URLを入力','class'=>'col-md-6 linkURL','name'=>'referenceLinkURL[0]']) }}
+                </div>
+                <div class="form-group mt-3 form-inline">
+                  {{ Form::label('remarks','説明',['class'=>'col-md-2']) }}
+                  <span class="badge badge-primary mr-1">空白可</span>
+                  {{ Form::text('remarks','',['placeholder'=>'参考URLの説明を入力','class'=>'col-md-6 remarks','name'=>'remarks[0]']) }}
+                  {{ Form::button('削除',['class'=>'btn btn-danger btn-sm ml-2 delete-box']) }}
+                </div>
+              </div>
+              <div class="form-group mt-3">
+                {{ Form::button('追加',['class'=>'btn btn-success col-md-6 btn-sm mx-auto btn-block add-box'])}}
+              </div>
             </div>
 
             <div class="form-group mt-5 form-inline">
