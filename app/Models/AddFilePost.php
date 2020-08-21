@@ -14,11 +14,11 @@ class AddFilePost extends Model
 
   public function operations()
   {
-    return $this->belongsToMany('App\Models\TakeOverTheOperation')
+    return $this->belongsToMany('App\Models\TakeOverTheOperation','take_over_file_post','addFilePostId','takeOverId');
   }
 
   public function addOperations()
   {
-    return $this->belongsToMany('App\Models\AddTakeOverTheOperation')
+    return $this->belongsToMany('App\Models\AddTakeOverTheOperation','add_take_over_file_post','addFilePostId','addTakeOverId');
   }
 }

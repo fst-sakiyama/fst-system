@@ -19,12 +19,12 @@ class AddTakeOverTheOperation extends Model
 
   public function files()
   {
-    return $this->belongsToMany('App\Models\AddFilePost');
+    return $this->belongsToMany('App\Models\AddFilePost','add_take_over_file_post','addTakeOverId','addFilePostId');
   }
 
   public function links()
   {
-    return $this->belongsToMany('App\Models\ReferenceLink');
+    return $this->belongsToMany('App\Models\ReferenceLink','add_take_over_reference_link','addTakeOverId','linkId');
   }
 
 }

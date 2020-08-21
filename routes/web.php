@@ -33,7 +33,8 @@ Route::get('/projects_detail','ProjectsDetailController@index')->name('project_d
 Route::get('/file_posts/restore','FilePostsController@restore')->name('file_posts.restore');
 Route::resource('/file_posts', 'FilePostsController');
 
-Route::get('/file_show', 'FileShowController@show');
+Route::get('/file_show', 'FileShowController@show')->name('file_show.show');
+Route::get('/file_addShow', 'FileShowController@addShow')->name('file_addShow.addShow');
 
 Route::resource('/upload','UploaderController');
 

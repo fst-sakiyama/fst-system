@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\TakeOverTheOperation;
 use App\Models\MasterClient;
 use App\Models\MasterProject;
+use App\Models\AddFilePost;
+use App\Models\ReferenceLink;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Storage;
+use File;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class TakeOverTheOperationController extends Controller
 {
@@ -103,16 +108,6 @@ class TakeOverTheOperationController extends Controller
      */
     public function store(Request $request)
     {
-      dd($request->referenceLinkURL);
-      for($i=0; $i<count($request->referenceLinkURL); $i++){
-        if($request->referenceLinkURL[$i])
-        {
-
-        } else {
-          dd($i.':なし');
-        }
-      }
-      dd('終了');
       $validator = Validator::make($request->all(),$this->rules,$this->messages);
 
       if($validator->fails()){
@@ -126,9 +121,70 @@ class TakeOverTheOperationController extends Controller
         $request->wellKnown = Carbon::now();
       }
       $dispDate = $request->dispDate;
-      $request->request->remove('dispDate');
-      $request->request->remove('clientId');
-      TakeOverTheOperation::create($request->all());
+
+      DB::beginTransaction();
+      try{
+
+        $takeOver = new TakeOverTheOperation;
+        $takeOver->fill([
+          'projectId' => $request->projectId,
+          'takeOverContent' => $request->takeOverContent,
+          'timeLimit' => $request->timeLimit,
+          'wellKnown' => $request->wellKnown,
+        ])->save();
+        $takeOverId = $takeOver->takeOverId;
+
+        $addFilePostId = array();
+        $files = $request->file('files');
+        if($files){
+          for($i=0; $i<count($files); $i++){
+            $file = $files[$i];
+            if($file){
+              $fileName = $file->getClientOriginalName();
+              $path = Storage::disk('s3')->putFile('/takeOver', $file, 'public');
+              $fileURL = Storage::disk('s3')->url($path);
+              $addFilePost = new AddFilePost;
+              $addFilePost->fill([
+                'projectId' => $request->projectId,
+                'fileName' => $fileName,
+                'fileURL' => $fileURL,
+              ])->save();
+              $addFilePostId[] = $addFilePost->addFilePostId;
+            }
+          }
+        }
+        if($addFilePostId){
+          $takeOver = TakeOverTheOperation::find($takeOverId);
+          $takeOver->files()->sync($addFilePostId);
+        }
+
+        $linkId = array();
+        for($i=0; $i<count($request->referenceLinkURL); $i++){
+          $referenceLinkURL = $request->referenceLinkURL[$i];
+          $remarks = $request->remarks[$i];
+          if($referenceLinkURL){
+            $referenceLink = new ReferenceLink;
+            $referenceLink->fill([
+              'referenceLinkURL' => $referenceLinkURL,
+              'remarks' => $remarks,
+            ])->save();
+            $linkId[] = $referenceLink->linkId;
+          }
+        }
+        if($linkId){
+          $takeOver = TakeOverTheOperation::find($takeOverId);
+          $takeOver->links()->sync($linkId);
+        }
+
+        DB::commit();
+
+      } catch(\Exception $e) {
+
+        DB::rollback();
+        dd('エラーが発生しました');
+        
+      }
+
       return redirect()->route('take_over.index',['dispDate'=>$dispDate]);
     }
 

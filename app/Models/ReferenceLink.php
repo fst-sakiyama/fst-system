@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ReferenceLink extends Model
 {
@@ -13,11 +14,11 @@ class ReferenceLink extends Model
 
   public function operations()
   {
-    return $this->belongsToMany('App\Models\TakeOverTheOperation')
+    return $this->belongsToMany('App\Models\TakeOverTheOperation','take_over_reference_link','linkId','takeOverId');
   }
 
   public function addOperations()
   {
-    return $this->belongsToMany('App\Models\AddTakeOverTheOperation')
+    return $this->belongsToMany('App\Models\AddTakeOverTheOperation','add_take_over_reference_link','linkId','addTakeOverId');
   }
 }

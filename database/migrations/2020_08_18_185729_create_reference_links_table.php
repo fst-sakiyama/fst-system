@@ -16,7 +16,7 @@ class CreateReferenceLinksTable extends Migration
         Schema::create('reference_links', function (Blueprint $table) {
           $table->increments('linkId');
           $table->string('referenceLinkURL');
-          $table->string('remaeks')->nullable();
+          $table->string('remarks')->nullable();
           $table->timestamps();
           $table->softDeletes();
         });

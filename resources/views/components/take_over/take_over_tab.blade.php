@@ -39,6 +39,22 @@
     </div>
   </div>
 </div>
+
+<div class="row mb-2" style="position:relative;">
+  <div class="col ml-4">
+    @foreach($item->files as $file)
+      <a href="{{ asset('/file_addShow?id=') }}{{ $file->addFilePostId }}" target="_blank" rel="noopener noreferrer">{{ $file->fileName }}<br>
+    @endforeach
+  </div>
+</div>
+<div class="row mb-2" style="position:relative;">
+  <div class="col ml-4">
+    @foreach($item->links as $link)
+      <a href="{{ $link->referenceLinkURL }}" target="_blank" rel="noopener noreferrer">@if(empty($link->remarks)){{ $link->referenceLinkURL }}@else {{ $link->remarks }} @endif</a><br>
+    @endforeach
+  </div>
+</div>
+
 <div class="row mb-2" style="position:relative;">
   @empty(!($item->takeOverTheOperations()->first()))
     <div class="col ml-4" style="position:relative;">

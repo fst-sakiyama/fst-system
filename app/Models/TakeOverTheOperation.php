@@ -26,12 +26,12 @@ class TakeOverTheOperation extends Model
 
   public function files()
   {
-    return $this->belongsToMany('App\Models\AddFilePost');
+    return $this->belongsToMany('App\Models\AddFilePost','take_over_file_post','takeOverId','addFilePostId');
   }
 
   public function links()
   {
-    return $this->belongsToMany('App\Models\ReferenceLink');
+    return $this->belongsToMany('App\Models\ReferenceLink','take_over_reference_link','takeOverId','linkId');
   }
 
 /**
