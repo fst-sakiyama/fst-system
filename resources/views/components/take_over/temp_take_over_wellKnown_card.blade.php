@@ -24,6 +24,31 @@
     </div>
   </div>
 </div>
+
+@if(count($item->files)>0)
+  <div class="row mb-2">
+    <div class="col ml-4" style="position:relative">
+      <small>【添付ファイル】<br>
+      @foreach($item->files as $file)
+        <a href="{{ asset('/file_addShow?id=') }}{{ $file->addFilePostId }}" target="_blank" rel="noopener noreferrer" class="text-info">{{ $file->fileName }}</a><br>
+      @endforeach
+      </small>
+    </div>
+  </div>
+@endif
+
+@if(count($item->links)>0)
+  <div class="row mb-2" style="position:relative;">
+    <div class="col ml-4">
+      <small>【参考リンク】<br>
+      @foreach($item->links as $link)
+        <a href="{{ $link->referenceLinkURL }}" target="_blank" rel="noopener noreferrer" class="text-info">@if(empty($link->remarks)){{ $link->referenceLinkURL }}@else {{ $link->remarks }} @endif</a><br>
+      @endforeach
+      </small>
+    </div>
+  </div>
+@endif
+
 <div class="card-footer" style="position:relative;">
   <div class="row mb-0">
     <div class="col ml-4">

@@ -40,25 +40,34 @@
   </div>
 </div>
 
-<div class="row mb-2" style="position:relative;">
-  <div class="col ml-4">
-    @foreach($item->files as $file)
-      <a href="{{ asset('/file_addShow?id=') }}{{ $file->addFilePostId }}" target="_blank" rel="noopener noreferrer">{{ $file->fileName }}<br>
-    @endforeach
+@if(count($item->files)>0)
+  <div class="row mb-2">
+    <div class="col ml-4" style="position:relative">
+      <small>【添付ファイル】<br>
+      @foreach($item->files as $file)
+        <a href="{{ asset('/file_addShow?id=') }}{{ $file->addFilePostId }}" target="_blank" rel="noopener noreferrer" class="text-info">{{ $file->fileName }}</a><br>
+      @endforeach
+      </small>
+    </div>
   </div>
-</div>
-<div class="row mb-2" style="position:relative;">
-  <div class="col ml-4">
-    @foreach($item->links as $link)
-      <a href="{{ $link->referenceLinkURL }}" target="_blank" rel="noopener noreferrer">@if(empty($link->remarks)){{ $link->referenceLinkURL }}@else {{ $link->remarks }} @endif</a><br>
-    @endforeach
+@endif
+
+@if(count($item->links)>0)
+  <div class="row mb-2" style="position:relative;">
+    <div class="col ml-4">
+      <small>【参考リンク】<br>
+      @foreach($item->links as $link)
+        <a href="{{ $link->referenceLinkURL }}" target="_blank" rel="noopener noreferrer" class="text-info">@if(empty($link->remarks)){{ $link->referenceLinkURL }}@else {{ $link->remarks }} @endif</a><br>
+      @endforeach
+      </small>
+    </div>
   </div>
-</div>
+@endif
 
 <div class="row mb-2" style="position:relative;">
   @empty(!($item->takeOverTheOperations()->first()))
     <div class="col ml-4" style="position:relative;">
-      <small class="text-primary"><a id="takeOver_{{$item->takeOverId}}" class="openAddCard" style="cursor:pointer;">追記を開く...</a></small>
+      <small><a id="takeOver_{{$item->takeOverId}}" class="openAddCard text-primary" style="cursor:pointer;">追記を開く...</a></small>
     </div>
   @endempty
   <div class="col text-right mr-3">

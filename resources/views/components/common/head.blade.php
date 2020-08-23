@@ -4,6 +4,8 @@
 <meta name="description" itemprop="description" content="@yield('description')">
 <meta name="keywords" itemprop="keywords" content="@yield('keywords')">
 
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
 <!--CSS
 <link rel="stylesheet" type ="text/css" href="{{asset('/css/app.css')}}">
 -->

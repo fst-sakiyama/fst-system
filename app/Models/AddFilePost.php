@@ -12,6 +12,11 @@ class AddFilePost extends Model
   protected $primaryKey = 'addFilePostId';
   protected $guarded = array('addFilePostId');
 
+  public function project()
+  {
+    return $this->belongsTo('App\Models\MasterProject','projectId','projectId');
+  }
+
   public function operations()
   {
     return $this->belongsToMany('App\Models\TakeOverTheOperation','take_over_file_post','addFilePostId','takeOverId');

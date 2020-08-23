@@ -6,7 +6,7 @@
 
 @include('components.common.header')
 
-@include('components.dev_deleted_items.dev_deleted_items_index',['filePosts'=>$filePosts])
+@include('components.dev_deleted_items.dev_deleted_items_index',['filePosts'=>$filePosts,'addFilePosts'=>$addFilePosts])
 
 @section('pageJs')
 <script type="text/javascript" src="{{asset('js/add_jquery.js')}}"></script>

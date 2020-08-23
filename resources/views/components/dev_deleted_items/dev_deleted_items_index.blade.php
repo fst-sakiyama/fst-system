@@ -48,6 +48,48 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="col mt-3">
+			<div class="card">
+				<div class="card-header">
+					<h3>【削除済み】追加ファイル一覧（引き継ぎ）</h3>
+				</div>
+				<table class="table mb-0 table-hover">
+					<thead>
+						<tr class="d-flex">
+							<th class="col-2">案件名</th>
+							<th class="col-1">分類</th>
+							<th class="col-3">ファイル名</th>
+							<th class="col-2">作成日</th>
+							<th class="col-2">削除日</th>
+							<th class="col-1">戻す</th>
+							<th class="col-1">完全削除</th>
+						</tr>
+					</thead>
+					<tbody>
+					@foreach($addFilePosts as $item)
+						<tr class="d-flex">
+							<td class="col-2">{{ $item->project->projectName }}</td>
+							<td class="col-1">-</td>
+							<td class="col-3"><a href="{{ asset('/file_addShow?id=') }}{{ $item->addFilePostId }}" target="_blank" rel="noopener noreferrer">{{ $item->fileName }}</td>
+							<td class="col-2">{{ $item->created_at->format('Y年m月d日') }}</td>
+							<td class="col-2">{{ $item->deleted_at->format('Y年m月d日') }}</td>
+							<td class="col-1"><a href="{{ route('add_file_posts.restore',['id'=>$item->addFilePostId]) }}" class="btn btn-success btn-sm">戻す</a></td>
+							<td class="col-1">
+								{{Form::open(['route'=>['add_file_posts.destroy',$item->addFilePostId],'method'=>'DELETE','id'=>'form_'.$item->addFilePostId])}}
+								{{Form::submit('削除',['class' => 'btn btn-danger btn-sm','data-id'=>$item->addTakeOverId,'onclick'=>"return confirm('本当に削除して良いですか？')"])}}
+								{{Form::close()}}
+							</td>
+						</tr>
+					@endforeach
+					</tbody>
+				</table>
+				<div class="card-footer d-flex justify-content-center align-middle">
+					{{ $filePosts->links() }}
+				</div>
+			</div>
+		</div>
+
 	</div>
 </div>
 

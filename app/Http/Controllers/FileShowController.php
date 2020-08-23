@@ -26,7 +26,9 @@ class FileShowController extends Controller
         return response($contents)->header('Content-Type', $mimeType)
                 ->header('Content-Disposition', 'inline; filename="'.$filePost->fileName.'"');
       } elseif($mimeType == 'text/plain') {
-        echo nl2br("\n".$contents);
+        mb_language('Ja');
+        $str = mb_convert_encoding($contents,"utf-8","ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN,SJIS");
+        echo nl2br("\n".$str);
       } else {
         return response($contents)->header('Content-Type', $mimeType)
                 ->header('Content-Disposition', 'attachment; filename="'.$filePost->fileName.'"');
@@ -50,7 +52,9 @@ class FileShowController extends Controller
         return response($contents)->header('Content-Type', $mimeType)
                 ->header('Content-Disposition', 'inline; filename="'.$filePost->fileName.'"');
       } elseif($mimeType == 'text/plain') {
-        echo nl2br("\n".$contents);
+        mb_language('Ja');
+        $str = mb_convert_encoding($contents,"utf-8","ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN,SJIS");
+        echo nl2br("\n".$str);
       } else {
         return response($contents)->header('Content-Type', $mimeType)
                 ->header('Content-Disposition', 'attachment; filename="'.$filePost->fileName.'"');

@@ -33,6 +33,9 @@ Route::get('/projects_detail','ProjectsDetailController@index')->name('project_d
 Route::get('/file_posts/restore','FilePostsController@restore')->name('file_posts.restore');
 Route::resource('/file_posts', 'FilePostsController');
 
+Route::get('/add_file_posts/restore','AddFilePostController@restore')->name('add_file_posts.restore');
+Route::resource('/add_file_posts', 'AddFilePostController');
+
 Route::get('/file_show', 'FileShowController@show')->name('file_show.show');
 Route::get('/file_addShow', 'FileShowController@addShow')->name('file_addShow.addShow');
 
@@ -42,6 +45,8 @@ Route::get('/take_over/doEdit','TakeOverTheOperationController@doEdit')->name('t
 Route::get('/take_over/doWellKnown','TakeOverTheOperationController@doWellKnown')->name('take_over.doWellKnown');
 Route::get('/take_over/rmWellKnown','TakeOverTheOperationController@rmWellKnown')->name('take_over.rmWellKnown');
 Route::get('/take_over/restore','TakeOverTheOperationController@restore')->name('take_over.restore');
+Route::post('/take_over/filedel','TakeOverTheOperationController@filedel')->name('take_over.filedel');
+Route::post('/take_over/linkdel','TakeOverTheOperationController@linkdel')->name('take_over.linkdel');
 Route::resource('/take_over','TakeOverTheOperationController');
 
 Route::resource('/add_take_over','AddTakeOverTheOperationController');

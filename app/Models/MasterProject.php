@@ -17,6 +17,11 @@ class MasterProject extends Model
     return $this->hasMany('App\Models\FilePost','projectId','projectId');
   }
 
+  public function addFilePosts()
+  {
+    return $this->hasMany('App\Models\AddFilePost','projectId','projectId');
+  }
+
   public function TakeOverTheOperations()
   {
     return $this->hasMany('App\Models\TakeOverTheOperation','projectId','projectId');

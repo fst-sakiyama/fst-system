@@ -182,7 +182,7 @@ class TakeOverTheOperationController extends Controller
 
         DB::rollback();
         dd('エラーが発生しました');
-        
+
       }
 
       return redirect()->route('take_over.index',['dispDate'=>$dispDate]);
@@ -237,14 +237,73 @@ class TakeOverTheOperationController extends Controller
       }
 
       $dispDate = $request->dispDate;
-      $request->request->remove('dispDate');
-      $request->request->remove('clientId');
-      $item = TakeOverTheOperation::find($id);
-      $item->fill($request->all());
       if(empty($request->wellKnown)){
-        $item->wellKnown = null;
+        $wellKnown =  null;
+      }else{
+        $wellKnown = $request->wellKnown;
       }
-      $item->save();
+
+      DB::beginTransaction();
+      try{
+        $takeOver = TakeOverTheOperation::find($id);
+        $takeOver->fill([
+          'projectId' => $request->projectId,
+          'takeOverContent' => $request->takeOverContent,
+          'timeLimit' => $request->timeLimit,
+          'wellKnown' => $wellKnown,
+        ])->save();
+
+        $addFilePostId = array();
+        $files = $request->file('files');
+        if($files){
+          for($i=0; $i<count($files); $i++){
+            $file = $files[$i];
+            if($file){
+              $fileName = $file->getClientOriginalName();
+              $path = Storage::disk('s3')->putFile('/takeOver', $file, 'public');
+              $fileURL = Storage::disk('s3')->url($path);
+              $addFilePost = new AddFilePost;
+              $addFilePost->fill([
+                'projectId' => $request->projectId,
+                'fileName' => $fileName,
+                'fileURL' => $fileURL,
+              ])->save();
+              $addFilePostId[] = $addFilePost->addFilePostId;
+            }
+          }
+        }
+        if($addFilePostId){
+          $takeOver = TakeOverTheOperation::find($id);
+          $takeOver->files()->attach($addFilePostId);
+        }
+
+        $linkId = array();
+        for($i=0; $i<count($request->referenceLinkURL); $i++){
+          $referenceLinkURL = $request->referenceLinkURL[$i];
+          $remarks = $request->remarks[$i];
+          if($referenceLinkURL){
+            $referenceLink = new ReferenceLink;
+            $referenceLink->fill([
+              'referenceLinkURL' => $referenceLinkURL,
+              'remarks' => $remarks,
+            ])->save();
+            $linkId[] = $referenceLink->linkId;
+          }
+        }
+        if($linkId){
+          $takeOver = TakeOverTheOperation::find($id);
+          $takeOver->links()->attach($linkId);
+        }
+
+        DB::commit();
+
+      } catch(\Exception $e) {
+
+        DB::rollback();
+        dd('エラーが発生しました');
+
+      }
+
       return redirect()->route('take_over.index',['dispDate'=>$dispDate]);
     }
 
@@ -265,6 +324,19 @@ class TakeOverTheOperationController extends Controller
       $dispDate = $request->dispDate;
       return redirect()->route('take_over.index',['dispDate'=>$dispDate]);
     }
+
+    public function filedel(Request $request)
+    {
+      AddFilePost::find($request->id)->delete();
+      return response()->json(['url'=>url('/take_over?dispDate='.$request->dispDate)]);
+    }
+
+    public function linkdel(Request $request)
+    {
+      ReferenceLink::find($request->id)->delete();
+      return response()->json(['url'=>url('/take_over?dispDate='.$request->dispDate)]);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
