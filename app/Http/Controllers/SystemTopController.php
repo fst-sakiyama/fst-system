@@ -2,10 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FstSystemProgressDetail;
+use App\Models\FstSystemRequestPlate;
+use App\Models\MasterRequestClassification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SystemTopController extends Controller
 {
+    private $messages = [
+      'requestClassificationId.required' => '※要望の分類を選択してください。',
+      'request.required' => '※要望の内容を記載してください。'
+    ];
+    private $rules = [
+      'requestClassificationId' => 'required',
+      'request' => 'required',
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +26,11 @@ class SystemTopController extends Controller
      */
     public function index()
     {
-        return view('system_top.index');
+      $progressDetails = FstSystemProgressDetail::whereNotNull('doComp')
+                          ->orderBy('doComp','desc')
+                          ->paginate(5);
+
+        return view('system_top.index',compact('progressDetails'));
     }
 
     /**
@@ -23,7 +40,10 @@ class SystemTopController extends Controller
      */
     public function create()
     {
-        //
+
+      $masterRequestClassifications = MasterRequestClassification::select('requestClassificationId','requestClassification')->get();
+      $masterRequestClassifications = $masterRequestClassifications->pluck('requestClassification','requestClassificationId');
+      return view('system_top.create',compact('masterRequestClassifications'));
     }
 
     /**
@@ -34,7 +54,16 @@ class SystemTopController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $validator = Validator::make($request->all(),$this->rules,$this->messages);
+
+      if($validator->fails()){
+        return redirect()
+                  ->back()
+                  ->withInput()
+                  ->withErrors($validator);
+      }
+
+      return redirect()->back();
     }
 
     /**
