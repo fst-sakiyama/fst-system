@@ -11,6 +11,7 @@ class FstSystemRequestPlate extends Model
   protected $connection = 'mysql_three';
   protected $primaryKey = 'fstSystemRequestPlateId';
   protected $guarded = array('fstSystemRequestPlateId');
+  protected $dates = ['doComp'];
 
   public function requestClassification()
   {

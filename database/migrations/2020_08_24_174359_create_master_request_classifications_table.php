@@ -16,6 +16,9 @@ class CreateMasterRequestClassificationsTable extends Migration
         Schema::connection('mysql_three')->create('master_request_classifications', function (Blueprint $table) {
           $table->increments('requestClassificationId');
           $table->string('requestClassification');
+          $table->string('requestColorClass');
+          $table->string('requestImage');
+          $table->string('explanation');
           $table->timestamps();
           $table->softDeletes();
         });

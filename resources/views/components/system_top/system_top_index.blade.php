@@ -25,12 +25,18 @@
           @foreach($progressDetails as $item)
           <div class="row mt-2 ml-1">
             <div class="col-md-2">
-              {{ $item->doComp->format('Y-m-d') }}
+              @php
+                $doComp = $item->doComp;
+              @endphp
+              {{ $doComp->format('Y-m-d') }}
             </div>
             <div class="col">
               <div class="row">
                 <div class="col">
                   {{ $item->progress->fstSystemPlan }}
+                  @if($doComp->diffInWeeks($todayDate)<=2)
+                    <img class="" alt='新規' src="{{ asset( 'images/new.png' ) }}" width="50px">
+                  @endif
                 </div>
               </div>
               <div class="row">
@@ -55,7 +61,8 @@
         <h3>要望板</h3>
         <div class="row mt-3 ml-1">
           <div class="col">
-            バグ報告や機能修正の要望、機能追加の要望は、<a href="{{ asset('/system_top/create') }}" class="h5">こちら</a>からご報告ください。
+            バグ報告や機能修正のリクエスト、機能追加のリクエストは、<a href="{{ asset('/system_top/create') }}" class="h5">こちら</a>からご報告ください。<br>
+            リクエストいただいたもので既に完了したものの一覧は<a href="{{ asset('/system_top/docomp_show') }}" class="h5">こちら</a>からご確認いただけます。
           </div>
         </div>
       </div>

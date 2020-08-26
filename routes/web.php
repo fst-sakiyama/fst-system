@@ -17,6 +17,10 @@ Route::get('/', function () {
     return redirect()->route('top');
 });
 
+Route::delete('/system_top/requestDestroy/{id}','SystemTopController@requestDestroy')->name('system_top.requestDestroy');
+Route::delete('/system_top/replyDestroy/{id}','SystemTopController@replyDestroy')->name('system_top.replyDestroy');
+Route::get('/system_top/editDoComp/{id}','SystemTopController@editDoComp')->name('system_top.editDoComp');
+Route::get('/system_top/docomp_show','SystemTopController@doCompShow')->name('system_top.doCompShow');
 Route::resource('/system_top','SystemTopController',['names' => ['index' => 'top']]);
 
 Route::get('/progress_detail/editDoComp','ProgressDetailController@editDoComp')->name('progress_detail.editDoComp');

@@ -16,7 +16,8 @@ class CreateFstSystemRequestPlatesTable extends Migration
         Schema::connection('mysql_three')->create('fst_system_request_plates', function (Blueprint $table) {
             $table->increments('fstSystemRequestPlateId');
             $table->integer('requestClassificationId')->unsigned();
-            $table->text('request');
+            $table->text('requestMessage');
+            $table->timestamp('doComp')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
@@ -34,10 +35,6 @@ class CreateFstSystemRequestPlatesTable extends Migration
      */
     public function down()
     {
-        Schema::connection('mysql_three')->table('fst_system_reply_to_requests', function (Blueprint $table) {
-          $table->dropForeign('master_request_classifications_requestClassificationId_foreign');
-          $table->dropForeign('fst_system_reply_to_requests_fstSystemRequestPlateId_foreign');
-        });
         Schema::connection('mysql_three')->dropIfExists('fst_system_request_plates');
     }
 }
