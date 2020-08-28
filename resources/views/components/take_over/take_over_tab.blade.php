@@ -1,7 +1,7 @@
 <div class="card-header">
   {{ $item->created_at->format('Y.m.d') }} - {{ mb_substr($item->project->projectName,0,12) }}
 </div>
-<div class="card-body">
+<div class="card-body" style="height:auto;">
   <img class="img-fluid mx-auto d-block" alt='猫' src="{{ asset( 'images/brownCat.png' ) }}" width="">
   <div class="card-img-overlay">
     <div class="card-text mt-5">

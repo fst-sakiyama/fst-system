@@ -47,7 +47,7 @@
         <div class="tab-content" id="myTab-content">
           <div class="tab-pane fade show active" id="takeOver" role="tabpanel" aria-labelledby="takeOver-tab">
             <div class="row mt-2">
-              @foreach($takeOvers as $item)
+              @foreach($takeOversTimeLimit as $item)
               <div class="col-sm-4">
                 <div class="card mt-1">
                   @include('components.take_over.take_over_tab',['item'=>$item,'dt'=>$dt])
@@ -63,7 +63,7 @@
               @endforeach
             </div>
             <div class="row mt-2">
-              @foreach($takeOversTimeLimit as $item)
+              @foreach($takeOvers as $item)
               <div class="col-sm-4">
                 <div class="card mt-1">
                   @include('components.take_over.take_over_tab',['item'=>$item,'dt'=>$dt])
