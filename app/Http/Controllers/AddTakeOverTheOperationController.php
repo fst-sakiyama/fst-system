@@ -64,13 +64,13 @@ class AddTakeOverTheOperationController extends Controller
       try{
 
         $addTakeOver = new AddTakeOverTheOperation;
-        dump('通過0');
+
         $addTakeOver->fill([
           'takeOverId' => $request->takeOverId,
           'addTakeOverContent' => $request->addTakeOverContent,
         ])->save();
         $addTakeOverId = $addTakeOver->addTakeOverId;
-        dump('通過1'.'pro：'.$request->projectId);
+
         $addFilePostId = array();
         $files = $request->file('files');
         if($files){
@@ -90,12 +90,12 @@ class AddTakeOverTheOperationController extends Controller
             }
           }
         }
-        dump('通過2');
+
         if($addFilePostId){
           $addTakeOver = AddTakeOverTheOperation::find($addTakeOverId);
           $addTakeOver->files()->sync($addFilePostId);
         }
-        dump('通過3');
+
 
         $linkId = array();
         for($i=0; $i<count($request->referenceLinkURL); $i++){
@@ -110,12 +110,11 @@ class AddTakeOverTheOperationController extends Controller
             $linkId[] = $referenceLink->linkId;
           }
         }
-        dump('通過4');
+
         if($linkId){
           $addTakeOver = AddTakeOverTheOperation::find($addTakeOverId);
           $addTakeOver->links()->sync($linkId);
         }
-        dump('通過5');
         DB::commit();
 
       }catch(\Exception $e) {
@@ -150,6 +149,14 @@ class AddTakeOverTheOperationController extends Controller
         //
     }
 
+    public function doEdit(Request $request)
+    {
+      $dispDate = $request->dispDate;
+      $addId = $request->addId;
+      $takeOverTheOperation = TakeOverTheOperation::find($request->id);
+
+      return view('add_take_over.edit',compact('dispDate','addId','takeOverTheOperation'));
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -159,7 +166,81 @@ class AddTakeOverTheOperationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $validator = Validator::make($request->all(),$this->rules,$this->messages);
+
+      if($validator->fails()){
+        return redirect()
+                  ->back()
+                  ->withInput()
+                  ->withErrors($validator);
+      }
+      $dispDate = $request->dispDate;
+
+      DB::beginTransaction();
+      try{
+
+        $addTakeOver = AddTakeOverTheOperation::find($id);
+
+        $addTakeOver->fill([
+          'takeOverId' => $request->takeOverId,
+          'addTakeOverContent' => $request->addTakeOverContent,
+        ])->save();
+
+        $addFilePostId = array();
+        $files = $request->file('files');
+        if($files){
+          for($i=0; $i<count($files); $i++){
+            $file = $files[$i];
+            if($file){
+              $fileName = $file->getClientOriginalName();
+              $path = Storage::disk('s3')->putFile('/takeOver', $file, 'public');
+              $fileURL = Storage::disk('s3')->url($path);
+              $addFilePost = new AddFilePost;
+              $addFilePost->fill([
+                'projectId' => $request->projectId,
+                'fileName' => $fileName,
+                'fileURL' => $fileURL,
+              ])->save();
+              $addFilePostId[] = $addFilePost->addFilePostId;
+            }
+          }
+        }
+
+        if($addFilePostId){
+          $addTakeOver = AddTakeOverTheOperation::find($id);
+          $addTakeOver->files()->attach($addFilePostId);
+        }
+
+
+        $linkId = array();
+        for($i=0; $i<count($request->referenceLinkURL); $i++){
+          $referenceLinkURL = $request->referenceLinkURL[$i];
+          $remarks = $request->remarks[$i];
+          if($referenceLinkURL){
+            $referenceLink = new ReferenceLink;
+            $referenceLink->fill([
+              'referenceLinkURL' => $referenceLinkURL,
+              'remarks' => $remarks,
+            ])->save();
+            $linkId[] = $referenceLink->linkId;
+          }
+        }
+
+        if($linkId){
+          $addTakeOver = AddTakeOverTheOperation::find($id);
+          $addTakeOver->links()->attach($linkId);
+        }
+        DB::commit();
+
+      }catch(\Exception $e) {
+
+        DB::rollback();
+        dd('エラーが発生しました');
+
+      }
+
+      return redirect()->route('take_over.index',['dispDate'=>$dispDate]);
+
     }
 
     /**

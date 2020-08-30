@@ -53,6 +53,9 @@ Route::post('/take_over/filedel','TakeOverTheOperationController@filedel')->name
 Route::post('/take_over/linkdel','TakeOverTheOperationController@linkdel')->name('take_over.linkdel');
 Route::resource('/take_over','TakeOverTheOperationController');
 
+Route::get('/add_take_over/doEdit','AddTakeOverTheOperationController@doEdit')->name('add_take_over.doEdit');
+Route::post('/add_take_over/filedel','TakeOverTheOperationController@filedel')->name('add_take_over.filedel');
+Route::post('/add_take_over/linkdel','TakeOverTheOperationController@linkdel')->name('add_take_over.linkdel');
 Route::resource('/add_take_over','AddTakeOverTheOperationController');
 
 Route::post('/search_result','TakeOverSearchController@search')->name('search_result.search');
