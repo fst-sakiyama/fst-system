@@ -14,8 +14,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('top');
+    return redirect()->route('login');
 });
+
+Route::get('/register','HomeController@index')->name('login');
+
+Route::get('/password/change', 'Auth\ChangePasswordController@showChangePasswordForm')->name('password.form');
+Route::post('/password/change', 'Auth\ChangePasswordController@ChangePassword')->name('password.change');
+
+Route::get('/deactive', 'Auth\DeactiveController@showDeactiveForm')->name('deactive.form');
+Route::post('/deactive', 'Auth\DeactiveController@deactive')->name('deactive');
 
 Route::delete('/system_top/requestDestroy/{id}','SystemTopController@requestDestroy')->name('system_top.requestDestroy');
 Route::delete('/system_top/replyDestroy/{id}','SystemTopController@replyDestroy')->name('system_top.replyDestroy');
@@ -72,3 +80,7 @@ Route::delete('/dev_confirm/editDelete','DevConfirmController@editDelete')->name
 Route::get('/dev_confirm/restore','DevConfirmController@restore')->name('dev_confirm.restore');
 
 Route::resource('/dummy','dummyController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
