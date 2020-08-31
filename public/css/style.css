@@ -19,56 +19,56 @@ a.modaltable {
 }
 
 .img-brownCat {
-  background-image: url("../images/brownCat.png");
+  background-image: url("/images/brownCat.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: auto;
   background-attachment: relative;
 }
 .img-brownCatDoComp {
-  background-image: url("../images/brownCatDoComp.png");
+  background-image: url("/images/brownCatDoComp.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: auto;
   background-attachment: relative;
 }
 .img-brownCatSearch {
-  background-image: url("../images/brownCatSearch.png");
+  background-image: url("/images/brownCatSearch.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: auto;
   background-attachment: relative;
 }
 .img-runningCat {
-  background-image: url("../images/runningCat.png");
+  background-image: url("/images/runningCat.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: auto;
   background-attachment: relative;
 }
 .img-runningCatDoComp {
-  background-image: url("../images/runningCatDoComp.png");
+  background-image: url("/images/runningCatDoComp.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: auto;
   background-attachment: relative;
 }
 .img-runningCatSearch {
-  background-image: url("../images/runningCatSearch.png");
+  background-image: url("/images/runningCatSearch.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: auto;
   background-attachment: relative;
 }
 .img-runningCatWellKnown {
-  background-image: url("../images/runningCatWellKnown.png");
+  background-image: url("/images/runningCatWellKnown.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: auto;
   background-attachment: relative;
 }
 .img-wellKnown {
-  background-image: url("../images/wellKnown.png");
+  background-image: url("/images/wellKnown.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: auto;
