@@ -19,11 +19,16 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->tinyInteger('role')->default(0)->index('index_role');
+            $table->tinyInteger('role')->unsigned()->default(10)->index('index_role');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
             $table->unique(['email', 'deleted_at'], 'users_email_deleted_at_unique');
+
+            $table->foreign('role')
+                  ->references('role')->on('master_roles')
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
         });
     }
 

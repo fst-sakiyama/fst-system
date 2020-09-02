@@ -13,17 +13,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
 Route::get('/register','HomeController@index')->name('login');
 
-Route::get('/password/change', 'Auth\ChangePasswordController@showChangePasswordForm')->name('password.form');
-Route::post('/password/change', 'Auth\ChangePasswordController@ChangePassword')->name('password.change');
-
-Route::get('/deactive', 'Auth\DeactiveController@showDeactiveForm')->name('deactive.form');
-Route::post('/deactive', 'Auth\DeactiveController@deactive')->name('deactive');
+Route::get('/setting', 'SettingController@index')->name('setting');
+Route::get('/setting/password', 'Auth\ChangePasswordController@showChangePasswordForm')->name('password.form');
+Route::post('/setting/password', 'Auth\ChangePasswordController@changePassword')->name('password.change');
+Route::get('/setting/deactive', 'Auth\DeactiveController@showDeactiveForm')->name('deactive.form');
+Route::post('/setting/deactive', 'Auth\DeactiveController@deactive')->name('deactive');
+Route::get('/setting/name', 'SettingController@showChangeNameForm')->name('name.form');
+Route::post('/setting/name', 'SettingController@changeName')->name('name.change');
+Route::get('/setting/email', 'SettingController@showChangeEmailForm')->name('email.form');
+Route::post('/setting/email', 'SettingController@changeEmail')->name('email.change');
 
 Route::delete('/system_top/requestDestroy/{id}','SystemTopController@requestDestroy')->name('system_top.requestDestroy');
 Route::delete('/system_top/replyDestroy/{id}','SystemTopController@replyDestroy')->name('system_top.replyDestroy');
@@ -79,8 +85,10 @@ Route::get('/dev_confirm/editDoComp','DevConfirmController@editDoComp')->name('d
 Route::delete('/dev_confirm/editDelete','DevConfirmController@editDelete')->name('dev_confirm.editDelete');
 Route::get('/dev_confirm/restore','DevConfirmController@restore')->name('dev_confirm.restore');
 
-Route::resource('/dummy','dummyController');
+Route::group(['middleware' => ['auth', 'can:system-only']], function () {
+    Route::resource('/dummy','dummyController');
+});
+
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');

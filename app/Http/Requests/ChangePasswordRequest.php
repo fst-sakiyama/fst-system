@@ -7,6 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Rules\AlphaNumHalf;
 
 class ChangePasswordRequest extends FormRequest
 {
@@ -29,7 +30,7 @@ class ChangePasswordRequest extends FormRequest
     {
         return [
            'current_password' => ['required', 'string', 'min:8'],
-           'password' => ['required', 'string', 'min:8', 'confirmed']
+           'password' => ['required', new AlphaNumHalf, 'confirmed']
         ];
     }
 
@@ -42,5 +43,5 @@ class ChangePasswordRequest extends FormRequest
                 $validator->errors()->add('current_password', __('The current password is incorrect.'));
             }
         });
-    }    
+    }
 }

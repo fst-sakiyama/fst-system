@@ -2,6 +2,7 @@
 
 @php
   $dispDate = new Carbon\Carbon(now());
+  $user = Auth::user();
 @endphp
 <!--
   navbar-fixed-topが機能しない？？
@@ -22,7 +23,7 @@
 
           <li class="nav-item dropdown">
               <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                  {{ Auth::user()->name }}さん<span class="caret"></span>
+                  {{ $user->name.'（'.$user->master_role->roleName.'）' }}さん<span class="caret"></span>
               </a>
 
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -32,11 +33,13 @@
                 <a class="dropdown-item" href="">継続案件一覧ページ</a>
                 <a class="dropdown-item" href="">入札案件一覧ページ</a>
                 <a class="dropdown-item" href="">短期案件一覧ページ</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{asset('/dummy')}}">テスト用ダミーページ</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{asset('/dev_deleted_items')}}">開発者用削除アイテム確認</a>
-                <a class="dropdown-item" href="{{asset('/dev_confirm')}}">開発者用進捗確認ページ</a>
+                @can('admin-higher')
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{{asset('/dummy')}}">テスト用ダミーページ</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{{asset('/dev_deleted_items')}}">開発者用削除アイテム確認</a>
+                  <a class="dropdown-item" href="{{asset('/dev_confirm')}}">開発者用進捗確認ページ</a>
+                @endcan
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('password.form') }}">
                   {{ __('Change Password') }}
