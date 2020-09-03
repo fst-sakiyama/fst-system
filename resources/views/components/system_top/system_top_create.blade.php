@@ -59,6 +59,15 @@
                 @endif
                 </div>
               </div>
+              @empty(!($item->created_by))
+                <div class="row ml-1">
+                  <div class="col-10">
+                    <div class="small">
+                      作成者：{{ app\User::find($item->created_by)->name }}
+                    </div>
+                  </div>
+                </div>
+              @endempty
             </div>
           </div>
           <div class="col align-self-center">
@@ -86,6 +95,15 @@
                   </div>
                   @endif
                 </div>
+                @empty(!($reply->created_by))
+                  <div class="row ml-1">
+                    <div class="col-10">
+                      <div class="small">
+                        作成者：{{ app\User::find($reply->created_by)->name }}
+                      </div>
+                    </div>
+                  </div>
+                @endempty
               </div>
             </div>
           </div>

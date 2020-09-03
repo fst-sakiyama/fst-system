@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\AuthorObservable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,6 +13,8 @@ class User extends Authenticatable
 {
     use Notifiable;
     use SoftDeletes;
+    use AuthorObservable;
+
     protected $connection = 'mysql_two';
 
     /**
@@ -45,4 +48,25 @@ class User extends Authenticatable
     {
       return $this->belongsTo('App\Models\MasterRole','role','role');
     }
+
+    public function created_by()
+    {
+        return $this->belongsTo('App\User', 'created_by');
+    }
+
+    public function updated_by()
+    {
+        return $this->belongsTo('App\User', 'updated_by');
+    }
+
+    public function deleted_by()
+    {
+        return $this->belongsTo('App\User', 'deleted_by');
+    }
+
+    public function restored_by()
+    {
+        return $this->belongsTo('App\User', 'restored_by');
+    }
+    
 }

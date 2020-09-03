@@ -57,7 +57,15 @@
     <div class="card-footer" style="position:relative;">
       <div class="row mb-0 mr-1 float-right">
         <div class="small">
-          {{ $takeOverTheOperation->project->client->clientName }}
+          <!--{{ $takeOverTheOperation->project->client->clientName }}-->
+          @empty(!($takeOverTheOperation->created_by))
+            作成者：{{ app\User::find($takeOverTheOperation->created_by)->name }}
+          @endempty
+          @empty(!($takeOverTheOperation->updated_by))
+            @if(($takeOverTheOperation->created_at) != ($takeOverTheOperation->updated_at))
+              <br>更新者：{{ app\User::find($takeOverTheOperation->updated_by)->name }}
+            @endif
+          @endempty
         </div>
       </div>
     </div>

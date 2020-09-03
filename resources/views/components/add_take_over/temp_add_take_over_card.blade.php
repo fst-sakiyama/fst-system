@@ -54,19 +54,18 @@
     </div>
 
     <div class="card-footer" style="position:relative;">
-      <div class="row mb-0">
-        <div class="col ml-4">
-          <!--
-          {{Form::open(['route'=>['add_take_over.destroy',$item->addTakeOverId],'method'=>'DELETE','id'=>'form_'.$item->addTakeOverId])}}
-          {{Form::submit('削除',['class' => 'btn btn-danger btn-sm','data-id'=>$item->takeOverId,'onclick'=>"return confirm('本当に削除して良いですか？')"])}}
-          {{Form::close()}}
-          -->
-        </div>
-        <div class="small text-right">
-          ユーザー名【追記】
+      <div class="row mb-0 mr-1 float-right">
+        <div class="small">
+          @empty(!($item->created_by))
+            作成者：{{ app\User::find($item->created_by)->name }}
+          @endempty
+          @empty(!($item->updated_by))
+            @if(($item->created_at) != ($item->updated_at))
+              <br>更新者：{{ app\User::find($item->updated_by)->name }}
+            @endif
+          @endempty
         </div>
       </div>
     </div>
-
   </div>
 </div>

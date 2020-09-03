@@ -28,6 +28,15 @@
                   {!! nl2br(e($requestPlate->requestMessage)) !!}
                 </div>
               </div>
+              @empty(!($requestPlate->created_by))
+                <div class="row ml-1">
+                  <div class="col-10">
+                    <div class="small">
+                      作成者：{{ app\User::find($requestPlate->created_by)->name }}
+                    </div>
+                  </div>
+                </div>
+              @endempty
             </div>
           </div>
         </div>
@@ -51,6 +60,15 @@
                     {!! nl2br(e($reply->reply)) !!}
                   </div>
                 </div>
+                @empty(!($reply->created_by))
+                  <div class="row ml-1">
+                    <div class="col-10">
+                      <div class="small">
+                        作成者：{{ app\User::find($reply->created_by)->name }}
+                      </div>
+                    </div>
+                  </div>
+                @endempty
               </div>
             </div>
           </div>

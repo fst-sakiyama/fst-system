@@ -26,7 +26,7 @@
         @include('components.take_over.search_table',['items'=>$items])
       </div>
       <div class="card-footer d-flex justify-content-center align-middle">
-            {{ $items->links() }}
+            {{ $items->onEachSide(2)->links() }}
       </div>
     </div>
   </div>

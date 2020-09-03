@@ -148,7 +148,7 @@
 					</tbody>
 				</table>
 				<div class="card-footer d-flex justify-content-center align-middle">
-					{{ $doCompletes->links() }}
+					{{ $doCompletes->onEachSide(2)->links() }}
 				</div>
 			</div>
 		</div>

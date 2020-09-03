@@ -52,7 +52,7 @@
       </div>
       <div class="row mt-5">
         <div class="col d-flex justify-content-center align-middle">
-          {{ $progressDetails->onEachSide(3)->links() }}
+          {{ $progressDetails->onEachSide(2)->links() }}
         </div>
       </div>
     </div>

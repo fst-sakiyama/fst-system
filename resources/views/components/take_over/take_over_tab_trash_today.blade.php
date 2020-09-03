@@ -61,7 +61,15 @@
   </div>
   <div class="row mb-0 mr-1 float-right">
     <div class="small">
-      {{ $item->project->client->clientName }}
+      <!--{{ $item->project->client->clientName }}-->
+      @empty(!($item->created_by))
+        作成者：{{ app\User::find($item->created_by)->name }}
+      @endempty
+      @empty(!($item->updated_by))
+        @if(($item->created_at) != ($item->updated_at))
+          <br>更新者：{{ app\User::find($item->updated_by)->name }}
+        @endif
+      @endempty
     </div>
   </div>
 </div>
