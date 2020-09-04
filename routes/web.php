@@ -21,6 +21,9 @@ Route::get('/', function () {
 
 Route::get('/register','HomeController@index')->name('login');
 
+Route::get('/user_regist/create','UserRegistrationController@create')->name('user.regist');
+Route::post('/user_regist/create','UserRegistrationController@store')->name('user.store');
+
 Route::get('/setting', 'SettingController@index')->name('setting');
 Route::get('/setting/password', 'Auth\ChangePasswordController@showChangePasswordForm')->name('password.form');
 Route::post('/setting/password', 'Auth\ChangePasswordController@changePassword')->name('password.change');

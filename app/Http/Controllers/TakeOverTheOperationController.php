@@ -345,7 +345,8 @@ class TakeOverTheOperationController extends Controller
      */
     public function destroy($id)
     {
-      TakeOverTheOperation::find($id)->delete();
+      //TakeOverTheOperation::find($id)->delete();
+      TakeOverTheOperation::destroy($id);
       return redirect()->back();
     }
 
