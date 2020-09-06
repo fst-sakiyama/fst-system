@@ -13,6 +13,11 @@ use Carbon\Carbon;
 
 class SystemTopController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     private $messages = [
       'requestClassificationId.required' => '※要望の分類を選択してください。',
       'requestMessage.required' => '※要望の内容を記載してください。',
@@ -28,11 +33,14 @@ class SystemTopController extends Controller
      */
     public function index()
     {
+
       $progressDetails = FstSystemProgressDetail::whereNotNull('doComp')
                           ->orderBy('doComp','desc')
                           ->paginate(5);
 
-        return view('system_top.index',compact('progressDetails'));
+      return view('system_top.index',compact('progressDetails'));
+
+
     }
 
     /**
