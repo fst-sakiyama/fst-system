@@ -12,7 +12,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class UserRegistrationController extends Controller
 {
 
-  protected function validator(array $data)
+  private function validator(array $data)
   {
       return Validator::make($data, [
           'name' => ['required', 'string', 'max:255'],

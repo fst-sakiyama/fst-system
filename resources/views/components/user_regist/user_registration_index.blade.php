@@ -15,7 +15,7 @@
                 <h5>ユーザー一覧</h5>
               </div>
               <div class="col-md text-right">
-                <a href="{{asset('/user_regist/create')}}"><button type="button" class="w-50 btn btn-primary">ユーザー一覧 | 新規登録</button></a>
+                <a href="{{asset('/user_regist/create')}}"><button type="button" class="w-50 btn btn-primary">ユーザー | 新規登録</button></a>
               </div>
             </div>
           </div>
