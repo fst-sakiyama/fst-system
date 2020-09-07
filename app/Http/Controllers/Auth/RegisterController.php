@@ -71,6 +71,6 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        return redirect()->route('top');
+        return redirect()->back();
     }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Carbon\Carbon;
 
 class LoginController extends Controller
 {
@@ -37,5 +39,17 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * ログイン認証後の処理
+     * @param Request $request
+     * @param $user
+     */
+    protected function authenticated(Request $request, $time)
+    {
+        // ログインイベントを発火させ最終ログイン日時を記録する
+        $time->last_login_at=Carbon::now();
+        $time->save();
     }
 }
