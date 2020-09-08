@@ -25,7 +25,7 @@ class AlphaNumHalf implements Rule
      */
     public function passes($attribute, $value)
     {
-        return preg_match('/^[a-zA-Z0-9]{12.255}+$/', $value);
+        return preg_match('/^[a-zA-Z0-9]{8,100}+$/', $value);
     }
 
     /**
@@ -35,6 +35,6 @@ class AlphaNumHalf implements Rule
      */
     public function message()
     {
-        return ':attributeは半角英数字12文字以上で入力してください';
+        return ':attributeは半角英数字8文字以上で入力してください';
     }
 }

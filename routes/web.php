@@ -25,20 +25,23 @@ Route::get('/user_regist','UserRegistrationController@index')->name('user.index'
 Route::get('/user_regist/create','UserRegistrationController@create')->name('user.regist');
 Route::post('/user_regist/create','UserRegistrationController@store')->name('user.store');
 Route::get('/user_regist/edit/{id}','UserRegistrationController@edit')->name('user.edit');
-Route::post('/user_regist/edit','UserRegistrationController@update')->name('user.update');
+Route::post('/user_regist/edit/{id}','UserRegistrationController@update')->name('user.update');
 Route::delete('/user_regist/destroy/{id}','UserRegistrationController@destroy')->name('user.destroy');
-Route::post('/user_regist/restore/{id}','UserRegistrationController@restore')->name('user.restore');
+Route::get('/user_regist/restore/{id}','UserRegistrationController@restore')->name('user.restore');
 Route::delete('/user_regist/forceDelete/{id}','UserRegistrationController@forceDelete')->name('user.forceDelete');
 
-Route::get('/setting', 'SettingController@index')->name('setting');
-Route::get('/setting/password', 'Auth\ChangePasswordController@showChangePasswordForm')->name('password.form');
-Route::post('/setting/password', 'Auth\ChangePasswordController@changePassword')->name('password.change');
-Route::get('/setting/deactive', 'Auth\DeactiveController@showDeactiveForm')->name('deactive.form');
-Route::post('/setting/deactive', 'Auth\DeactiveController@deactive')->name('deactive');
-Route::get('/setting/name', 'SettingController@showChangeNameForm')->name('name.form');
-Route::post('/setting/name', 'SettingController@changeName')->name('name.change');
-Route::get('/setting/email', 'SettingController@showChangeEmailForm')->name('email.form');
-Route::post('/setting/email', 'SettingController@changeEmail')->name('email.change');
+Route::get('/change_password','ChangePasswordController@index')->name('change_password.index');
+Route::post('/change_password','ChangePasswordController@changePassword')->name('change_password.change');
+
+// Route::get('/setting', 'SettingController@index')->name('setting');
+// Route::get('/setting/password', 'Auth\ChangePasswordController@showChangePasswordForm')->name('password.form');
+// Route::post('/setting/password', 'Auth\ChangePasswordController@changePassword')->name('password.change');
+// Route::get('/setting/deactive', 'Auth\DeactiveController@showDeactiveForm')->name('deactive.form');
+// Route::post('/setting/deactive', 'Auth\DeactiveController@deactive')->name('deactive');
+// Route::get('/setting/name', 'SettingController@showChangeNameForm')->name('name.form');
+// Route::post('/setting/name', 'SettingController@changeName')->name('name.change');
+// Route::get('/setting/email', 'SettingController@showChangeEmailForm')->name('email.form');
+// Route::post('/setting/email', 'SettingController@changeEmail')->name('email.change');
 
 Route::delete('/system_top/requestDestroy/{id}','SystemTopController@requestDestroy')->name('system_top.requestDestroy');
 Route::delete('/system_top/replyDestroy/{id}','SystemTopController@replyDestroy')->name('system_top.replyDestroy');

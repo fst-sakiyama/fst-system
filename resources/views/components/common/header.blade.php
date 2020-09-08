@@ -41,12 +41,12 @@
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{{asset('/dev_deleted_items')}}">開発者用削除アイテム確認</a>
                   <a class="dropdown-item" href="{{asset('/dev_confirm')}}">開発者用進捗確認ページ</a>
+                  <a class="dropdown-item" href="{{ route('user.index') }}">ユーザー一覧</a>
                 @endcan
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('password.form') }}">
+                <a class="dropdown-item" href="{{ route('change_password.index') }}">
                   {{ __('Change Password') }}
                 </a>
-                <a class="dropdown-item" href="{{ route('user.index') }}">ユーザー一覧</a>
                 <a class="dropdown-item" href="{{ route('logout') }}"
                    onclick="event.preventDefault();
                                  document.getElementById('logout-form').submit();">

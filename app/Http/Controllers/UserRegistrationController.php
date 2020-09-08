@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 
 class UserRegistrationController extends Controller
 {
@@ -19,6 +20,15 @@ class UserRegistrationController extends Controller
           'email' => ['required', 'string', 'email', 'max:255', Rule::unique('mysql_two.users', 'email')->whereNull('deleted_at'),],
           'role' => ['required'],
           'password' => ['required', 'string', 'min:8', 'confirmed'],
+      ]);
+  }
+
+  private function update_validator(array $data)
+  {
+      return Validator::make($data, [
+          'name' => ['required', 'string', 'max:255'],
+          'email' => ['required', 'string', 'email', 'max:255'],
+          'role' => ['required'],
       ]);
   }
 
@@ -57,26 +67,45 @@ class UserRegistrationController extends Controller
 
   public function edit($id)
   {
+    $item = User::find($id);
 
+    return view('/user_regist/edit',compact('item'));
   }
 
-  public function update($id)
+  public function update(Request $request,$id)
   {
+    $validator = $this->update_validator($request->all());
+    if($validator->fails()){
+      return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+    }
 
+    $item = User::where('id',$id)->first();
+    $item->name = $request->name;
+    $item->email = $request->email;
+    $item->role = $request->role;
+    $item->save();
+
+    return redirect()->route('user.index');
   }
 
   public function destroy($id)
   {
-
+    User::find($id)->delete();
+    return redirect()->back();
   }
 
   public function restore($id)
   {
-
+    User::withTrashed()->find($id)->restore();
+    return redirect()->route('user.index');
   }
 
   public function forceDelete($id)
   {
-
+    User::withTrashed()->find($id)->forceDelete();
+    return redirect()->route('user.index');
   }
 }

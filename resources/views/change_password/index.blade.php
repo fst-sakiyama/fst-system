@@ -1,12 +1,12 @@
 @extends('layouts.system_top')
 
-@section('title','ユーザー登録')
+@section('title','パスワード変更')
 
 @include('components.common.head')
 
 @include('components.common.header')
 
-@include('components.user_regist.user_registration_common',['item'=>$item])
+@include('components.change_password.change_password_index')
 
 @section('pageJs')
 <script type="text/javascript" src="{{asset('js/add_jquery.js')}}"></script>

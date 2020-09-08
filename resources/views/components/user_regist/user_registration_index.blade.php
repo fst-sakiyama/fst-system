@@ -3,7 +3,7 @@
   <div class="container mt-3">
     <div class="row">
       <div class="col">
-        <h1>@include('components.returnButton')</h1>
+        <h1>@include('components.returnLinkButton',['item'=>'/system_top'])</h1>
       </div>
     </div>
     <div class="row">
