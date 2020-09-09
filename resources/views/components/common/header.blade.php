@@ -32,12 +32,14 @@
                 @endcan
                 <a class="dropdown-item" href="{{asset('/master_clients')}}">顧客一覧ページ</a>
                 <a class="dropdown-item" href="{{asset('/master_projects')}}">案件一覧ページ</a>
-                <a class="dropdown-item" href="">継続案件一覧ページ</a>
+                <!-- <a class="dropdown-item" href="">継続案件一覧ページ</a>
                 <a class="dropdown-item" href="">入札案件一覧ページ</a>
-                <a class="dropdown-item" href="">短期案件一覧ページ</a>
-                @can('admin-higher')
+                <a class="dropdown-item" href="">短期案件一覧ページ</a> -->
+                @can('system-only')
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{{asset('/dummy')}}">テスト用ダミーページ</a>
+                @endcan
+                @can('admin-higher')
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{{asset('/dev_deleted_items')}}">開発者用削除アイテム確認</a>
                   <a class="dropdown-item" href="{{asset('/dev_confirm')}}">開発者用進捗確認ページ</a>

@@ -35,19 +35,19 @@ class AuthServiceProvider extends ServiceProvider
         });
         // 経理チームのみ許可
         Gate::define('account-only', function ($user) {
-          return ($user->role == 1 || $user->role == 3 || $user->role == 6);
+          return ($user->role == 1 || $user->role == 3 || $user->role == 11);
         });
         // 営業チームのみ許可
         Gate::define('sales-only', function ($user) {
-          return ($user->role == 1 || $user->role == 3 || $user->role == 7);
+          return ($user->role == 1 || $user->role == 3 || $user->role == 13);
         });
         // 開発チームのみ許可
         Gate::define('dev-only', function ($user) {
-          return ($user->role == 1 || $user->role == 3 || $user->role == 8);
+          return ($user->role == 1 || $user->role == 3 || $user->role == 15);
         });
         // 運用チームのみ許可
         Gate::define('ope-only', function ($user) {
-          return ($user->role == 1 || $user->role == 3 || $user->role == 9);
+          return ($user->role == 1 || $user->role == 3 || $user->role == 17);
         });
         // 一般ユーザ以上（つまり全権限）に許可
         Gate::define('user-higher', function ($user) {

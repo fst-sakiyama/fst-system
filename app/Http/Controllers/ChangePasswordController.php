@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Rules\AlphaNumHalf;
 
 class ChangePasswordController extends Controller
 {
@@ -15,13 +14,22 @@ class ChangePasswordController extends Controller
       $this->middleware('auth');
   }
 
-  private function validator(array $data)
-  {
-    return Validator::make($data, [
-      'current_password' => ['required'],
-      'password' => ['required', new AlphaNumHalf, 'min:8', 'confirmed'],
-    ]);
-  }
+  // private function validator(array $data)
+  // {
+  //   return Validator::make($data, [
+  //     'current_password' => ['required'],
+  //     'password' => ['required', new AlphaNumHalf, 'min:8', 'confirmed'],
+  //   ]);
+  // }
+
+  private $messages = [
+    'current_password.required' => '※現在のパスワードの入力は必須です。',
+    'password.regix' => '※8文字以上の半角英数字で入力してください。'
+  ];
+  private $rules = [
+    'current_password' => 'required|max:100',
+    'password' => 'required|string|min:8|max:100|regex:/^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i',
+  ];
 
   public function index()
   {
@@ -41,7 +49,7 @@ class ChangePasswordController extends Controller
       }
 
       //パスワードのバリデーション。新しいパスワードは8文字以上、new-password_confirmationフィールドの値と一致しているかどうか。
-      $validator = $this->validator($request->all());
+      $validator = Validator::make($request->all(),$this->rules,$this->messages);
 
       if($validator->fails()){
         return redirect()
