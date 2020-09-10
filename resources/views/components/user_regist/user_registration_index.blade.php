@@ -34,26 +34,28 @@
             </thead>
             <tbody>
               @foreach($items as $item)
-              <tr>
-                <td>{{ $item->name }}</td>
-                <td>{{ $item->email }}</td>
-                <td>{{ $item->master_role->roleName }}</td>
-                <td>
-                  @empty(!($item->last_login_at))
-                    {{ $item->last_login_at->format('Y年m月d日 H時i分') }}
-                  @endempty
-                </td>
-                <td><a href="{{ route('user.edit',$item->id) }}" class="btn btn-success btn-sm">修正</a></td>
-                @can('system-only')
-                  <td>
-                    <form action="{{ route('user.destroy', $item->id) }}" id="form_{{ $item->id }}" method="post">
-                      {{ csrf_field() }}
-                      {{ method_field('delete') }}
-                      <a href="#" data-id="{{ $item->id }}" class="btn btn-danger deleteConf btn-sm">削除</a>
-                    </form>
-                  </td>
-                @endcan
-              </tr>
+                @if($item->role != '1')
+                  <tr>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->email }}</td>
+                    <td>{{ $item->master_role->roleName }}</td>
+                    <td>
+                      @empty(!($item->last_login_at))
+                        {{ $item->last_login_at->format('Y年m月d日 H時i分') }}
+                      @endempty
+                    </td>
+                    <td><a href="{{ route('user.edit',$item->id) }}" class="btn btn-success btn-sm">修正</a></td>
+                    @can('system-only')
+                      <td>
+                        <form action="{{ route('user.destroy', $item->id) }}" id="form_{{ $item->id }}" method="post">
+                          {{ csrf_field() }}
+                          {{ method_field('delete') }}
+                          <a href="#" data-id="{{ $item->id }}" class="btn btn-danger deleteConf btn-sm">削除</a>
+                        </form>
+                      </td>
+                    @endcan
+                  </tr>
+                @endif
               @endforeach
             </tbody>
           </table>
