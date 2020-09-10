@@ -27,7 +27,9 @@
                 <th>権限名</th>
                 <th>最終ログイン</th>
                 <th>修正</th>
-                <th>削除</th>
+                @can('system-only')
+                  <th>削除</th>
+                @endcan
               </tr>
             </thead>
             <tbody>
@@ -42,13 +44,15 @@
                   @endempty
                 </td>
                 <td><a href="{{ route('user.edit',$item->id) }}" class="btn btn-success btn-sm">修正</a></td>
-                <td>
-                  <form action="{{ route('user.destroy', $item->id) }}" id="form_{{ $item->id }}" method="post">
-                    {{ csrf_field() }}
-                    {{ method_field('delete') }}
-                    <a href="#" data-id="{{ $item->id }}" class="btn btn-danger deleteConf btn-sm">削除</a>
-                  </form>
-                </td>
+                @can('system-only')
+                  <td>
+                    <form action="{{ route('user.destroy', $item->id) }}" id="form_{{ $item->id }}" method="post">
+                      {{ csrf_field() }}
+                      {{ method_field('delete') }}
+                      <a href="#" data-id="{{ $item->id }}" class="btn btn-danger deleteConf btn-sm">削除</a>
+                    </form>
+                  </td>
+                @endcan
               </tr>
               @endforeach
             </tbody>
@@ -60,7 +64,7 @@
       </div>
     </div>
 
-    @can('admin-higher')
+    @can('system-only')
     <div class="row mt-5">
       <div class="col">
         <div class="card">
