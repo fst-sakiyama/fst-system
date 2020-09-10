@@ -110,14 +110,17 @@ Route::group(['middleware' => ['auth', 'can:admin-higher']], function () {
     Route::post('/user_regist/create','UserRegistrationController@store')->name('user.store');
     Route::get('/user_regist/edit/{id}','UserRegistrationController@edit')->name('user.edit');
     Route::post('/user_regist/edit/{id}','UserRegistrationController@update')->name('user.update');
-    Route::delete('/user_regist/destroy/{id}','UserRegistrationController@destroy')->name('user.destroy');
-    Route::get('/user_regist/restore/{id}','UserRegistrationController@restore')->name('user.restore');
-    Route::delete('/user_regist/forceDelete/{id}','UserRegistrationController@forceDelete')->name('user.forceDelete');
+    Route::post('/user_regist/password_reset/{id}','UserRegistrationController@password_reset')->name('user.password_reset');
 
 });
 
 // 開発者のみ許可
 Route::group(['middleware' => ['auth', 'can:system-only']], function () {
+
+    Route::delete('/user_regist/destroy/{id}','UserRegistrationController@destroy')->name('user.destroy');
+    Route::get('/user_regist/restore/{id}','UserRegistrationController@restore')->name('user.restore');
+    Route::delete('/user_regist/forceDelete/{id}','UserRegistrationController@forceDelete')->name('user.forceDelete');
+
 
     Route::resource('/dummy','dummyController');
 

@@ -27,6 +27,9 @@
                 <th>権限名</th>
                 <th>最終ログイン</th>
                 <th>修正</th>
+                @can('admin-higher')
+                  <th>リセット</th>
+                @endcan
                 @can('system-only')
                   <th>削除</th>
                 @endcan
@@ -45,6 +48,13 @@
                       @endempty
                     </td>
                     <td><a href="{{ route('user.edit',$item->id) }}" class="btn btn-success btn-sm">修正</a></td>
+                    @can('admin-higher')
+                      <td>
+                        {{ Form::open(array('route' => array('user.password_reset', $item->id), 'method' => 'POST')) }}
+                        {{ Form::submit('リセット',['class'=>'btn btn-sm btn-warning','onclick'=>"return confirm('パスワードをリセットしてもよろしいですか？')"]) }}
+                        {{ Form::close() }}
+                      </td>
+                    @endcan
                     @can('system-only')
                       <td>
                         <form action="{{ route('user.destroy', $item->id) }}" id="form_{{ $item->id }}" method="post">

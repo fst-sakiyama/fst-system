@@ -108,4 +108,13 @@ class UserRegistrationController extends Controller
     User::withTrashed()->find($id)->forceDelete();
     return redirect()->route('user.index');
   }
+
+  public function password_reset($id)
+  {
+    $item = User::where('id',$id)->first();
+    $item->password = Hash::make('faith123');
+    $item->save();
+
+    return redirect()->route('user.index');
+  }
 }

@@ -29,6 +29,9 @@ class FileShowController extends Controller
         mb_language('Ja');
         $str = mb_convert_encoding($contents,"utf-8","ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN,SJIS");
         echo nl2br("\n".$str);
+      } elseif(preg_match('/^image/',$mimeType)=='1') {
+        return response($contents)->header('Content-Type', $mimeType)
+                ->header('Content-Disposition', 'inline; filename="'.$filePost->fileName.'"');
       } else {
         return response($contents)->header('Content-Type', $mimeType)
                 ->header('Content-Disposition', 'attachment; filename="'.$filePost->fileName.'"');
@@ -55,6 +58,9 @@ class FileShowController extends Controller
         mb_language('Ja');
         $str = mb_convert_encoding($contents,"utf-8","ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN,SJIS");
         echo nl2br("\n".$str);
+      } elseif(preg_match('/^image/',$mimeType)=='1') {
+        return response($contents)->header('Content-Type', $mimeType)
+                ->header('Content-Disposition', 'inline; filename="'.$filePost->fileName.'"');
       } else {
         return response($contents)->header('Content-Type', $mimeType)
                 ->header('Content-Disposition', 'attachment; filename="'.$filePost->fileName.'"');
