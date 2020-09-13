@@ -42,6 +42,7 @@
                 @can('system-only')
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{{asset('/dummy')}}">テスト用ダミーページ</a>
+                  <a class="dropdown-item" href="{{route('calendar.show')}}">テストカレンダー</a>
                   <a class="dropdown-item" href="{{asset('/dev_deleted_items')}}">開発者用削除アイテム確認</a>
                   <a class="dropdown-item" href="{{asset('/dev_confirm')}}">開発者用進捗確認ページ</a>
                 @endcan

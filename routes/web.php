@@ -21,6 +21,11 @@ Route::get('/', function () {
 
 Route::get('/register','HomeController@index')->name('login');
 
+Route::get('/calendar_show','CalendarController@show')->name('calendar.show');
+
+Route::get('/calendar_take_over_view','CalendarTakeOverViewController@form')->name("calendar_take_over_view");
+Route::post('/calendar_take_over_view','CalendarTakeOverViewController@update')->name("calendar_take_over_view.update");
+
 Auth::routes();
 // Route::get('/setting', 'SettingController@index')->name('setting');
 // Route::get('/setting/password', 'Auth\ChangePasswordController@showChangePasswordForm')->name('password.form');
