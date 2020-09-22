@@ -23,8 +23,8 @@ Route::get('/register','HomeController@index')->name('login');
 
 Route::get('/calendar_show','CalendarController@show')->name('calendar.show');
 
-Route::get('/calendar_take_over_view','CalendarTakeOverViewController@form')->name("calendar_take_over_view");
-Route::post('/calendar_take_over_view','CalendarTakeOverViewController@update')->name("calendar_take_over_view.update");
+// Route::get('/calendar_take_over_view','CalendarTakeOverViewController@form')->name("calendar_take_over_view");
+// Route::post('/calendar_take_over_view','CalendarTakeOverViewController@update')->name("calendar_take_over_view.update");
 
 Auth::routes();
 // Route::get('/setting', 'SettingController@index')->name('setting');
@@ -127,6 +127,7 @@ Route::group(['middleware' => ['auth', 'can:system-only']], function () {
     Route::delete('/user_regist/forceDelete/{id}','UserRegistrationController@forceDelete')->name('user.forceDelete');
 
 
+    Route::get('/dummy/{year}/{month}','dummyController@index')->name('dummy.calendar');
     Route::resource('/dummy','dummyController');
 
     Route::get('dev_deleted_items','DevDeletedItemsController@index')->name('dev_deleted_items.index');

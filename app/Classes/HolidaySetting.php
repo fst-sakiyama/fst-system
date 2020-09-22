@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Calendar;
+namespace App\Classes;
 
 use Yasumi\Yasumi;
 

@@ -1,9 +1,9 @@
 @section('content')
 
 @php
-  $currentMonth = 9;
+  $currentMonth = 5;
   $nowd = strtotime(date("Y-m-d"));
-  $weekday = ['日', '月', '火', '水', '木', '金', '土'];
+
 @endphp
 
 <div class="contents">
@@ -12,7 +12,7 @@
 <table class="table table-bordered">
   <thead>
     <tr>
-    @foreach (['日', '月', '火', '水', '木', '金', '土'] as $dayOfWeek)
+    @foreach ($calendar->weekday() as $dayOfWeek)
     <th>{{ $dayOfWeek }}</th>
     @endforeach
     </tr>
@@ -23,13 +23,15 @@
     <tr>
     @endif
     <td
-    @if ($date->month != $currentMonth)
+    @if ($date->month != $disp->month)
     class="bg-secondary"
+    @elseif($holidays[$date->timestamp])
+    class="{{$holidays[$date->timestamp]}}"
     @endif
     >
     @php
-    $dt = new Carbon\Carbon($date);
-    dump($dt->timestamp);
+    dump($cnt[$date->timestamp]);
+    dump($calendar->weekday()[$date->dayOfWeek]);
     @endphp
     {{ $date->day }}
     </td>

@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\MasterClient;
 use App\Models\MasterProject;
+use App\Models\TakeoverTheOperation;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Classes\Calendar;
+use App\Classes\HolidaySetting;
 
 class dummyController extends Controller
 {
@@ -14,15 +17,7 @@ class dummyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-      $masterProjects = MasterProject::all();
-      $masterClients = MasterClient::all();
-      $dates = $this->getCalendarDates($request->year,$request->month);
-      return view('dummy.index',compact('masterProjects','masterClients','dates'));
-    }
-
-    public function getCalendarDates($year,$month)
+    public function index($year,$month)
     {
       // 年月の指定がないときは、現在の年月でカレンダーを作成する
       if(empty($year) || empty($month)){
@@ -30,21 +25,27 @@ class dummyController extends Controller
         $month = date("m");
       }
 
-      $date = new Carbon("{$year}-{$month}-01");
-      // カレンダーを四角形にするため、前月となる左上の隙間用のデータを入れるためずらす
-      $addDay = ($date->copy()->endOfMonth()->isSunday()) ? 7 : 0;
+      $disp = new Carbon("{$year}-{$month}-01");
+      // $dates = $this->getCalendarDates($request->year,$request->month);
+      $calendar = new Calendar;
+      $dates = $calendar->getCalendarDates($year,$month);
 
-      $date->subDay($date->dayOfWeek);
-      // 同上。右下の隙間のための計算。
-      $count = 31 + $addDay + $date->dayOfWeek;
-      $count = ceil($count / 7) * 7;
-      $dates = [];
+      $setting = new HolidaySetting;
+      $setting->loadHoliday($year);
 
-      for ($i = 0; $i < $count; $i++, $date->addDay()) {
-          // copyしないと全部同じオブジェクトを入れてしまうことになる
-          $dates[] = $date->copy();
+      $cnt = [];
+      $holidays = [];
+
+      foreach ($dates as $date) {
+        $cnt += array($date->timestamp=>TakeoverTheOperation::withTrashed()->whereDate('created_at','=',$date)->count());
+
+        if($setting->isHoliday($date)){
+          $holidays += array($date->timestamp=>"day-holiday");
+        } else {
+          $holidays += array($date->timestamp=>'');
+        }
       }
-      return $dates;
+      return view('dummy.index',compact('disp','dates','cnt','calendar','holidays'));
     }
 
     /**
