@@ -122,6 +122,10 @@ Route::group(['middleware' => ['auth', 'can:admin-higher']], function () {
 // 開発者のみ許可
 Route::group(['middleware' => ['auth', 'can:system-only']], function () {
 
+    // ----- 現在準備中のもの -----
+    Route::resource('/master_shifts','MasterShiftController');
+    // --------------------------
+
     Route::delete('/user_regist/destroy/{id}','UserRegistrationController@destroy')->name('user.destroy');
     Route::get('/user_regist/restore/{id}','UserRegistrationController@restore')->name('user.restore');
     Route::delete('/user_regist/forceDelete/{id}','UserRegistrationController@forceDelete')->name('user.forceDelete');
