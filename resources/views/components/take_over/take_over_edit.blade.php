@@ -9,7 +9,7 @@ if(empty($takeOverTheOperation->wellKnown)){
 @endphp
 
 <div class="contents">
-  <div class="container mt-3">
+  <div class="container container-top">
 		<h1>@include('components.returnButton')</h1>
     <div class="col">
       <div class="card">

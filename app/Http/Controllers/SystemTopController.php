@@ -70,14 +70,14 @@ class SystemTopController extends Controller
 
       $validator = Validator::make($request->all(),
       [
-        'requestClassificationId.required' => '※要望の分類を選択してください。',
-        'requestMessage.required' => '※要望の内容を入力してください。',
-      ],
-      [
         'requestClassificationId' => 'required',
         'requestMessage' => 'required',
+      ],
+      [
+        'requestClassificationId.required' => '※要望の分類を選択してください。',
+        'requestMessage.required' => '※要望の内容を入力してください。',
       ]);
-
+      // dd($validator);
       if($validator->fails()){
         return redirect()
                   ->back()
@@ -137,12 +137,12 @@ class SystemTopController extends Controller
     {
       $validator = Validator::make($request->all(),
       [
-        'reply.required' => '※返信の内容を入力してください。',
+        'reply' => 'required',
       ],
       [
-        'reply' => 'required',
+        'reply.required' => '※返信の内容を入力してください。',
       ]);
-
+      // dd($validator);
       if($validator->fails()){
         return redirect()
                   ->back()

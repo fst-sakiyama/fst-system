@@ -1,7 +1,7 @@
 @section('content')
 
 <div class="contents">
-  <div class="container mt-3">
+  <div class="container container-top">
 		<h1>@include('components.returnLinkButton',['item'=>'/progress_detail'])</h1>
     <div class="col">
       <div class="card">

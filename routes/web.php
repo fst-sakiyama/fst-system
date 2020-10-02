@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+// use App\Http\Controllers\SystemTopController;
+use App\Http\Controllers\DevDeletedItemsController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,8 +46,8 @@ Route::group(['middleware' => ['auth', 'can:user-higher']], function () {
     Route::delete('/system_top/requestDestroy/{id}','SystemTopController@requestDestroy')->name('system_top.requestDestroy');
     Route::delete('/system_top/replyDestroy/{id}','SystemTopController@replyDestroy')->name('system_top.replyDestroy');
     Route::get('/system_top/editDoComp/{id}','SystemTopController@editDoComp')->name('system_top.editDoComp');
-    Route::get('/system_top/docomp_show','SystemTopController@doCompShow')->name('system_top.doCompShow');
-    Route::resource('/system_top','SystemTopController',['names' => ['index' => 'top']]);
+    Route::get('/system_top/doCompShow','SystemTopController@doCompShow')->name('system_top.doCompShow');
+    Route::resource('/system_top',SystemTopController::class,['names' => ['index' => 'top']]);
 
     Route::get('/file_show', 'FileShowController@show')->name('file_show.show');
     Route::get('/file_addShow', 'FileShowController@addShow')->name('file_addShow.addShow');
@@ -55,9 +58,9 @@ Route::group(['middleware' => ['auth', 'can:user-higher']], function () {
     Route::get('/progress_detail/editDoComp','ProgressDetailController@editDoComp')->name('progress_detail.editDoComp');
     Route::resource('/progress_detail', 'ProgressDetailController');
 
-    Route::resource('/master_clients', 'MasterClientsController');
+    Route::resource('/master_clients', MasterClientsController::class);
 
-    Route::resource('/clients_detail','ClientsDetailController');
+    Route::resource('/clients_detail',ClientsDetailController::class);
 
     Route::resource('/master_projects', 'MasterProjectsController');
 
@@ -96,7 +99,7 @@ Route::group(['middleware' => ['auth', 'can:ope-only']], function () {
     Route::get('/take_over/restore','TakeOverTheOperationController@restore')->name('take_over.restore');
     Route::post('/take_over/filedel','TakeOverTheOperationController@filedel')->name('take_over.filedel');
     Route::post('/take_over/linkdel','TakeOverTheOperationController@linkdel')->name('take_over.linkdel');
-    Route::resource('/take_over','TakeOverTheOperationController');
+    Route::resource('/take_over',TakeOverTheOperationController::class);
 
     Route::get('/add_take_over/doEdit','AddTakeOverTheOperationController@doEdit')->name('add_take_over.doEdit');
     Route::post('/add_take_over/filedel','TakeOverTheOperationController@filedel')->name('add_take_over.filedel');
@@ -123,7 +126,8 @@ Route::group(['middleware' => ['auth', 'can:admin-higher']], function () {
 Route::group(['middleware' => ['auth', 'can:system-only']], function () {
 
     // ----- 現在準備中のもの -----
-    Route::resource('/master_shifts','MasterShiftController');
+    Route::resource('/master_shifts',MasterShiftController::class);
+    Route::resource('/shift_table',ShiftTableController::class);
     // --------------------------
 
     Route::delete('/user_regist/destroy/{id}','UserRegistrationController@destroy')->name('user.destroy');
@@ -132,9 +136,9 @@ Route::group(['middleware' => ['auth', 'can:system-only']], function () {
 
 
     Route::get('/dummy/{year}/{month}','dummyController@index')->name('dummy.calendar');
-    Route::resource('/dummy','dummyController');
+    Route::resource('/dummy',dummyController::class);
 
-    Route::get('dev_deleted_items','DevDeletedItemsController@index')->name('dev_deleted_items.index');
+    Route::get('dev_deleted_items',[DevDeletedItemsController::class,'index'])->name('dev_deleted_items.index');
 
     Route::get('dev_confirm','DevConfirmController@index')->name('dev_confirm.top');
     Route::get('/dev_confirm/add','DevConfirmController@add')->name('dev_confirm.add');

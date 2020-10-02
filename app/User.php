@@ -50,6 +50,11 @@ class User extends Authenticatable
       return $this->belongsTo('App\Models\MasterRole','role','role');
     }
 
+    public function shiftTables()
+    {
+        return $this->hasMany('App\Models\ShiftTable','id','userId');
+    }
+
     public function created_by()
     {
         return $this->belongsTo('App\User', 'created_by');

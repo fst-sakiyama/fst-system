@@ -1,4 +1,5 @@
 <?php
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\MasterClient;
@@ -41,7 +42,7 @@ class MasterClientsTableSeeder extends Seeder
       $now=Carbon::now();
       $MasterClient=new MasterClient;
       $MasterClient::insert([
-        ['clientCode'=>0,'clientName'=>'社内業務','clientNameKana'=>'しゃないぎょうむ','created_at'=>$now,'updated_at'=>$now,],
+        ['clientCode'=>100,'clientName'=>'社内業務','clientNameKana'=>'しゃないぎょうむ','created_at'=>$now,'updated_at'=>$now,],
         ['clientCode'=>101,'clientName'=>'(株)ITコア','clientNameKana'=>'あいてぃーこあ','created_at'=>$now,'updated_at'=>$now,],
         ['clientCode'=>102,'clientName'=>'愛南町','clientNameKana'=>'あいなんちょう','created_at'=>$now,'updated_at'=>$now,],
         ['clientCode'=>103,'clientName'=>'(株)アドバンテック','clientNameKana'=>'あどばんてっく','created_at'=>$now,'updated_at'=>$now,],

@@ -1,6 +1,6 @@
 @section('content')
 <div class="contents">
-  <div class="container mt-3">
+  <div class="container container-top">
     <div class="row">
       <div class="col">
         <h1>@include('components.returnLinkButton',['item'=>'/user_regist'])</h1>

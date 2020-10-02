@@ -7,7 +7,7 @@
 @endphp
 
 <div class="contents">
-  <div class="container mt-3">
+  <div class="container container-top">
 
 <table class="table table-bordered">
   <thead>

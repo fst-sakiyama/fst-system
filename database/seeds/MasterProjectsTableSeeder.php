@@ -1,4 +1,5 @@
 <?php
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\MasterProject;
@@ -16,7 +17,7 @@ class MasterProjectsTableSeeder extends Seeder
       $now=Carbon::now();
       $MasterProject=new MasterProject;
       $MasterProject::insert([
-        ['clientId'=>1,'contractTypeId'=>6,'projectName'=>'脆弱性調査','created_at'=>$now,'updated_at'=>$now,],
+        ['clientId'=>51,'contractTypeId'=>6,'projectName'=>'脆弱性調査','created_at'=>$now,'updated_at'=>$now,],
       ]);
     }
 }

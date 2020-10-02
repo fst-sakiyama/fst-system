@@ -1,7 +1,7 @@
 @section('content')
 
 <div class="contents">
-  <div class="container mt-3">
+  <div class="container container-top">
     <h1>@include('components.returnButton')</h1>
     <div class="col">
       <div class="card">
@@ -52,7 +52,7 @@
           </tbody>
         </table>
         <div class="card-footer d-flex justify-content-center align-middle">
-          {{ $items->onEachSide(2)->links() }}
+          {{ $items->onEachSide(2)->links('pagination::bootstrap-4') }}
         </div>
       </div>
     </div>

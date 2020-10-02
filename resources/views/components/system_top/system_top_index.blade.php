@@ -62,7 +62,7 @@
         <div class="row mt-3 ml-1">
           <div class="col">
             バグ報告や機能修正のリクエスト、機能追加のリクエストは、<a href="{{ asset('/system_top/create') }}" class="h5">こちら</a>からご報告ください。<br>
-            リクエストいただいたもので既に完了したものの一覧は<a href="{{ asset('/system_top/docomp_show') }}" class="h5">こちら</a>からご確認いただけます。
+            リクエストいただいたもので既に完了したものの一覧は<a href="{{ route('system_top.doCompShow') }}" class="h5">こちら</a>からご確認いただけます。
           </div>
         </div>
       </div>

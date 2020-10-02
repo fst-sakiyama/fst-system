@@ -74,3 +74,22 @@ a.modaltable {
   background-size: auto;
   background-attachment: relative;
 }
+
+.shift-table {
+  table-layout: fixed;     /* 固定レイアウト */
+  border-collapse: collapse; /* 隣接する枠線を重ねる */
+  border: 2px solid green;   /* 外枠：2px,実線,緑色 */
+  width:  1100px;
+}
+
+.shift-table-td {
+   border: 1px solid green; /* 表内側の線：1px,実線,緑色 */
+   padding: 1px;            /* セル内側の余白：3ピクセル */
+}
+.shift-table-title {
+   width: 5.0em;   /* セルの横幅：1.8文字分 */
+}
+
+.container-top {
+  margin-top: 20px;
+}

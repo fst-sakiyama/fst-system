@@ -10,7 +10,7 @@
 @endphp
 
 <div class="contents">
-  <div class="container mt-3">
+  <div class="container container-top">
     <div class="col">
       <div class="card">
         <div class="card-header">

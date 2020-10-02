@@ -12,7 +12,7 @@
         <div class="row ml-3">
           <div class="col">
             出来るだけ詳細に記載していただくと助かります。<br>
-            リクエストいただいたもので既に完了したものの一覧は<a href="{{ asset('/system_top/docomp_show') }}" class="h5">こちら</a>からご確認いただけます。
+            リクエストいただいたもので既に完了したものの一覧は<a href="{{ route('system_top.doCompShow') }}" class="h5">こちら</a>からご確認いただけます。
           </div>
         </div>
         <div class="row ml-5">

@@ -15,4 +15,9 @@ class MasterShift extends Model
     protected $primaryKey = 'shiftId';
     protected $guarded = array('shiftId');
 
+    public function shifts()
+    {
+        return $this->hasMany('ShiftTable','shiftId','shiftId');
+    }
+
 }
