@@ -60,6 +60,7 @@ class UserRegistrationController extends Controller
         'email' => $request->email,
         'role' => $request->role,
         'password' => Hash::make($request->password),
+        'display_shift' => $request->display_shift,
     ]);
 
     return redirect()->route('user.index');
@@ -86,6 +87,7 @@ class UserRegistrationController extends Controller
     $item->name = $request->name;
     $item->email = $request->email;
     $item->role = $request->role;
+    $item->display_shift = $request->display_shift;
     $item->save();
 
     return redirect()->route('user.index');

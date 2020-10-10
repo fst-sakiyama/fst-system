@@ -55,12 +55,12 @@
                                         <!-- <option value=4 @if($item->role=='4') selected @endif></option> -->
                                       @endcan
                                       @can('admin-higher')
-                                        <!-- <option value=5 @if($item->role=='5') selected @endif></option>
-                                        <option value=6 @if($item->role=='6') selected @endif></option>
-                                        <option value=7 @if($item->role=='7') selected @endif></option>
-                                        <option value=8 @if($item->role=='8') selected @endif></option>
-                                        <option value=9 @if($item->role=='9') selected @endif></option>
-                                        <option value=10 @if($item->role=='10') selected @endif></option> -->
+                                        <option value=5 @if($item->role=='5') selected @endif>営業＋経理</option>
+                                        <!-- <option value=6 @if($item->role=='6') selected @endif></option> -->
+                                        <option value=7 @if($item->role=='7') selected @endif>開発＋経理</option>
+                                        <!-- <option value=8 @if($item->role=='8') selected @endif></option> -->
+                                        <option value=9 @if($item->role=='9') selected @endif>運用＋経理</option>
+                                        <!-- <option value=10 @if($item->role=='10') selected @endif></option> -->
                                         <option value=11 @if($item->role=='11') selected @endif>経理チーム</option>
                                         <!-- <option value=12 @if($item->role=='12') selected @endif></option> -->
                                         <option value=13 @if($item->role=='13') selected @endif>営業チーム</option>
@@ -125,6 +125,25 @@
                               </div>
                           </div>
                           @endif
+
+                          <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="check1" class="col-form-label text-md-right" style="cursor:pointer;">
+                                <input
+                                  @if($item)
+                                    @if($item->display_shift == 1)
+                                      checked
+                                    @endif
+                                  @elseif(old('display_shift') == 1)
+                                    checked
+                                  @else
+                                    checked
+                                  @endif
+                                name="display_shift" type="checkbox" value=1 style="cursor:pointer;" id="check1">
+                                シフト表示を行う
+                                </label>
+                            </div>
+                          </div>
 
                           <div class="form-group row mb-0">
                               <div class="col-md-6 offset-md-4">

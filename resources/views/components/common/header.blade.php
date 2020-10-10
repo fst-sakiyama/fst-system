@@ -27,6 +27,7 @@
               </a>
 
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="{{ route('shift_table.index') }}">シフト表</a>
                 @can('ope-only')
                   <a class="dropdown-item" href="{{asset('/take_over?dispDate=')}}{{$dispDate->timestamp}}">監視引継ぎページ</a>
                 @endcan

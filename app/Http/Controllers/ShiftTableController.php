@@ -27,8 +27,8 @@ class ShiftTableController extends Controller
       }
 
       $calendar = new Calendar;
-      // $dates = $calendar->getCalendarDates($year,$month);
-      $dates = $calendar->getCalendarDates($year,9);
+      $dates = $calendar->getCalendarDates($year,$month);
+      // $dates = $calendar->getCalendarDates($year,9);
 
       $setting = new HolidaySetting;
       $setting->loadHoliday($year);
@@ -44,19 +44,20 @@ class ShiftTableController extends Controller
       }
 
       // 月初、月末
-      // $firstDay = Carbon::create($year,$month,1)->firstOfMonth()->format('Y-m-d');
-      // $lastDay = Carbon::create($year,$month,1)->lastOfMonth()->format('Y-m-d');
+      $firstDay = Carbon::create($year,$month,1)->firstOfMonth();
+      $lastDay = Carbon::create($year,$month,1)->lastOfMonth();
       // テスト用
-      $firstDay = Carbon::create($year,$month-1,1);
-      $lastDay = Carbon::create($year,$month-1,30);
+      // $firstDay = Carbon::create($year,$month-1,1);
+      // $lastDay = Carbon::create($year,$month-1,30);
 
       $param = [
         'firstDay' => $firstDay->format('Y-m-d'),
-        'lastDay' => $lastDay->format('Y-m-d')
+        'lastDay' => $lastDay->format('Y-m-d'),
+        'lastDay2' => $lastDay->format('Y-m-d')
       ];
 
       $items = DB::connection('mysql_two')->
-                select('SELECT t5.userId,t5.name,
+                select('SELECT t5.id,t5.name,
                         MAX(CASE WHEN Day(t5.workDay) = 1 THEN t5.shiftName ELSE null END) AS d1,
                         MAX(CASE WHEN Day(t5.workDay) = 2 THEN t5.shiftName ELSE null END) AS d2,
                         MAX(CASE WHEN Day(t5.workDay) = 3 THEN t5.shiftName ELSE null END) AS d3,
@@ -89,16 +90,22 @@ class ShiftTableController extends Controller
                         MAX(CASE WHEN Day(t5.workDay) = 30 THEN t5.shiftName ELSE null END) AS d30,
                         MAX(CASE WHEN Day(t5.workDay) = 31 THEN t5.shiftName ELSE null END) AS d31
                         FROM
-                        (SELECT t3.*,t4.name
+                        (SELECT t3.*,t4.id,t4.name,t4.order_of_row
                         FROM
                         (SELECT t1.shiftTableId,t1.workDay,t1.userId,t2.shiftName
                         FROM company_data.shift_tables AS t1
                         INNER JOIN company_data.master_shifts AS t2
                         ON t1.shiftId = t2.shiftId
                         WHERE workDay BETWEEN :firstDay AND :lastDay) AS t3
-                        INNER JOIN company_data.users AS t4
+                        RIGHT OUTER JOIN
+                        (SELECT sub1.id,sub1.name,sub1.order_of_row
+                        FROM company_data.users AS sub1
+                        WHERE sub1.deleted_at IS NULL
+                        AND sub1.display_shift = 1
+                        AND sub1.created_at <= :lastDay2) AS t4
                         ON t3.userId = t4.id) AS t5
-                        GROUP BY t5.userId',$param);
+                        GROUP BY t5.id
+                        ORDER BY t5.order_of_row IS NULL ASC,t5.order_of_row ASC,t5.id ASC',$param);
       // dd($items);
       return view('shift_table.index',compact('dates','items','holidays','calendar','firstDay'));
     }

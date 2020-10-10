@@ -36,8 +36,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
           @foreach($items as $item)
+          <tr>
             @foreach($item as $shift)
               @if($shift === reset($item))
                 <td style="display: none;">
@@ -47,13 +47,17 @@
                 <td class="small text-center text-nowrap">
                   {{ $shift }}
                 </td>
+              @else
+                <td class=""></td>
+              @endif
+              @if($loop->iteration > $firstDay->format('t') + 1)
+                @break
               @endif
             @endforeach
+          </tr>
           @endforeach
-        </tr>
       </tbody>
     </table>
-
   </div>
 </div>
 

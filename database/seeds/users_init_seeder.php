@@ -18,7 +18,7 @@ class users_init_seeder extends Seeder
         $now=Carbon::now();
         $user=new User;
         $user::insert([
-          ['name'=>'﨑山亮','email'=>'r_sakiyama@faith-sol-tech.com','password'=>Hash::make('sakiyama123'),'role'=>1,'created_at'=>$now,'updated_at'=>$now,],
+          ['name'=>'﨑山亮','email'=>'ranpeki@gmail.com','password'=>Hash::make('sakiyama123'),'role'=>1,'created_at'=>$now,'updated_at'=>$now,],
         ]);
     }
 }
