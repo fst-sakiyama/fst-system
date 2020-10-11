@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\MasterShift;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Exports\MasterShiftsExport;
 
 class MasterShiftController extends Controller
 {
@@ -86,4 +88,13 @@ class MasterShiftController extends Controller
     {
         //
     }
+
+    public function export(){
+
+      $bookName = Carbon::now()->format('YmdHis').'_master_shifts.xlsx';
+
+      return (new MasterShiftsExport)->download($bookName);
+
+    }
+
 }

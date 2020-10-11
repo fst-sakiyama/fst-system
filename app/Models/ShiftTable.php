@@ -12,9 +12,13 @@ class ShiftTable extends Model
     use SoftDeletes;
 
     protected $connection='mysql_two';
-    protected $primaryKey='shiftId';
+    protected $primaryKey='shiftTableId';
     protected $dates='workDay';
-    protected $guarded=array('shiftId');
+    protected $guarded=array('shiftTableId');
+
+    protected $fillable = [
+        'workDay', 'userId','shiftId'
+    ];
 
     public function employee()
     {

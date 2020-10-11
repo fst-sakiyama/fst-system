@@ -8,9 +8,18 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Classes\Calendar;
 use App\Classes\HolidaySetting;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UsersExport;
+use App\Imports\ShiftTablesImport;
 
 class ShiftTableController extends Controller
 {
+    protected $shiftTable = null;
+
+    public function __construct(ShiftTable $shiftTable)
+    {
+        $this->shiftTable = $shiftTable;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -128,7 +137,11 @@ class ShiftTableController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $file = $request->file('file');
+        dd(new ShiftTablesImport);
+        (new ShiftTablesImport)->import($request->file);
+
+        return redirect()->route('shift_table.index');
     }
 
     /**
@@ -175,4 +188,13 @@ class ShiftTableController extends Controller
     {
         //
     }
+
+    public function export(){
+
+      $bookName = Carbon::now()->format('YmdHis').'_users.xlsx';
+
+      return (new UsersExport)->download($bookName);
+
+    }
+
 }

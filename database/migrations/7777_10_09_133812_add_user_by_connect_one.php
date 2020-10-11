@@ -121,6 +121,6 @@ class AddUserByConnectOne extends Migration
         $table->dropColumn('restored_by');
       });
 
-      
+
     }
 }

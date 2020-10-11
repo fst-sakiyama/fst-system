@@ -126,7 +126,10 @@ Route::group(['middleware' => ['auth', 'can:admin-higher']], function () {
 Route::group(['middleware' => ['auth', 'can:system-only']], function () {
 
     // ----- 現在準備中のもの -----
+    Route::get('/master_shifts/export','MasterShiftController@export')->name('master_shifts.export');
     Route::resource('/master_shifts',MasterShiftController::class);
+
+    Route::get('/shift_table/export','ShiftTableController@export')->name('shift_table.export');
     Route::resource('/shift_table',ShiftTableController::class);
     // --------------------------
 

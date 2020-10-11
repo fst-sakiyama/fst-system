@@ -58,6 +58,30 @@
           @endforeach
       </tbody>
     </table>
+
+    <div class="mt-3">
+      {{ Form::open(['route'=>'shift_table.store','enctype'=>'multipart/form-data','method'=>'POST']) }}
+
+      <div class="form-group mt-5 form-inline">
+        {{ Form::label('file','添付ファイル',['class'=>'col-md-2']) }}
+        <div class="input-group col-md-6">
+            <div class="custom-file">
+                {{ Form::file('file',['class'=>'custom-file-input','id'=>'file','name'=>'file']) }}
+                {{ Form::label('file','ファイル選択...',['class'=>'custom-file-label','for'=>'file','data-browse'=>'参照']) }}
+            </div>
+            <div class="input-group-append">
+                {{ Form::button('取消',['class'=>'btn btn-outline-secondary reset']) }}
+            </div>
+        </div>
+      </div>
+
+      <div class="form-group text-center">
+        {{ Form::submit('シフト登録',['class'=>'w-25 btn btn-primary']) }}
+      </div>
+
+      {{ Form::close() }}
+    </div>
+
   </div>
 </div>
 
