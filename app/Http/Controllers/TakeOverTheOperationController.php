@@ -173,7 +173,7 @@ class TakeOverTheOperationController extends Controller
         }
         if($linkId){
           $takeOver = TakeOverTheOperation::find($takeOverId);
-          $takeOver->links()->sync($linkId);
+          $takeOverlinks('pagination::bootstrap-4')->sync($linkId);
         }
 
         DB::commit();
@@ -292,7 +292,7 @@ class TakeOverTheOperationController extends Controller
         }
         if($linkId){
           $takeOver = TakeOverTheOperation::find($id);
-          $takeOver->links()->attach($linkId);
+          $takeOverlinks('pagination::bootstrap-4')->attach($linkId);
         }
 
         DB::commit();

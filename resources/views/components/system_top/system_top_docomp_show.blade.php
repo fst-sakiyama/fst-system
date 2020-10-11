@@ -62,7 +62,7 @@
         @endforeach
         <div class="row mt-5">
           <div class="col d-flex justify-content-center align-middle">
-            {{ $items->onEachSide(2)->links() }}
+            {{ $items->onEachSide(2)links('pagination::bootstrap-4') }}
           </div>
         </div>
       </div>

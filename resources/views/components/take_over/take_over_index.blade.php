@@ -133,7 +133,7 @@
               @include('components.take_over.take_over_trash_tab',['takeOversTrash'=>$takeOversTrash])
             </div>
             <div class="card-footer d-flex justify-content-center align-middle">
-                  {{ $takeOversTrash->onEachSide(2)->links() }}
+                  {{ $takeOversTrash->onEachSide(2)links('pagination::bootstrap-4') }}
             </div>
           </div>
           <div class="tab-pane fade" id="wellKnownTrash" role="tabpanel" aria-labelledby="wellKnownTrash-tab">
@@ -157,7 +157,7 @@
               @include('components.take_over.well_known_trash_tab',['wellKnownsTrash'=>$wellKnownsTrash])
             </div>
             <div class="card-footer d-flex justify-content-center align-middle">
-                  {{ $wellKnownsTrash->onEachSide(2)->links() }}
+                  {{ $wellKnownsTrash->onEachSide(2)links('pagination::bootstrap-4') }}
             </div>
           </div>
           <div class="tab-pane fade" id="searchPanel" role="tabpanel" aria-labelledby="searchPanel-tab">

@@ -44,7 +44,7 @@
 					</tbody>
 				</table>
         <div class="card-footer d-flex justify-content-center align-middle">
-					{{ $filePosts->onEachSide(2)->links() }}
+					{{ $filePosts->onEachSide(2)links('pagination::bootstrap-4') }}
 				</div>
 			</div>
 		</div>
@@ -85,7 +85,7 @@
 					</tbody>
 				</table>
 				<div class="card-footer d-flex justify-content-center align-middle">
-					{{ $filePosts->onEachSide(2)->links() }}
+					{{ $filePosts->onEachSide(2)links('pagination::bootstrap-4') }}
 				</div>
 			</div>
 		</div>
