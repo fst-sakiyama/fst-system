@@ -57,7 +57,7 @@
           </tbody>
         </table>
         <div class="card-footer d-flex justify-content-center align-middle">
-          {{ $items->onEachSide(2)links('pagination::bootstrap-4') }}
+          {{ $items->onEachSide(2)->links('pagination::bootstrap-4') }}
         </div>
       </div>
     </div>

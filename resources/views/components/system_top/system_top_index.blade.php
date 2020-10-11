@@ -52,7 +52,7 @@
       </div>
       <div class="row mt-5">
         <div class="col d-flex justify-content-center align-middle">
-          {{ $progressDetails->onEachSide(2)links('pagination::bootstrap-4') }}
+          {{ $progressDetails->onEachSide(2)->links('pagination::bootstrap-4') }}
         </div>
       </div>
     </div>
