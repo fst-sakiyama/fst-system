@@ -13,7 +13,7 @@ class ShiftTable extends Model
 
     protected $connection='mysql_two';
     protected $primaryKey='shiftTableId';
-    protected $dates='workDay';
+    protected $dates=['workDay'];
     protected $guarded=array('shiftTableId');
 
     protected $fillable = [

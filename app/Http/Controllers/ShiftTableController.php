@@ -138,8 +138,21 @@ class ShiftTableController extends Controller
     public function store(Request $request)
     {
         // $file = $request->file('file');
-        dd(new ShiftTablesImport);
-        (new ShiftTablesImport)->import($request->file);
+        $file = $request->file('file');
+        $book = Excel::toArray(new ShiftTablesImport(), $file->getPathname(),null,\Maatwebsite\Excel\Excel::XLSX);
+        $items = $book[0];
+
+        $shiftTable = new ShiftTable;
+
+        foreach ($items as $item) {
+            $workDay = date('Y-m-d', ($item["work_day"] - 25569) * 60 * 60 * 24);
+            // dump($workDay.' '.$item["user_id"].' '.$item["shift_id"]);
+            ShiftTable::updateOrCreate(
+              ['workDay'=>$workDay,'userId'=>$item["user_id"]],
+              ['workDay'=>$workDay,'userId'=>$item["user_id"],'shiftId'=>$item["shift_id"]]
+            );
+
+        }
 
         return redirect()->route('shift_table.index');
     }
