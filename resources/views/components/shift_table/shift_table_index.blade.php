@@ -73,13 +73,18 @@
                 {{ Form::button('取消',['class'=>'btn btn-outline-secondary reset']) }}
             </div>
         </div>
+        <div class="form-group text-center">
+          {{ Form::submit('シフト登録',['class'=>'btn btn-primary']) }}
+        </div>
       </div>
-
-      <div class="form-group text-center">
-        {{ Form::submit('シフト登録',['class'=>'w-25 btn btn-primary']) }}
-      </div>
-
       {{ Form::close() }}
+
+      <div class="mt-5 text-center">
+        <div class="btn btn-warning"><a href={{ route("shift_table.export") }}>ユーザー一覧ダウンロード</a></div>
+      </div>
+      <div class="mt-3 text-center">
+        <div class="btn btn-warning"><a href={{ route("master_shifts.export") }}>マスターシフトダウンロード</a></div>
+      </div>
     </div>
 
   </div>

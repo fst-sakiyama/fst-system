@@ -6,6 +6,7 @@ use App\Models\MasterShift;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Exports\MasterShiftsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MasterShiftController extends Controller
 {
@@ -93,7 +94,8 @@ class MasterShiftController extends Controller
 
       $bookName = Carbon::now()->format('YmdHis').'_master_shifts.xlsx';
 
-      return (new MasterShiftsExport)->download($bookName);
+      // return (new MasterShiftsExport)->download($bookName);
+      return Excel::download(new MasterShiftsExport,$bookName);
 
     }
 

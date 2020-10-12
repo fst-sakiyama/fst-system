@@ -137,7 +137,11 @@ class ShiftTableController extends Controller
      */
     public function store(Request $request)
     {
-        // $file = $request->file('file');
+        if(!$request->file('file')){
+            return redirect()
+                    ->back();
+        }
+
         $file = $request->file('file');
         $book = Excel::toArray(new ShiftTablesImport(), $file->getPathname(),null,\Maatwebsite\Excel\Excel::XLSX);
         $items = $book[0];
@@ -202,10 +206,10 @@ class ShiftTableController extends Controller
         //
     }
 
-    public function export(){
+    public function export()
+    {
 
       $bookName = Carbon::now()->format('YmdHis').'_users.xlsx';
-
       return (new UsersExport)->download($bookName);
 
     }
