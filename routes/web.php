@@ -129,6 +129,8 @@ Route::group(['middleware' => ['auth', 'can:system-only']], function () {
     Route::get('/master_shifts/export','MasterShiftController@export')->name('master_shifts.export');
     Route::resource('/master_shifts',MasterShiftController::class);
 
+    Route::resource('/work_table',WorkTableController::class);
+
     Route::get('/shift_table/export','ShiftTableController@export')->name('shift_table.export');
     Route::resource('/shift_table',ShiftTableController::class);
     // --------------------------
