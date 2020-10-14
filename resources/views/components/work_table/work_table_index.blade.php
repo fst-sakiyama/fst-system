@@ -35,7 +35,7 @@
     <h1>勤務表</h1>
 
     <table class="table table-bordered table-sm table-hover" style="table-layout:fixed;">
-      <thead>
+      <thead class="thead-light">
         <tr>
           <th class="text-center" style="width:60px;">編集</th>
           <th class="text-center" style="width:100px;">勤務日</th>
@@ -55,18 +55,20 @@
           @if($date->month == $firstDay->month)
           <tr
           @if($holidays[$date->timestamp] || $date->dayOfWeek == 0)
-            style="background-color: #ffc0cb;"
+            class="table-danger"
           @elseif($date->dayOfWeek == 6)
-            style="background-color: #e0ffff;"
+            class="table-info"
           @endif
           >
+            @php $item = $items[$date->timestamp]; @endphp
             <td class="text-center">
-              <a href="#" class="btn btn-primary btn-sm py-0" style="font-size:12px;">編集</a>
+              <a href="{{ route('work_table.edit',[$date->copy()->timestamp])}}" class="btn btn-primary btn-sm py-0" style="font-size:12px;">編集</a>
             </td>
+
             <td class="text-center">
             {{ $date->format('m/d').'('.$calendar->weekday()[$date->dayOfWeek].')' }}
             </td>
-            @php $item = $items[$date->timestamp]; @endphp
+
             <td class="text-center">{{ $item->shiftName }}</td>
 
             <td class="text-center">
@@ -78,21 +80,36 @@
             </td>
 
             <td class="text-center">
-              {{ create_time(init_value($item->workTableRest1StartHour,$item->rest1StartHour),init_value($item->workTableRest1StartMinute,$item->rest1StartMinute)) }}
-              ～
-              {{ create_time(init_value($item->workTableRest1EndHour,$item->rest1EndHour),init_value($item->workTableRest1EndMinute,$item->rest1EndMinute)) }}
+              @php $val = init_value($item->workTableRest1StartHour,$item->rest1StartHour); @endphp
+              @if($val === '-')
+                -
+              @else
+                {{ create_time($val,init_value($item->workTableRest1StartMinute,$item->rest1StartMinute)) }}
+                ～
+                {{ create_time(init_value($item->workTableRest1EndHour,$item->rest1EndHour),init_value($item->workTableRest1EndMinute,$item->rest1EndMinute)) }}
+              @endif
             </td>
 
             <td class="text-center">
-              {{ create_time(init_value($item->workTableRest2StartHour,$item->rest2StartHour),init_value($item->workTableRest2StartMinute,$item->rest2StartMinute)) }}
-              ～
-              {{ create_time(init_value($item->workTableRest2EndHour,$item->rest2EndHour),init_value($item->workTableRest2EndMinute,$item->rest2EndMinute)) }}
+              @php $val = init_value($item->workTableRest2StartHour,$item->rest2StartHour); @endphp
+              @if($val === '-')
+                -
+              @else
+                {{ create_time($val,init_value($item->workTableRest2StartMinute,$item->rest2StartMinute)) }}
+                ～
+                {{ create_time(init_value($item->workTableRest2EndHour,$item->rest2EndHour),init_value($item->workTableRest2EndMinute,$item->rest2EndMinute)) }}
+              @endif
             </td>
 
             <td class="text-center">
-              {{ create_time(init_value($item->workTableRest3StartHour,$item->rest3StartHour),init_value($item->workTableRest3StartMinute,$item->rest3StartMinute)) }}
-              ～
-              {{ create_time(init_value($item->workTableRest3EndHour,$item->rest3EndHour),init_value($item->workTableRest3EndMinute,$item->rest3EndMinute)) }}
+              @php $val = init_value($item->workTableRest3StartHour,$item->rest3StartHour); @endphp
+              @if($val === '-')
+                -
+              @else
+                {{ create_time($val,init_value($item->workTableRest3StartMinute,$item->rest3StartMinute)) }}
+                ～
+                {{ create_time(init_value($item->workTableRest3EndHour,$item->rest3EndHour),init_value($item->workTableRest3EndMinute,$item->rest3EndMinute)) }}
+              @endif
             </td>
 
             <td class="text-center">

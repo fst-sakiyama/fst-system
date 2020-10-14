@@ -27,6 +27,13 @@ class WorkTableController extends Controller
           $month = date("m");
         }
 
+
+        // テスト用年月
+        $year = 2020;
+        $month = 10;
+        $userId = 2;
+
+
         $calendar = new Calendar;
         $dates = $calendar->getCalendarDates($year,$month);
         // $dates = $calendar->getCalendarDates($year,9);
@@ -45,12 +52,8 @@ class WorkTableController extends Controller
         }
 
         // 月初、月末
-        // $firstDay = Carbon::create($year,$month,1)->firstOfMonth();
-        // $lastDay = Carbon::create($year,$month,1)->lastOfMonth();
-        // テスト用
-        $firstDay = Carbon::create(2020,10,1)->firstOfMonth();
-        $lastDay = Carbon::create(2020,10,1)->lastOfMonth();
-        $userId = 2;
+        $firstDay = Carbon::create($year,$month,1)->firstOfMonth();
+        $lastDay = Carbon::create($year,$month,1)->lastOfMonth();
 
         $workTables = DB::connection('mysql_two')->table('shift_tables')
                       ->join('master_shifts','shift_tables.shiftId','=','master_shifts.shiftId')
@@ -112,9 +115,23 @@ class WorkTableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($d)
     {
-        //
+      $editDate = Carbon::createFromTimestamp($d)->format('Y-m-d');
+      $userId = 1;
+
+      $workTable = DB::connection('mysql_two')->table('shift_tables')
+                    ->join('master_shifts','shift_tables.shiftId','=','master_shifts.shiftId')
+                    ->leftJoin('work_tables',function($join){
+                        $join->on('shift_tables.workDay','=','work_tables.workTableWorkDay');
+                        $join->on('shift_tables.userId','=','work_tables.workTableUserId');
+                    })->whereDate('shift_tables.workDay',$editDate)
+                      ->where('shift_tables.userId',$userId)
+                      ->first();
+
+        dd($workTable);
+
+        return redirect()->route('work_table.edit');
     }
 
     /**
