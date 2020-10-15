@@ -6,7 +6,7 @@
 
 @include('components.common.header')
 
-@include('components.work_table.work_table_edit')
+@include('components.work_table.work_table_edit',['masterShifts'=>$masterShifts,'masterShift'=>$masterShift,'worktable'=>$workTable])
 
 @section('pageJs')
 <script type="text/javascript" src="{{asset('js/add_jquery.js')}}"></script>

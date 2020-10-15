@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ShiftTable;
 use App\Models\WorkTable;
+use App\Models\MasterShift;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,7 @@ class WorkTableController extends Controller
         // テスト用年月
         $year = 2020;
         $month = 10;
-        $userId = 2;
+        $userId = 1;
 
 
         $calendar = new Calendar;
@@ -65,16 +66,20 @@ class WorkTableController extends Controller
                         ->get();
 
         $items = [];
+        $status = '';
+
+        if(empty($workTables[0])){
+          $status = "シフト表が作成されておりません。\n管理者にご確認ください。";
+          return view('work_table.index',compact('status','dates','items','holidays','calendar','firstDay'));
+        }
 
         foreach($workTables as $workTable)
         {
           $items += array(Carbon::create($workTable->workDay)->timestamp=>$workTable);
-          // dump(Carbon::create($item->workDay)->timestamp);
         }
          // dd($items);
 
-
-        return view('work_table.index',compact('dates','items','holidays','calendar','firstDay'));
+        return view('work_table.index',compact('status','dates','items','holidays','calendar','firstDay'));
     }
 
     /**
@@ -115,9 +120,14 @@ class WorkTableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($d)
+    public function edit($id)
     {
-      $editDate = Carbon::createFromTimestamp($d)->format('Y-m-d');
+
+    }
+
+    public function doEdit(Request $request)
+    {
+      $editDate = Carbon::createFromTimestamp($request->d)->format('Y-m-d');
       $userId = 1;
 
       $workTable = DB::connection('mysql_two')->table('shift_tables')
@@ -129,9 +139,10 @@ class WorkTableController extends Controller
                       ->where('shift_tables.userId',$userId)
                       ->first();
 
-        dd($workTable);
+        $masterShifts = MasterShift::all();
+        $masterShift = MasterShift::select('shiftId','shiftName')->get()->pluck('shiftName','shiftId');
 
-        return redirect()->route('work_table.edit');
+        return view('work_table.edit',compact('masterShifts','masterShift','workTable'));
     }
 
     /**
