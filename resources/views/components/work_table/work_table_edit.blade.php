@@ -16,27 +16,17 @@
         {{ Form::hidden('workDay',$workTable->workDay )}}
         {{ Form::hidden('userId',$workTable->userId) }}
 
-        <div class="card-body">
-          <div class="mt-3">
 
-            <div class="form-group mt-3 form-inline">
-              {{ Form::label('shiftId','シフト',['class'=>'col-md-2']) }}
-              {{ Form::select('shiftId',$masterShift,$workTable->shiftName,['class'=>'col-md-4','wire:model'=>'shiftId','wire:change'=>'onChange'])}}
-              <br>
-              @livewireStyles
-              <livewire:work-table>
-              @livewireScripts
-            </div>
+        <livewire:work-table :workTable=$workTable>
 
-          </div>
-        </div>
 
         <div class="card-footer">
           <div class="form-group text-center">
-
+            {{ Form::submit('編集を登録する',['class'=>'btn btn-primary']) }}
           </div>
         </div>
 
+        {{ Form::close() }}
       </div>
     </div>
   </div>

@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Classes\Calendar;
 use App\Classes\HolidaySetting;
+use Illuminate\Support\Facades\Auth;
 
 class WorkTableController extends Controller
 {
@@ -28,11 +29,12 @@ class WorkTableController extends Controller
           $month = date("m");
         }
 
+        $userId = Auth::id();
 
         // テスト用年月
         $year = 2020;
         $month = 10;
-        $userId = 1;
+        $userId = 2;
 
 
         $calendar = new Calendar;
@@ -100,7 +102,7 @@ class WorkTableController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -128,7 +130,10 @@ class WorkTableController extends Controller
     public function doEdit(Request $request)
     {
       $editDate = Carbon::createFromTimestamp($request->d)->format('Y-m-d');
-      $userId = 1;
+      $userId = Auth::id();
+
+      // テスト用
+      $userId = 2;
 
       $workTable = DB::connection('mysql_two')->table('shift_tables')
                     ->join('master_shifts','shift_tables.shiftId','=','master_shifts.shiftId')
