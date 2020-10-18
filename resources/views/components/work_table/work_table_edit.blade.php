@@ -16,17 +16,19 @@
         {{ Form::hidden('workDay',$workTable->workDay )}}
         {{ Form::hidden('userId',$workTable->userId) }}
 
-
-        <livewire:work-table :workTable=$workTable>
-
+        <div class="card-body">
+          <div class="mt-3">
+            <livewire:work-table :workTable=$workTable :masterShift=$masterShift>
+          </div>
+        </div>
 
         <div class="card-footer">
           <div class="form-group text-center">
             {{ Form::submit('編集を登録する',['class'=>'btn btn-primary']) }}
+            {{ Form::close() }}
           </div>
         </div>
 
-        {{ Form::close() }}
       </div>
     </div>
   </div>

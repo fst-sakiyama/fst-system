@@ -34,7 +34,7 @@ class WorkTableController extends Controller
         // テスト用年月
         $year = 2020;
         $month = 10;
-        $userId = 2;
+        // $userId = 2;
 
 
         $calendar = new Calendar;
@@ -133,7 +133,7 @@ class WorkTableController extends Controller
       $userId = Auth::id();
 
       // テスト用
-      $userId = 2;
+      // $userId = 2;
 
       $workTable = DB::connection('mysql_two')->table('shift_tables')
                     ->join('master_shifts','shift_tables.shiftId','=','master_shifts.shiftId')
