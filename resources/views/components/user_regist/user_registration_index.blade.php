@@ -22,6 +22,7 @@
           <table class="table table-hover">
             <thead>
               <tr>
+                <th>シフト</th>
                 <th>名前</th>
                 <th>メールアドレス</th>
                 <th>権限名</th>
@@ -39,6 +40,7 @@
               @foreach($items as $item)
                 @if($item->role != '1')
                   <tr>
+                    <td><a href="{{ route('work_table.index',['uid'=>$item->id]) }}"><div class="btn btn-sm btn-primary px-0">シフト</div></a></td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->email }}</td>
                     <td>{{ $item->master_role->roleName }}</td>

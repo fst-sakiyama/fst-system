@@ -1,6 +1,7 @@
 @section('content')
 
 @php
+  $loginUserId = Auth::id();
   $prevMonth = $firstDay->copy()->subMonth();
   $nextMonth = $firstDay->copy()->addMonth();
 
@@ -90,7 +91,9 @@
               class="table-info"
             @endif
             >
+
               @php $item = $items[$date->timestamp]; @endphp
+
               <td class="text-center">
                 <a href="{{ asset('/work_table/doEdit?d=')}}{{$date->timestamp}}" class="btn btn-primary btn-sm py-0" style="font-size:12px;">編集</a>
               </td>

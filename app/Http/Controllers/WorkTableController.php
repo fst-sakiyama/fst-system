@@ -29,12 +29,15 @@ class WorkTableController extends Controller
           $month = date("m");
         }
 
-        $userId = Auth::id();
-
+        if(empty($request->uid)){
+          $userId = Auth::id();
+        } else {
+          $userId = $request->uid;
+        }
         // テスト用年月
         // $year = 2020;
         // $month = 10;
-        $userId = 2;
+        // $userId = 1;
 
 
         $calendar = new Calendar;
@@ -124,37 +127,54 @@ class WorkTableController extends Controller
           $request->workTableRest3EndMinute = null;
         }
 
-        // dd($request->workTableRest3StartHour);
+        // dd($request);
 
-        WorkTable::updateOrcreate(
-          [
-            'workTableWorkDay' => $request->workDay,
-            'workTableUserId' => $request->userId
-          ],
-          [
-            'workTableWorkDay' => $request->workDay,
-            'workTableUserId' => $request->userId,
-            'goingWorkHour' => $request->goingWorkHour,
-            'goingWorkMinute' => $request->goingWorkMinute,
-            'leavingWorkHour' => $request->leavingWorkHour,
-            'leavingWorkMinute' => $request->leavingWorkMinute,
-            'workTableRest1StartHour' => $request->workTableRest1StartHour,
-            'workTableRest1StartMinute' => $request->workTableRest1StartMinute,
-            'workTableRest1EndHour' => $request->workTableRest1EndHour,
-            'workTableRest1EndMinute' => $request->workTableRest1EndMinute,
-            'workTableRest2StartHour' => $request->workTableRest2StartHour,
-            'workTableRest2StartMinute' => $request->workTableRest2StartMinute,
-            'workTableRest2EndHour' => $request->workTableRest2EndHour,
-            'workTableRest2EndMinute' => $request->workTableRest2EndMinute,
-            'workTableRest3StartHour' => $request->workTableRest3StartHour,
-            'workTableRest3StartMinute' => $request->workTableRest3StartMinute,
-            'workTableRest3EndHour' => $request->workTableRest3EndHour,
-            'workTableRest3EndMinute' => $request->workTableRest3EndMinute,
-            'lateEarlyLeave' => $request->lateEarlyLeave,
-            'specialReason' => $request->specialReason,
-            'remarks' => $request->remarks
-          ]
-        );
+        DB::beginTransaction();
+
+        try{
+          WorkTable::updateOrcreate(
+            [
+              'workTableWorkDay' => $request->workDay,
+              'workTableUserId' => $request->userId
+            ],
+            [
+              'workTableWorkDay' => $request->workDay,
+              'workTableUserId' => $request->userId,
+              'goingWorkHour' => $request->goingWorkHour,
+              'goingWorkMinute' => $request->goingWorkMinute,
+              'leavingWorkHour' => $request->leavingWorkHour,
+              'leavingWorkMinute' => $request->leavingWorkMinute,
+              'workTableRest1StartHour' => $request->workTableRest1StartHour,
+              'workTableRest1StartMinute' => $request->workTableRest1StartMinute,
+              'workTableRest1EndHour' => $request->workTableRest1EndHour,
+              'workTableRest1EndMinute' => $request->workTableRest1EndMinute,
+              'workTableRest2StartHour' => $request->workTableRest2StartHour,
+              'workTableRest2StartMinute' => $request->workTableRest2StartMinute,
+              'workTableRest2EndHour' => $request->workTableRest2EndHour,
+              'workTableRest2EndMinute' => $request->workTableRest2EndMinute,
+              'workTableRest3StartHour' => $request->workTableRest3StartHour,
+              'workTableRest3StartMinute' => $request->workTableRest3StartMinute,
+              'workTableRest3EndHour' => $request->workTableRest3EndHour,
+              'workTableRest3EndMinute' => $request->workTableRest3EndMinute,
+              'lateEarlyLeave' => $request->lateEarlyLeave,
+              'specialReason' => $request->specialReason,
+              'remarks' => $request->remarks
+            ]
+          );
+
+          $item = ShiftTable::whereDate('workDay','=',$request->workDay)
+                    ->where('userId','=',$request->userId)->first();
+          $item->shiftId = $request->shiftId;
+          $item->save();
+
+          DB::commit();
+
+        }catch(\Exception $e) {
+
+          DB::rollback();
+          dd('エラーが発生しました work_table.stor');
+
+        }
 
         return redirect()->route('work_table.index');
     }
@@ -187,7 +207,7 @@ class WorkTableController extends Controller
       $userId = Auth::id();
 
       // テスト用
-      $userId = 2;
+      $userId = 1;
 
       $workTable = DB::connection('mysql_two')->table('shift_tables')
                     ->join('master_shifts','shift_tables.shiftId','=','master_shifts.shiftId')
