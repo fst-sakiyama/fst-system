@@ -1,8 +1,11 @@
 @section('content')
 
 @php
+  $prevMonth = $firstDay->copy()->subMonth();
+  $nextMonth = $firstDay->copy()->addMonth();
+
   function init_value($str1,$str2){
-    if(isset($str1)){
+    if(isset($str1) && $str1 != "null"){
       return $str1;
     } elseif(isset($str2)){
       return $str2;
@@ -12,7 +15,7 @@
   }
 
   function init_class($str1,$str2){
-    if(isset($str1)){
+    if(isset($str1) && $str1 != "null"){
       return "";
     } elseif(isset($str2)){
       return "";
@@ -32,7 +35,28 @@
 
 <div class="contents">
   <div class="container container-top">
-    <h1>勤務表</h1>
+    <div class="row">
+      <div class="col text-left">
+        <a href="{{ route('work_table.index',['year'=>$prevMonth->format('Y'),'month'=>$prevMonth->format('m')])}}">
+          <i class="fa fa-lg fa-chevron-circle-left" style="color:#65ab31;"><small>{{ $prevMonth->format('Y年m月') }}</small></i>
+        </a>
+      </div>
+      <div class="col text-center">
+        <a href="{{ route('work_table.index') }}">
+          <i class="fa fa-lg fa-angle-left" style="color:#65ab31;"><small>当月へ</small></i><i class="fa fa-lg fa-angle-right" style="color:#65ab31;"></i>
+        </a>
+      </div>
+      <div class="col text-right">
+        <a href="{{ route('work_table.index',['year'=>$nextMonth->format('Y'),'month'=>$nextMonth->format('m')])}}">
+          <i class="fa fa-lg fa-chevron-circle-right" style="color:#65ab31;"><small>{{ $nextMonth->format('Y年m月') }}</small></i>
+        </a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col mt-3 ml-5">
+        <h1>{{ $firstDay->format('Y年m月') }}勤務表</h1>
+      </div>
+    </div>
 
     @if($status)
       <div class="mt-5 alert alert-danger text-center" role="alert">

@@ -16,11 +16,9 @@
         {{ Form::hidden('workDay',$workTable->workDay )}}
         {{ Form::hidden('userId',$workTable->userId) }}
 
-        <div class="card-body">
-          <div class="mt-3">
+
             <livewire:work-table :workTable=$workTable :masterShift=$masterShift>
-          </div>
-        </div>
+
 
         <div class="card-footer">
           <div class="form-group text-center">

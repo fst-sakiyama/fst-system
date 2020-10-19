@@ -32,9 +32,9 @@ class WorkTableController extends Controller
         $userId = Auth::id();
 
         // テスト用年月
-        $year = 2020;
-        $month = 10;
-        // $userId = 2;
+        // $year = 2020;
+        // $month = 10;
+        $userId = 2;
 
 
         $calendar = new Calendar;
@@ -102,7 +102,61 @@ class WorkTableController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+
+        if(is_null($request->workTableRest1StartHour) || is_null($request->workTableRest1StartMinute) || is_null($request->workTableRest1EndHour) || is_null($request->workTableRest1EndMinute)){
+          $request->workTableRest1StartHour = null;
+          $request->workTableRest1StartMinute = null;
+          $request->workTableRest1EndHour= null;
+          $request->workTableRest1EndMinute = null;
+        }
+
+        if(is_null($request->workTableRest2StartHour) || is_null($request->workTableRest2StartMinute) || is_null($request->workTableRest2EndHour) || is_null($request->workTableRest2EndMinute)){
+          $request->workTableRest2StartHour = null;
+          $request->workTableRest2StartMinute = null;
+          $request->workTableRest2EndHour= null;
+          $request->workTableRest2EndMinute = null;
+        }
+
+        if(is_null($request->workTableRest3StartHour) || is_null($request->workTableRest3StartMinute) || is_null($request->workTableRest3EndHour) || is_null($request->workTableRest3EndMinute)){
+          $request->workTableRest3StartHour = null;
+          $request->workTableRest3StartMinute = null;
+          $request->workTableRest3EndHour= null;
+          $request->workTableRest3EndMinute = null;
+        }
+
+        // dd($request->workTableRest3StartHour);
+
+        WorkTable::updateOrcreate(
+          [
+            'workTableWorkDay' => $request->workDay,
+            'workTableUserId' => $request->userId
+          ],
+          [
+            'workTableWorkDay' => $request->workDay,
+            'workTableUserId' => $request->userId,
+            'goingWorkHour' => $request->goingWorkHour,
+            'goingWorkMinute' => $request->goingWorkMinute,
+            'leavingWorkHour' => $request->leavingWorkHour,
+            'leavingWorkMinute' => $request->leavingWorkMinute,
+            'workTableRest1StartHour' => $request->workTableRest1StartHour,
+            'workTableRest1StartMinute' => $request->workTableRest1StartMinute,
+            'workTableRest1EndHour' => $request->workTableRest1EndHour,
+            'workTableRest1EndMinute' => $request->workTableRest1EndMinute,
+            'workTableRest2StartHour' => $request->workTableRest2StartHour,
+            'workTableRest2StartMinute' => $request->workTableRest2StartMinute,
+            'workTableRest2EndHour' => $request->workTableRest2EndHour,
+            'workTableRest2EndMinute' => $request->workTableRest2EndMinute,
+            'workTableRest3StartHour' => $request->workTableRest3StartHour,
+            'workTableRest3StartMinute' => $request->workTableRest3StartMinute,
+            'workTableRest3EndHour' => $request->workTableRest3EndHour,
+            'workTableRest3EndMinute' => $request->workTableRest3EndMinute,
+            'lateEarlyLeave' => $request->lateEarlyLeave,
+            'specialReason' => $request->specialReason,
+            'remarks' => $request->remarks
+          ]
+        );
+
+        return redirect()->route('work_table.index');
     }
 
     /**
@@ -133,7 +187,7 @@ class WorkTableController extends Controller
       $userId = Auth::id();
 
       // テスト用
-      // $userId = 2;
+      $userId = 2;
 
       $workTable = DB::connection('mysql_two')->table('shift_tables')
                     ->join('master_shifts','shift_tables.shiftId','=','master_shifts.shiftId')
