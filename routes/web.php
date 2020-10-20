@@ -49,6 +49,13 @@ Route::group(['middleware' => ['auth', 'can:user-higher']], function () {
     Route::get('/system_top/doCompShow','SystemTopController@doCompShow')->name('system_top.doCompShow');
     Route::resource('/system_top',SystemTopController::class,['names' => ['index' => 'top']]);
 
+    Route::get('/work_table/doEdit','WorkTableController@doEdit')->name('work_table.doEdit');
+    Route::get('/work_table/export','WorkTableController@export')->name('work_table.export');
+    Route::resource('/work_table',WorkTableController::class);
+
+    Route::get('/shift_table/export','ShiftTableController@export')->name('shift_table.export');
+    Route::resource('/shift_table',ShiftTableController::class);
+
     Route::get('/file_show', 'FileShowController@show')->name('file_show.show');
     Route::get('/file_addShow', 'FileShowController@addShow')->name('file_addShow.addShow');
 
@@ -113,6 +120,9 @@ Route::group(['middleware' => ['auth', 'can:ope-only']], function () {
 // 管理者以上（開発者＆管理者）に許可
 Route::group(['middleware' => ['auth', 'can:admin-higher']], function () {
 
+    Route::get('/master_shifts/export','MasterShiftController@export')->name('master_shifts.export');
+    Route::resource('/master_shifts',MasterShiftController::class);
+
     Route::get('/user_regist','UserRegistrationController@index')->name('user.index');
     Route::get('/user_regist/create','UserRegistrationController@create')->name('user.regist');
     Route::post('/user_regist/create','UserRegistrationController@store')->name('user.store');
@@ -126,14 +136,11 @@ Route::group(['middleware' => ['auth', 'can:admin-higher']], function () {
 Route::group(['middleware' => ['auth', 'can:system-only']], function () {
 
     // ----- 現在準備中のもの -----
-    Route::get('/master_shifts/export','MasterShiftController@export')->name('master_shifts.export');
-    Route::resource('/master_shifts',MasterShiftController::class);
 
-    Route::get('/work_table/doEdit','WorkTableController@doEdit')->name('work_table.doEdit');
-    Route::resource('/work_table',WorkTableController::class);
 
-    Route::get('/shift_table/export','ShiftTableController@export')->name('shift_table.export');
-    Route::resource('/shift_table',ShiftTableController::class);
+
+
+
     // --------------------------
 
     Route::delete('/user_regist/destroy/{id}','UserRegistrationController@destroy')->name('user.destroy');

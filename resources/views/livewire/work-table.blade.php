@@ -70,12 +70,12 @@
 
     <div class="form-group mt-3 form-inline">
       {{ Form::label('specialReason','特別事由',['class'=>'col-2']) }}
-      {{ Form::textarea('specialReason',null,['class'=>'form-control col-4','rows'=>3,$disabled]) }}
+      {{ Form::textarea('specialReason',$specialReason,['class'=>'form-control col-4','rows'=>3,$disabled]) }}
     </div>
 
     <div class="form-group mt-4 form-inline">
       {{ Form::label('remarks','備考',['class'=>'col-2']) }}
-      {{ Form::textarea('remarks',null,['class'=>'form-control col-4','rows'=>3]) }}
+      {{ Form::textarea('remarks',$remarks,['class'=>'form-control col-4','rows'=>3,'wire:model'=>'remarks']) }}
     </div>
 
   </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Models\ShiftTable;
 use App\Models\WorkTable;
 use App\Models\MasterShift;
@@ -11,6 +12,11 @@ use Illuminate\Support\Facades\DB;
 use App\Classes\Calendar;
 use App\Classes\HolidaySetting;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use App\Exports\Export;
+use App\Http\Requests\UserFormRequest;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ViewExport;
 
 class WorkTableController extends Controller
 {
@@ -29,11 +35,16 @@ class WorkTableController extends Controller
           $month = date("m");
         }
 
-        if(empty($request->uid)){
-          $userId = Auth::id();
+        if(Gate::allows('admin-higher')){
+          if(empty($request->uid)){
+            $userId = Auth::id();
+          } else {
+            $userId = $request->uid;
+          }
         } else {
-          $userId = $request->uid;
+          $userId = Auth::id();
         }
+
         // テスト用年月
         // $year = 2020;
         // $month = 10;
@@ -75,7 +86,7 @@ class WorkTableController extends Controller
 
         if(empty($workTables[0])){
           $status = "シフト表が作成されておりません。\n管理者にご確認ください。";
-          return view('work_table.index',compact('status','dates','items','holidays','calendar','firstDay'));
+          return view('work_table.index',compact('userId','status','dates','items','holidays','calendar','firstDay'));
         }
 
         foreach($workTables as $workTable)
@@ -84,7 +95,7 @@ class WorkTableController extends Controller
         }
          // dd($items);
 
-        return view('work_table.index',compact('status','dates','items','holidays','calendar','firstDay'));
+        return view('work_table.index',compact('userId','status','dates','items','holidays','calendar','firstDay'));
     }
 
     /**
@@ -176,7 +187,7 @@ class WorkTableController extends Controller
 
         }
 
-        return redirect()->route('work_table.index');
+        return redirect()->route('work_table.index',['uid'=>$request->userId]);
     }
 
     /**
@@ -204,10 +215,10 @@ class WorkTableController extends Controller
     public function doEdit(Request $request)
     {
       $editDate = Carbon::createFromTimestamp($request->d)->format('Y-m-d');
-      $userId = Auth::id();
+      $userId = $request->uid;
 
       // テスト用
-      $userId = 1;
+      // $userId = 1;
 
       $workTable = DB::connection('mysql_two')->table('shift_tables')
                     ->join('master_shifts','shift_tables.shiftId','=','master_shifts.shiftId')
@@ -221,7 +232,7 @@ class WorkTableController extends Controller
         $masterShifts = MasterShift::all();
         $masterShift = MasterShift::select('shiftId','shiftName')->get()->pluck('shiftName','shiftId');
 
-        return view('work_table.edit',compact('masterShifts','masterShift','workTable'));
+        return view('work_table.edit',compact('userId','masterShifts','masterShift','workTable'));
     }
 
     /**
@@ -245,5 +256,77 @@ class WorkTableController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function export(Request $request)
+    {
+      $year = $request->year;
+      $month = $request->month;
+      // 年月の指定がないとき
+      if(empty($year) || empty($month)){
+        $year = date("Y");
+        $month = date("m");
+      }
+
+      if(Gate::allows('admin-higher')){
+        if(empty($request->uid)){
+          $userId = Auth::id();
+        } else {
+          $userId = $request->uid;
+        }
+      } else {
+        $userId = Auth::id();
+      }
+
+      // テスト用年月
+      // $year = 2020;
+      // $month = 10;
+      // $userId = 2;
+
+
+      $calendar = new Calendar;
+      $dates = $calendar->getCalendarDates($year,$month);
+      // $dates = $calendar->getCalendarDates($year,9);
+
+      $setting = new HolidaySetting;
+      $setting->loadHoliday($year);
+
+      $holidays = [];
+
+      foreach ($dates as $date) {
+        if($setting->isHoliday($date)){
+          $holidays += array($date->timestamp=>$setting->jpHolidays[$date->timestamp]);
+        } else {
+          $holidays += array($date->timestamp=>'');
+        }
+      }
+
+      // 月初、月末
+      $firstDay = Carbon::create($year,$month,1)->firstOfMonth();
+      $lastDay = Carbon::create($year,$month,1)->lastOfMonth();
+
+      $workTables = DB::connection('mysql_two')->table('shift_tables')
+                    ->join('master_shifts','shift_tables.shiftId','=','master_shifts.shiftId')
+                    ->leftJoin('work_tables',function($join){
+                        $join->on('shift_tables.workDay','=','work_tables.workTableWorkDay');
+                        $join->on('shift_tables.userId','=','work_tables.workTableUserId');
+                    })->whereBetween('shift_tables.workDay',[$firstDay,$lastDay])
+                      ->where('shift_tables.userId',$userId)
+                      ->get();
+
+      $items = [];
+      $status = '';
+
+      foreach($workTables as $workTable)
+      {
+        $items += array(Carbon::create($workTable->workDay)->timestamp=>$workTable);
+      }
+
+        $view = view('work_table.export',compact('userId','status','dates','items','holidays','calendar','firstDay'));
+
+        $userName = User::find($userId)->name;
+        $bookName = $year.'年'.$month.'月分【'.$userName.'】勤務表.xlsx';
+
+        return Excel::download(new ViewExport($view), $bookName);
     }
 }

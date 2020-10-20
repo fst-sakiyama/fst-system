@@ -1,5 +1,3 @@
-@section('content')
-
 @php
   $userName = App\User::find($userId)->name;
   $prevMonth = $firstDay->copy()->subMonth();
@@ -34,48 +32,10 @@
   }
 @endphp
 
-<div class="contents">
-  <div class="container container-top">
-    <div class="row">
-      <div class="col text-left">
-        <a href="{{ route('work_table.index',['year'=>$prevMonth->format('Y'),'month'=>$prevMonth->format('m'),'uid'=>$userId])}}">
-          <i class="fa fa-lg fa-chevron-circle-left" style="color:#65ab31;"><small>{{ $prevMonth->format('Y年m月') }}</small></i>
-        </a>
-      </div>
-      <div class="col text-center">
-        <a href="{{ route('work_table.index',['uid'=>$userId]) }}">
-          <i class="fa fa-lg fa-angle-left" style="color:#65ab31;"><small>当月へ</small></i><i class="fa fa-lg fa-angle-right" style="color:#65ab31;"></i>
-        </a>
-      </div>
-      <div class="col text-right">
-        <a href="{{ route('work_table.index',['year'=>$nextMonth->format('Y'),'month'=>$nextMonth->format('m'),'uid'=>$userId])}}">
-          <i class="fa fa-lg fa-chevron-circle-right" style="color:#65ab31;"><small>{{ $nextMonth->format('Y年m月') }}</small></i>
-        </a>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-8 mt-3 ml-5 align-self-center">
-        <div class="h3">{{ $firstDay->format('Y年m月') }}勤務表　{{ $userName }}</div>
-      </div>
-      @can('admin-higher')
-      <div class="col-md-3 align-self-center text-right">
-        <a href="{{ route('work_table.export',['year'=>$firstDay->format('Y'),'month'=>$firstDay->format('m'),'uid'=>$userId]) }}">
-          <div class="btn btn-success py-0" style="cursor:pointer;">勤務表の出力</div>
-        </a>
-      </div>
-      @endcan
-    </div>
-
-    @if($status)
-      <div class="mt-5 alert alert-danger text-center" role="alert">
-        {!! nl2br(e($status)) !!}
-      </div>
-    @else
 
       <table class="table table-bordered table-sm table-hover" style="table-layout:fixed;">
         <thead class="thead-light">
           <tr>
-            <th class="text-center" style="width:60px;">編集</th>
             <th class="text-center" style="width:100px;">勤務日</th>
             <th class="text-center" style="width:60px;">シフト</th>
             <th class="text-center" style="width:80px;">出勤</th>
@@ -100,10 +60,6 @@
             >
 
               @php $item = $items[$date->timestamp]; @endphp
-
-              <td class="text-center">
-                <a href="{{ route('work_table.doEdit',['d'=>$date->timestamp,'uid'=>$userId]) }}" class="btn btn-primary btn-sm py-0" style="font-size:12px;">編集</a>
-              </td>
 
               <td class="text-center">
               {{ $date->format('m/d').'('.$calendar->weekday()[$date->dayOfWeek].')' }}
@@ -175,10 +131,3 @@
           @endforeach
         </tbody>
       </table>
-
-    @endif
-
-  </div>
-</div>
-
-@endsection

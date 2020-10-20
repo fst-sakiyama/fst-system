@@ -45,6 +45,8 @@ class WorkTable extends Component
     public $lateEarlyLeave ='';
     public $checked = '';
     public $disabled = '';
+    public $specialReason = '';
+    public $remarks = '';
 
     public function mount($workTable,$masterShift)
     {
@@ -133,6 +135,9 @@ class WorkTable extends Component
         $this->checked = false;
         $this->disabled = 'disabled';
       }
+
+      $this->specialReason = $workTable->specialReason;
+      $this->remarks = $workTable->remarks;
 
       $this->masterShift = $masterShift;
 

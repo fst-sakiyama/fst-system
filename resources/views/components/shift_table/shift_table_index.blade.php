@@ -59,6 +59,7 @@
       </tbody>
     </table>
 
+    @can('admin-higher')
     <div class="mt-3">
       {{ Form::open(['route'=>'shift_table.store','enctype'=>'multipart/form-data','method'=>'POST']) }}
 
@@ -86,6 +87,7 @@
         <div class="btn btn-warning"><a href={{ route("master_shifts.export") }}>マスターシフトダウンロード</a></div>
       </div>
     </div>
+    @endcan
 
   </div>
 </div>
