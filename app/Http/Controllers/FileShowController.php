@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\FilePost;
+use App\Models\FstSystemInformation;
 use App\Models\AddFilePost;
 use Storage;
 
@@ -64,6 +65,35 @@ class FileShowController extends Controller
       } else {
         return response($contents)->header('Content-Type', $mimeType)
                 ->header('Content-Disposition', 'attachment; filename="'.$filePost->fileName.'"');
+      }
+    }
+
+    public function infoShow(Request $request)
+    {
+      $fstSystemInformation = FstSystemInformation::where('id',$request->id)
+                  ->first();
+      $trimStr = DIRECTORY_SEPARATOR;
+      $fileURL = $fstSystemInformation->fileUrl;
+      $dirName = pathinfo($fileURL,PATHINFO_DIRNAME);
+      $dir = basename($dirName);
+      $fileRealName = pathinfo($fileURL, PATHINFO_BASENAME);
+      $fileFullName = $dir.$trimStr.$fileRealName;
+      $disk = Storage::disk('s3');
+      $contents = $disk->get($fileFullName);
+      $mimeType = $disk->mimeType($fileFullName);
+      if($mimeType == 'application/pdf'){
+        return response($contents)->header('Content-Type', $mimeType)
+                ->header('Content-Disposition', 'inline; filename="'.$fstSystemInformation->fileName.'"');
+      } elseif($mimeType == 'text/plain') {
+        mb_language('Ja');
+        $str = mb_convert_encoding($contents,"utf-8","ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN,SJIS");
+        echo nl2br("\n".$str);
+      } elseif(preg_match('/^image/',$mimeType)=='1') {
+        return response($contents)->header('Content-Type', $mimeType)
+                ->header('Content-Disposition', 'inline; filename="'.$fstSystemInformation->fileName.'"');
+      } else {
+        return response($contents)->header('Content-Type', $mimeType)
+                ->header('Content-Disposition', 'attachment; filename="'.$fstSystemInformation->fileName.'"');
       }
     }
 }

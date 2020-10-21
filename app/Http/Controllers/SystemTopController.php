@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FstSystemProgressDetail;
 use App\Models\FstSystemRequestPlate;
 use App\Models\FstSystemReplyToRequest;
+use App\Models\FstSystemInformation;
 use App\Models\MasterRequestClassification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -38,7 +39,9 @@ class SystemTopController extends Controller
                           ->orderBy('doComp','desc')
                           ->paginate(5);
 
-      return view('system_top.index',compact('progressDetails'));
+      $fstSystemInformation = FstSystemInformation::orderBy('classification')->get();
+
+      return view('system_top.index',compact('progressDetails','fstSystemInformation'));
 
 
     }

@@ -2,6 +2,7 @@
 
 @php
   $todayDate = Carbon\Carbon::now();
+  $classification = array('','【共通】','','【経理】','','【営業】','','【開発】','','【運用】');
 @endphp
 
 <div class="contents">
@@ -9,12 +10,28 @@
     <div class="row mt-4 justify-content-center">
       <div class="col-md-8">
         <h3>利用方法について</h3>
-        <div class="row mt-3 ml-1">
+        <div  class="row mt-3 ml-1">
           <div class="col">
-            利用方法PDF版はこちら。（ブラウザで表示されます）<br>
-            利用方法ダウンロード版（Word）はこちら。
+            <a href="{{ route('top_information.create') }}">
+              <div class="btn btn-sm btn-warning">新規登録</div>
+            </a>
           </div>
         </div>
+        @foreach($fstSystemInformation as $item)
+            <div class="row mt-3 ml-1">
+              <div class="col-9">
+                <li>
+                  {{ $classification[$item->classification] }}<a href="{{ route('file_infoShow.infoShow',['id'=>$item->id]) }}" target="topinfo" class="h6">{{ $item->information }}（{{ $item->fileName}}）</a>
+                </li>
+              </div>
+              <div class="col-3 clearfix">
+                <div class="float-right">
+                  <a href="{{ route('top_information.edit',[$item->id]) }}" class="btn btn-sm btn-primary py-0">修正</a>
+                  <div class="btn btn-sm btn-danger py-0">削除</div>
+                </div>
+              </div>
+            </div>
+        @endforeach
       </div>
     </div>
     <div class="row mt-4 justify-content-center">

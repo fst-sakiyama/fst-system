@@ -58,6 +58,7 @@ Route::group(['middleware' => ['auth', 'can:user-higher']], function () {
 
     Route::get('/file_show', 'FileShowController@show')->name('file_show.show');
     Route::get('/file_addShow', 'FileShowController@addShow')->name('file_addShow.addShow');
+    Route::get('/file_infoShow', 'FileShowController@infoShow')->name('file_infoShow.infoShow');
 
     Route::get('/change_password','ChangePasswordController@index')->name('change_password.index');
     Route::post('/change_password','ChangePasswordController@changePassword')->name('change_password.change');
@@ -137,8 +138,8 @@ Route::group(['middleware' => ['auth', 'can:system-only']], function () {
 
     // ----- 現在準備中のもの -----
 
-
-
+    // Route::get('/top_information/create','FstSystemInformationController@create')->name('top_information.create');
+    Route::resource('/top_information',FstSystemInformationController::class);
 
 
     // --------------------------

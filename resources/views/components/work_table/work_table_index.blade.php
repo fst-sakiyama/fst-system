@@ -60,7 +60,7 @@
       @can('admin-higher')
       <div class="col-md-3 align-self-center text-right">
         <a href="{{ route('work_table.export',['year'=>$firstDay->format('Y'),'month'=>$firstDay->format('m'),'uid'=>$userId]) }}">
-          <div class="btn btn-success py-0" style="cursor:pointer;">勤務表の出力</div>
+          <div class="btn btn-warning py-0" style="cursor:pointer;">勤務表の出力</div>
         </a>
       </div>
       @endcan
