@@ -21,25 +21,25 @@
     <tr>
       <th class="text-center">勤務日</th>
       <th class="text-center">曜日</th>
+      <th class="text-center">出勤</th>
+      <th class="text-center">出勤</th>
+      <th class="text-center">退勤</th>
+      <th class="text-center">退勤</th>
+      <th class="text-center">休憩1</th>
+      <th class="text-center">休憩1</th>
+      <th class="text-center">休憩1</th>
+      <th class="text-center">休憩1</th>
+      <th class="text-center">休憩2</th>
+      <th class="text-center">休憩2</th>
+      <th class="text-center">休憩2</th>
+      <th class="text-center">休憩2</th>
+      <th class="text-center">休憩3</th>
+      <th class="text-center">休憩3</th>
+      <th class="text-center">休憩3</th>
+      <th class="text-center">休憩3</th>
       <th class="text-center">シフト</th>
-      <th class="text-center">出勤</th>
-      <th class="text-center">出勤</th>
-      <th class="text-center">退勤</th>
-      <th class="text-center">退勤</th>
-      <th class="text-center">休憩1</th>
-      <th class="text-center">休憩1</th>
-      <th class="text-center">休憩1</th>
-      <th class="text-center">休憩1</th>
-      <th class="text-center">休憩2</th>
-      <th class="text-center">休憩2</th>
-      <th class="text-center">休憩2</th>
-      <th class="text-center">休憩2</th>
-      <th class="text-center">休憩3</th>
-      <th class="text-center">休憩3</th>
-      <th class="text-center">休憩3</th>
-      <th class="text-center">休憩3</th>
       <th class="text-center">遅刻<br>早退</th>
-      <th class="text-center">特別自由</th>
+      <th class="text-center">特別事由</th>
       <th class="text-center">備考</th>
     </tr>
   </thead>
@@ -57,8 +57,6 @@
         <td class="text-center">
           {{ $calendar->weekday()[$date->dayOfWeek] }}
         </td>
-
-        <td class="text-center">{{ $item->shiftName }}</td>
 
         <td class="text-center">
           {{ init_value($item->goingWorkHour,$item->startHour) }}
@@ -114,6 +112,8 @@
         <td class="text-center">
           {{ init_value($item->workTableRest3EndMinute,$item->rest3EndMinute) }}
         </td>
+
+        <td class="text-center">{{ $item->shiftName }}</td>
 
         <td class="text-center">
           @if($item->lateEarlyLeave==1)

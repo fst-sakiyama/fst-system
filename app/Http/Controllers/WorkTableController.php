@@ -317,16 +317,21 @@ class WorkTableController extends Controller
       $items = [];
       $status = '';
 
+      if(empty($workTables[0])){
+        $status = "シフト表が作成されておりません。\n管理者にご確認ください。";
+        return view('work_table.index',compact('userId','status','dates','items','holidays','calendar','firstDay'));
+      }
+
       foreach($workTables as $workTable)
       {
         $items += array(Carbon::create($workTable->workDay)->timestamp=>$workTable);
       }
 
-        $view = view('work_table.export',compact('userId','status','dates','items','holidays','calendar','firstDay'));
+      $view = view('work_table.export',compact('userId','status','dates','items','holidays','calendar','firstDay'));
 
-        $userName = User::find($userId)->name;
-        $bookName = $year.'年'.$month.'月分【'.$userName.'】勤務表.xlsx';
+      $userName = User::find($userId)->name;
+      $bookName = $year.'年'.$month.'月分【'.$userName.'】勤務表.xlsx';
 
-        return Excel::download(new ViewExport($view), $bookName);
+      return Excel::download(new ViewExport($view), $bookName);
     }
 }

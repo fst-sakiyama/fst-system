@@ -83,7 +83,26 @@ class FstSystemInformationController extends Controller
      */
     public function update(Request $request,$id)
     {
-        dd('update');
+        $item = FstSystemInformation::find($id);
+
+        $item->classification = $request->classification;
+        $item->information = $request->information;
+
+        $file = $request->file('file');
+
+        if(isset($file)){
+          $fileName = $file->getClientOriginalName();
+          $path = Storage::disk('s3')->putFile('/info', $file, 'public');
+          $item->fileName = $fileName;
+          $item->fileURL = Storage::disk('s3')->url($path);
+        } else {
+          $item->fileName = null;
+          $item->fileURL = null;
+        }
+
+        $item->save();
+
+        return redirect()->route('top');
     }
 
     /**
@@ -94,6 +113,12 @@ class FstSystemInformationController extends Controller
      */
     public function destroy($id)
     {
-        dd('destroy');
+        $item = FstSystemInformation::find($id);
+        $filename = pathinfo($item->fileUrl,PATHINFO_BASENAME);
+        Storage::disk('s3')->delete('/info/'.$filename);
+
+        $item->delete();
+        
+        return redirect()->route('top');
     }
 }

@@ -84,7 +84,7 @@
             <th class="text-center" style="width:120px;">休憩2</th>
             <th class="text-center" style="width:120px;">休憩3</th>
             <th class="text-center" style="width:60px;">遅刻<br>早退</th>
-            <th class="text-center" style="width:160px;">特別自由</th>
+            <th class="text-center" style="width:160px;">特別事由</th>
             <th class="text-center" style="width:160px;">備考</th>
           </tr>
         </thead>

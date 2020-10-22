@@ -138,11 +138,12 @@ Route::group(['middleware' => ['auth', 'can:system-only']], function () {
 
     // ----- 現在準備中のもの -----
 
-    // Route::get('/top_information/create','FstSystemInformationController@create')->name('top_information.create');
-    Route::resource('/top_information',FstSystemInformationController::class);
+
 
 
     // --------------------------
+
+    Route::resource('/top_information',FstSystemInformationController::class);
 
     Route::delete('/user_regist/destroy/{id}','UserRegistrationController@destroy')->name('user.destroy');
     Route::get('/user_regist/restore/{id}','UserRegistrationController@restore')->name('user.restore');

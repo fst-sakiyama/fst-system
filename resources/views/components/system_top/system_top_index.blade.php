@@ -10,6 +10,7 @@
     <div class="row mt-4 justify-content-center">
       <div class="col-md-8">
         <h3>利用方法について</h3>
+        @can('system-only')
         <div  class="row mt-3 ml-1">
           <div class="col">
             <a href="{{ route('top_information.create') }}">
@@ -17,19 +18,29 @@
             </a>
           </div>
         </div>
+        @endcan
         @foreach($fstSystemInformation as $item)
             <div class="row mt-3 ml-1">
-              <div class="col-9">
+              <div class="col">
                 <li>
-                  {{ $classification[$item->classification] }}<a href="{{ route('file_infoShow.infoShow',['id'=>$item->id]) }}" target="topinfo" class="h6">{{ $item->information }}（{{ $item->fileName}}）</a>
+                  {{ $classification[$item->classification] }}
+                  @empty($item->fileName)
+                    {{ $item->information }}
+                  @else
+                    <a href="{{ route('file_infoShow.infoShow',['id'=>$item->id]) }}" target="topinfo" class="h6">{{ $item->information }}（{{ $item->fileName}}）</a>
+                  @endempty
                 </li>
               </div>
+              @can('system-only')
               <div class="col-3 clearfix">
                 <div class="float-right">
                   <a href="{{ route('top_information.edit',[$item->id]) }}" class="btn btn-sm btn-primary py-0">修正</a>
-                  <div class="btn btn-sm btn-danger py-0">削除</div>
+                  {{ Form::open(['route'=>['top_information.destroy',$item->id],'method'=>'DELETE']) }}
+                  {{ Form::submit('削除',['class' => 'btn btn-danger btn-sm py-0','onclick'=>"return confirm('本当に削除して良いですか？')"]) }}
+                  {{ Form::close() }}
                 </div>
               </div>
+              @endcan
             </div>
         @endforeach
       </div>
