@@ -3,16 +3,17 @@
   $prevMonth = $firstDay->copy()->subMonth();
   $nextMonth = $firstDay->copy()->addMonth();
 
-  function init_value($str1,$str2){
-    if(isset($str1) && $str1 != "null"){
-      return $str1;
-    } elseif(isset($str2)){
-      return $str2;
-    } else {
-      return '';
+  if(!function_exists('init_value')){
+    function init_value($str1,$str2){
+      if(isset($str1) && $str1 != "null"){
+        return $str1;
+      } elseif(isset($str2)){
+        return $str2;
+      } else {
+        return '';
+      }
     }
   }
-
 @endphp
 
 

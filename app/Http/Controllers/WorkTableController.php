@@ -17,6 +17,7 @@ use App\Exports\Export;
 use App\Http\Requests\UserFormRequest;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ViewExport;
+use App\Exports\ViewExportMultiple;
 
 class WorkTableController extends Controller
 {
@@ -332,6 +333,13 @@ class WorkTableController extends Controller
       $userName = User::find($userId)->name;
       $bookName = $year.'年'.$month.'月分【'.$userName.'】勤務表.xlsx';
 
-      return Excel::download(new ViewExport($view), $bookName);
+      return Excel::download(new ViewExport($view),$bookName);
     }
+
+    public function allExport(Request $request)
+    {
+      $bookName = $request->year.'年'.$request->month.'月分勤務表.xlsx';
+      return Excel::download(new ViewExportMultiple($request->year,$request->month), $bookName);
+    }
+
 }

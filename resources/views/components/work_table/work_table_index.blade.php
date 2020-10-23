@@ -54,13 +54,16 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-8 mt-3 ml-5 align-self-center">
+      <div class="col-md-7 mt-3 ml-5 align-self-center">
         <div class="h3">{{ $firstDay->format('Y年m月') }}勤務表　{{ $userName }}</div>
       </div>
       @can('admin-higher')
-      <div class="col-md-3 align-self-center text-right">
+      <div class="col-md-4 align-self-center text-right">
         <a href="{{ route('work_table.export',['year'=>$firstDay->format('Y'),'month'=>$firstDay->format('m'),'uid'=>$userId]) }}">
-          <div class="btn btn-warning py-0" style="cursor:pointer;">勤務表の出力</div>
+          <div class="btn btn-warning py-0" style="cursor:pointer;"><i class="fa fa-download" aria-hidden="true"></i> 勤務表の出力</div>
+        </a>
+        <a href="{{ route('work_table.allExport',['year'=>$firstDay->format('Y'),'month'=>$firstDay->format('m')]) }}">
+          <div class="btn btn-danger py-0" style="cursor:pointer;"><i class="fa fa-download" aria-hidden="true"></i> 勤務表の一括出力</div>
         </a>
       </div>
       @endcan
@@ -75,7 +78,7 @@
       <table class="table table-bordered table-sm table-hover" style="table-layout:fixed;">
         <thead class="thead-light">
           <tr>
-            <th class="text-center" style="width:60px;">編集</th>
+            <th class="text-center" style="width:70px;">編集</th>
             <th class="text-center" style="width:100px;">勤務日</th>
             <th class="text-center" style="width:60px;">シフト</th>
             <th class="text-center" style="width:80px;">出勤</th>
@@ -102,7 +105,7 @@
               @php $item = $items[$date->timestamp]; @endphp
 
               <td class="text-center">
-                <a href="{{ route('work_table.doEdit',['d'=>$date->timestamp,'uid'=>$userId]) }}" class="btn btn-primary btn-sm py-0" style="font-size:12px;">編集</a>
+                <a href="{{ route('work_table.doEdit',['d'=>$date->timestamp,'uid'=>$userId]) }}" class="btn btn-primary btn-sm py-0" style="font-size:12px;"><i class="fa fa-edit" aria-hidden="true"></i> 編集</a>
               </td>
 
               <td class="text-center">

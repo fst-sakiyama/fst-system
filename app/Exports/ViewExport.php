@@ -18,4 +18,5 @@ class ViewExport implements FromView
     {
         return $this->view;
     }
+
 }

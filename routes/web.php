@@ -51,6 +51,7 @@ Route::group(['middleware' => ['auth', 'can:user-higher']], function () {
 
     Route::get('/work_table/doEdit','WorkTableController@doEdit')->name('work_table.doEdit');
     Route::get('/work_table/export','WorkTableController@export')->name('work_table.export');
+    Route::get('/work_table/allExport','WorkTableController@allExport')->name('work_table.allExport');
     Route::resource('/work_table',WorkTableController::class);
 
     Route::get('/shift_table/export','ShiftTableController@export')->name('shift_table.export');

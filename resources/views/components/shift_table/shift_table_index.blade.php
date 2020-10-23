@@ -1,8 +1,37 @@
 @section('content')
 
+@php
+  $prevMonth = $firstDay->copy()->subMonth();
+  $nextMonth = $firstDay->copy()->addMonth();
+  $str='';
+@endphp
+
 <div class="contents">
   <div class="container container-top">
-    <h1>シフト表</h1>
+    <div class="row">
+      <div class="col text-left">
+        <a href="{{ route('shift_table.index',['year'=>$prevMonth->format('Y'),'month'=>$prevMonth->format('m')])}}">
+          <i class="fa fa-lg fa-chevron-circle-left" style="color:#65ab31;"><small>{{ $prevMonth->format('Y年m月') }}</small></i>
+        </a>
+      </div>
+      <div class="col text-center">
+        <a href="{{ route('shift_table.index') }}">
+          <i class="fa fa-lg fa-angle-left" style="color:#65ab31;"><small>当月へ</small></i><i class="fa fa-lg fa-angle-right" style="color:#65ab31;"></i>
+        </a>
+      </div>
+      <div class="col text-right">
+        <a href="{{ route('shift_table.index',['year'=>$nextMonth->format('Y'),'month'=>$nextMonth->format('m')]) }}">
+          <i class="fa fa-lg fa-chevron-circle-right" style="color:#65ab31;"><small>{{ $nextMonth->format('Y年m月') }}</small></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-8 mt-3 ml-5 align-self-center">
+        <div class="h3">{{ $firstDay->format('Y年m月') }}シフト表</div>
+      </div>
+    </div>
+
     <table class="table table-bordered table-sm shift-table table-hover">
       <!-- 名前列 -->
       <col span="1" style="background-color: #fffacd;">
@@ -40,11 +69,12 @@
           <tr>
             @foreach($item as $shift)
               @if($shift === reset($item))
+                @php $str = ($shift === Auth::id()) ? 'font-weight-bold':''; @endphp
                 <td style="display: none;">
                   {{ $shift }}
                 </td>
               @elseif($shift)
-                <td class="small text-center text-nowrap">
+                <td class="small text-center text-nowrap {{ $str }}">
                   {{ $shift }}
                 </td>
               @else
@@ -65,7 +95,7 @@
 
       <div class="form-group mt-5 form-inline">
         {{ Form::label('file','添付ファイル',['class'=>'col-md-2']) }}
-        <div class="input-group col-md-6">
+        <div class="input-group col-md-4">
             <div class="custom-file">
                 {{ Form::file('file',['class'=>'custom-file-input','id'=>'file','name'=>'file']) }}
                 {{ Form::label('file','ファイル選択...',['class'=>'custom-file-label','for'=>'file','data-browse'=>'参照']) }}
@@ -75,16 +105,16 @@
             </div>
         </div>
         <div class="form-group text-center">
-          {{ Form::submit('シフト登録',['class'=>'btn btn-primary']) }}
+          {{ Form::button('<i class="fa fa-file-upload" aria-hidden="true"></i> シフト登録',['class'=>'btn btn-primary','type'=>'submit']) }}
         </div>
       </div>
       {{ Form::close() }}
 
-      <div class="mt-5 text-center">
-        <div class="btn btn-warning"><a href={{ route("shift_table.export") }}>ユーザー一覧ダウンロード</a></div>
+      <div class="col-md-8 mt-5 text-center">
+        <div class="btn btn-warning"><a href={{ route("shift_table.export") }}><i class="fa fa-download" aria-hidden="true"></i> ユーザー一覧ダウンロード</a></div>
       </div>
-      <div class="mt-3 text-center">
-        <div class="btn btn-warning"><a href={{ route("master_shifts.export") }}>マスターシフトダウンロード</a></div>
+      <div class="col-md-8 mt-3 text-center">
+        <div class="btn btn-warning"><a href={{ route("master_shifts.export") }}><i class="fa fa-download" aria-hidden="true"></i> マスターシフトダウンロード</a></div>
       </div>
     </div>
     @endcan

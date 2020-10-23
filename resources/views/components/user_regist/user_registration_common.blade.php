@@ -51,10 +51,10 @@
                                       @can('system-only')
                                         <option value=1 @if($item->role=='1') selected @endif>開発者</option>
                                         <!-- <option value=2 @if($item->role=='2') selected @endif></option> -->
-                                        <option value=3 @if($item->role=='3') selected @endif>管理者</option>
-                                        <!-- <option value=4 @if($item->role=='4') selected @endif></option> -->
                                       @endcan
                                       @can('admin-higher')
+                                        <option value=3 @if($item->role=='3') selected @endif>管理者</option>
+                                        <!-- <option value=4 @if($item->role=='4') selected @endif></option> -->
                                         <option value=5 @if($item->role=='5') selected @endif>営業＋経理</option>
                                         <!-- <option value=6 @if($item->role=='6') selected @endif></option> -->
                                         <option value=7 @if($item->role=='7') selected @endif>開発＋経理</option>
