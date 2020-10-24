@@ -2,7 +2,7 @@
 
 @section('title','インフォメーション修正')
 
-@include('components.common.head')
+@include('components.common.head_livewire')
 
 @include('components.common.header')
 
@@ -13,4 +13,4 @@
 <script type="text/javascript" src="{{asset('js/add_replyOpen.js')}}"></script>
 @endsection
 
-@include('components.common.footer')
+@include('components.common.footer_livewire')

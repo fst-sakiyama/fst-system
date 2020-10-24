@@ -2,7 +2,7 @@
 
 @section('title','勤務表 | 情報修正')
 
-@include('components.common.head')
+@include('components.common.head_livewire')
 
 @include('components.common.header')
 
@@ -12,4 +12,4 @@
 <script type="text/javascript" src="{{asset('js/add_jquery.js')}}"></script>
 @endsection
 
-@include('components.common.footer')
+@include('components.common.footer_livewire')

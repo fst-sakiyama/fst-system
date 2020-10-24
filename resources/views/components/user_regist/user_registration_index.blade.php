@@ -19,6 +19,8 @@
               </div>
             </div>
           </div>
+
+
           <table class="table table-hover">
             <thead>
               <tr>
@@ -36,41 +38,44 @@
                 @endcan
               </tr>
             </thead>
-            <tbody>
+            <tbody id="sort-able">
               @foreach($items as $item)
                 @if($item->role != '1')
-                  <tr>
-                    <td><a href="{{ route('work_table.index',['uid'=>$item->id]) }}"><div class="btn btn-sm btn-primary px-0">勤務表</div></a></td>
-                    <td>{{ $item->name }}</td>
-                    <td>{{ $item->email }}</td>
-                    <td>{{ $item->master_role->roleName }}</td>
+
+                <tr id="{{$item->id}}">
+                  <td><a href="{{ route('work_table.index',['uid'=>$item->id]) }}"><div class="btn btn-sm btn-primary px-0">勤務表</div></a></td>
+                  <td>{{ $item->name }}</td>
+                  <td>{{ $item->email }}</td>
+                  <td>{{ $item->master_role->roleName }}</td>
+                  <td>
+                    @empty(!($item->last_login_at))
+                      {{ $item->last_login_at->format('Y年m月d日 H時i分') }}
+                    @endempty
+                  </td>
+                  <td><a href="{{ route('user.edit',$item->id) }}" class="btn btn-success btn-sm">修正</a></td>
+                  @can('admin-higher')
                     <td>
-                      @empty(!($item->last_login_at))
-                        {{ $item->last_login_at->format('Y年m月d日 H時i分') }}
-                      @endempty
+                      {{ Form::open(array('route' => array('user.password_reset', $item->id), 'method' => 'POST')) }}
+                      {{ Form::submit('リセット',['class'=>'btn btn-sm btn-warning','onclick'=>"return confirm('パスワードをリセットしてもよろしいですか？')"]) }}
+                      {{ Form::close() }}
                     </td>
-                    <td><a href="{{ route('user.edit',$item->id) }}" class="btn btn-success btn-sm">修正</a></td>
-                    @can('admin-higher')
-                      <td>
-                        {{ Form::open(array('route' => array('user.password_reset', $item->id), 'method' => 'POST')) }}
-                        {{ Form::submit('リセット',['class'=>'btn btn-sm btn-warning','onclick'=>"return confirm('パスワードをリセットしてもよろしいですか？')"]) }}
-                        {{ Form::close() }}
-                      </td>
-                    @endcan
-                    @can('system-only')
-                      <td>
-                        <form action="{{ route('user.destroy', $item->id) }}" id="form_{{ $item->id }}" method="post">
-                          {{ csrf_field() }}
-                          {{ method_field('delete') }}
-                          <a href="#" data-id="{{ $item->id }}" class="btn btn-danger deleteConf btn-sm">削除</a>
-                        </form>
-                      </td>
-                    @endcan
-                  </tr>
+                  @endcan
+                  @can('system-only')
+                    <td>
+                      <form action="{{ route('user.destroy', $item->id) }}" id="form_{{ $item->id }}" method="post">
+                        {{ csrf_field() }}
+                        {{ method_field('delete') }}
+                        <a href="#" data-id="{{ $item->id }}" class="btn btn-danger deleteConf btn-sm">削除</a>
+                      </form>
+                    </td>
+                  @endcan
+                </tr>
+
                 @endif
               @endforeach
             </tbody>
           </table>
+
           <div class="card-footer d-flex justify-content-center align-middle">
             {{ $items->onEachSide(2)->links('pagination::bootstrap-4') }}
           </div>

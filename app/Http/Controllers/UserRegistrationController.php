@@ -119,4 +119,12 @@ class UserRegistrationController extends Controller
 
     return redirect()->route('user.index');
   }
+
+  public function order_of_row(Request $request)
+  {
+    foreach($request as $item){
+      dump($item);
+    }
+  }
+
 }

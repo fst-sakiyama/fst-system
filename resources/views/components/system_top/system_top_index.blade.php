@@ -2,7 +2,8 @@
 
 @php
   $todayDate = Carbon\Carbon::now();
-  $classification = array('','【共通】','','【経理】','','【営業】','','【開発】','','【運用】');
+  $classification = array('','【共通】','【共通：管理者】','【経理】','【経理：管理者】','【営業】','【営業：管理者】','【開発】','【開発：管理者】','【運用】','【運用：管理者】');
+  $gate = array('','user-higher','admin-higher','account-only','admin-higher','sales-only','admin-higher','dev-only','admin-higher','ope-only','admin-higher');
 @endphp
 
 <div class="contents">
@@ -19,9 +20,12 @@
           </div>
         </div>
         @endcan
+
+        <div class="mt-3">
         @foreach($fstSystemInformation as $item)
-            <div class="row mt-3 ml-1">
+            <div class="row mt-1 ml-1">
               <div class="col">
+                        @can($gate[$item->classification])
                 <li>
                   {{ $classification[$item->classification] }}
                   @empty($item->fileName)
@@ -30,6 +34,7 @@
                     <a href="{{ route('file_infoShow.infoShow',['id'=>$item->id]) }}" target="topinfo" class="h6">{{ $item->information }}（{{ $item->fileName}}）</a>
                   @endempty
                 </li>
+                @endcan
               </div>
               @can('system-only')
               <div class="col-3 clearfix">
@@ -43,6 +48,7 @@
               @endcan
             </div>
         @endforeach
+        </div>
       </div>
     </div>
     <div class="row mt-4 justify-content-center">
