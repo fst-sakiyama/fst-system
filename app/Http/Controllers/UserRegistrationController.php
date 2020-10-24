@@ -34,8 +34,8 @@ class UserRegistrationController extends Controller
 
   public function index()
   {
-      $items=User::orderBy('role')->paginate(20);
-      $trashItems=User::onlyTrashed()->orderBy('role')->paginate(20);
+      $items=User::orderBy('order_of_row')->get();
+      $trashItems=User::onlyTrashed()->orderBy('order_of_row')->get();
 
       return view('/user_regist/index',compact('items','trashItems'));
   }
@@ -122,8 +122,13 @@ class UserRegistrationController extends Controller
 
   public function order_of_row(Request $request)
   {
-    foreach($request as $item){
-      dump($item);
+    $i=1;
+    foreach($request->items as $item)
+    {
+      $user = User::where('id',$item)->first();
+      $user->order_of_row = $i;
+      $user->save();
+      $i++;
     }
   }
 
