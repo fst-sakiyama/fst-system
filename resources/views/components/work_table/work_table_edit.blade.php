@@ -20,12 +20,12 @@
             <livewire:work-table :workTable=$workTable :masterShift=$masterShift>
 
 
-        <div class="card-footer">
-          <div class="form-group text-center">
-            {{ Form::submit('編集を登録する',['class'=>'btn btn-primary']) }}
-            {{ Form::close() }}
-          </div>
-        </div>
+            <div class="card-footer">
+              <div class="form-group text-center">
+                {{ Form::button('編集を登録する',['class'=>'btn btn-primary','type'=>'submit']) }}
+                {{ Form::close() }}
+              </div>
+            </div>
 
       </div>
     </div>
