@@ -117,7 +117,11 @@ class WorkTableController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        if($request->goingWorkHour < $request->workTableRest3StartHour && $request->leavingWorkHour > $request->workTableRest3StartHour){
+          
+        } else {
+          return redirect()->back()->with('message','勤務時間外に休憩しています')->withInput();
+        }
 
         if(is_null($request->workTableRest1StartHour) || is_null($request->workTableRest1StartMinute) || is_null($request->workTableRest1EndHour) || is_null($request->workTableRest1EndMinute)){
           $request->workTableRest1StartHour = null;

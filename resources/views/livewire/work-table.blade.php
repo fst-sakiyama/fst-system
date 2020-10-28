@@ -1,13 +1,21 @@
 <div class="card-body">
-  <div class="mt-3">
+  <div class="row">
+    <div class="col-8">
+
+    @if(session()->has('message'))
+        <div class="alert alert-info mb-3">
+            {{session('message')}}
+            {{ old('workTableRest3StartHour') }}
+        </div>
+    @endif
 
     <div class="form-group mt-3 form-inline">
-      {{ Form::label('shiftId','シフト',['class'=>'col-2']) }}
+      {{ Form::label('shiftId','シフト',['class'=>'col-4']) }}
       {{ Form::select('shiftId',$masterShift,null,['class'=>'col-2 custom-select custom-select-sm','wire:model'=>'shiftId','wire:change'=>'onShiftChange'])}}
     </div>
 
     <div class="form-group mt-5 form-inline">
-      {{ Form::label('goingWorkHour','出勤時刻',['class'=>'col-2']) }}
+      {{ Form::label('goingWorkHour','出勤時刻',['class'=>'col-4']) }}
       {{ Form::select('goingWorkHour',Config::get('array.hour'),null,['class'=>'custom-select custom-select-sm','wire:model'=>'goingWorkHour','wire:change'=>'goingWorkHourChange']) }}<span class="ml-1">時</span>
       {{ Form::select('goingWorkMinute',Config::get('array.minutes'),null,['class'=>'ml-2 custom-select custom-select-sm','wire:model'=>'goingWorkMinute','wire:change'=>'goingWorkMinuteChange']) }}<span class="ml-1">分</span>
       {{ Form::hidden('oldGoingWorkHour',$oldGoingWorkHour,['wire:model'=>'oldGoingWorkHour']) }}
@@ -17,7 +25,7 @@
     </div>
 
     <div class="form-group mt-3 form-inline">
-      {{ Form::label('leavingWorkHour','退勤時刻',['class'=>'col-2']) }}
+      {{ Form::label('leavingWorkHour','退勤時刻',['class'=>'col-4']) }}
       {{ Form::select('leavingWorkHour',Config::get('array.hour'),null,['class'=>'custom-select custom-select-sm','wire:model'=>'leavingWorkHour','wire:change'=>'leavingWorkHourChange']) }}<span class="ml-1">時</span>
       {{ Form::select('leavingWorkMinute',Config::get('array.minutes'),null,['class'=>'ml-2 custom-select custom-select-sm','wire:model'=>'leavingWorkMinute','wire:change'=>'leavingWorkMinuteChange']) }}<span class="ml-1">分</span>
       {{ Form::hidden('oldLeavingWorkHour',$oldLeavingWorkHour,['wire:model'=>'oldLeavingWorkHour']) }}
@@ -27,7 +35,7 @@
     </div>
 
     <div class="form-group mt-4 form-inline">
-      {{ Form::label('workTableRest1StartHour','休憩１',['class'=>'col-2']) }}
+      {{ Form::label('workTableRest1StartHour','休憩１',['class'=>'col-4']) }}
       {{ Form::select('workTableRest1StartHour',Config::get('array.hour'),null,['class'=>'custom-select custom-select-sm','wire:model'=>'workTableRest1StartHour','wire:change'=>'workTableRest1StartHourChange']) }}<span class="ml-1">時</span>
       {{ Form::select('workTableRest1StartMinute',Config::get('array.minutes'),null,['class'=>'ml-2 custom-select custom-select-sm','wire:model'=>'workTableRest1StartMinute','wire:change'=>'workTableRest1StartMinuteChange']) }}<span class="ml-1">分</span>
       <span class="ml-2 mr-2">～</span>
@@ -44,12 +52,12 @@
     </div>
 
     <div class="form-group mt-3 form-inline">
-      {{ Form::label('workTableRest2StartHour','休憩２',['class'=>'col-2']) }}
+      {{ Form::label('workTableRest2StartHour','休憩２',['class'=>'col-4']) }}
       {{ Form::select('workTableRest2StartHour',Config::get('array.hour'),null,['class'=>'custom-select custom-select-sm','wire:model'=>'workTableRest2StartHour','wire:change'=>'workTableRest2StartHourChange']) }}<span class="ml-1">時</span>
       {{ Form::select('workTableRest2StartMinute',Config::get('array.minutes'),null,['class'=>'ml-2 custom-select custom-select-sm','wire:model'=>'workTableRest2StartMinute','wire:change'=>'workTableRest2StartMinuteChange']) }}<span class="ml-1">分</span>
       <span class="ml-2 mr-2">～</span>
       {{ Form::select('workTableRest2EndHour',Config::get('array.hour'),null,['class'=>'custom-select custom-select-sm','wire:model'=>'workTableRest2EndHour','wire:change'=>'workTableRest2EndHourChange']) }}<span class="ml-1">時</span>
-      {{ Form::select('workTableRest2EndMinute',Config::get('array.minutes'),null,['class'=>'ml-2 custom-select custom-select-sm','wire:model'=>'workTableRest2EndMinute','wire:change'=>'workTableRest3EndMinuteChange']) }}<span class="ml-1">分</span>
+      {{ Form::select('workTableRest2EndMinute',Config::get('array.minutes'),null,['class'=>'ml-2 custom-select custom-select-sm','wire:model'=>'workTableRest2EndMinute','wire:change'=>'workTableRest2EndMinuteChange']) }}<span class="ml-1">分</span>
       {{ Form::hidden('oldWorkTableRest2StartHour',$oldWorkTableRest2StartHour,['wire:model'=>'oldWorkTableRest2StartHour']) }}
       {{ Form::hidden('oldWorkTableRest2StartMinute',$oldWorkTableRest2StartMinute,['wire:model'=>'oldWorkTableRest2StartMinute']) }}
       {{ Form::hidden('oldWorkTableRest2EndHour',$oldWorkTableRest2EndHour,['wire:model'=>'oldWorkTableRest2EndHour']) }}
@@ -61,8 +69,8 @@
     </div>
 
     <div class="form-group mt-3 form-inline">
-      {{ Form::label('workTableRest3StartHour','休憩３',['class'=>'col-2']) }}
-      {{ Form::select('workTableRest3StartHour',Config::get('array.hour'),null,['class'=>'custom-select custom-select-sm','wire:model'=>'workTableRest3StartHour','wire:change'=>'workTableRest3StartHourChange']) }}<span class="ml-1">時</span>
+      {{ Form::label('workTableRest3StartHour','休憩３',['class'=>'col-4']) }}
+      {{ Form::select('workTableRest3StartHour',Config::get('array.hour'),old('workTableRest3StartHour'),['class'=>'custom-select custom-select-sm','wire:model'=>'workTableRest3StartHour','wire:change'=>'workTableRest3StartHourChange']) }}<span class="ml-1">時</span>
       {{ Form::select('workTableRest3StartMinute',Config::get('array.minutes'),null,['class'=>'ml-2 custom-select custom-select-sm','wire:model'=>'workTableRest3StartMinute','wire:change'=>'workTableRest3StartMinuteChange']) }}<span class="ml-1">分</span>
       <span class="ml-2 mr-2">～</span>
       {{ Form::select('workTableRest3EndHour',Config::get('array.hour'),null,['class'=>'custom-select custom-select-sm','wire:model'=>'workTableRest3EndHour','wire:change'=>'workTableRest3EndHourChange']) }}<span class="ml-1">時</span>
@@ -85,18 +93,20 @@
     </div>
 
     <div class="form-group mt-3 form-inline">
-      {{ Form::label('specialReason','特別事由',['class'=>'col-2']) }}
-      {{ Form::textarea('specialReason',$specialReason,['class'=>'form-control col-4','rows'=>3,$disabled]) }}
+      {{ Form::label('specialReason','特別事由',['class'=>'col-4']) }}
+      {{ Form::textarea('specialReason',$specialReason,['class'=>'form-control col-8','rows'=>3,$disabled]) }}
     </div>
 
     <div class="form-group mt-4 form-inline">
-      {{ Form::label('remarks','備考',['class'=>'col-2']) }}
-      {{ Form::textarea('remarks',$remarks,['class'=>'form-control col-4','rows'=>3,'wire:model'=>'remarks']) }}
+      {{ Form::label('remarks','備考',['class'=>'col-4']) }}
+      {{ Form::textarea('remarks',$remarks,['class'=>'form-control col-8','rows'=>3,'wire:model'=>'remarks']) }}
     </div>
 
     <div class="">
-      {{ floor($calcWorkHour/3600).'時間'.(($calcWorkHour%3600)/60).'分' }}
+      {{ floor($calcWorkHour/3600).'時間'.(($calcWorkHour%3600)/60).'分' }}<br>
+      <div id = 'calcWorkHour'>{{$calcWorkHour}}</div>
     </div>
 
+    </div>
   </div>
 </div>
