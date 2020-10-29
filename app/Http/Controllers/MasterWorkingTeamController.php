@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MasterProject;
+use App\Models\MasterWorkingTeam;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 
-class MasterProjectsController extends Controller
+class MasterWorkingTeamController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +14,7 @@ class MasterProjectsController extends Controller
      */
     public function index()
     {
-      $items = MasterProject::orderByRaw('order_of_row IS NULL asc')
-                ->orderBy('order_of_row')
-                ->orderBy('updated_at')
-                ->paginate(30);
-      return view('master_projects.index',compact('items'));
+        //
     }
 
     /**
@@ -46,10 +41,10 @@ class MasterProjectsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\MasterWorkingTeam  $masterWorkingTeam
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(MasterWorkingTeam $masterWorkingTeam)
     {
         //
     }
@@ -57,10 +52,10 @@ class MasterProjectsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\MasterWorkingTeam  $masterWorkingTeam
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(MasterWorkingTeam $masterWorkingTeam)
     {
         //
     }
@@ -69,10 +64,10 @@ class MasterProjectsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\MasterWorkingTeam  $masterWorkingTeam
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, MasterWorkingTeam $masterWorkingTeam)
     {
         //
     }
@@ -80,10 +75,10 @@ class MasterProjectsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\MasterWorkingTeam  $masterWorkingTeam
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(MasterWorkingTeam $masterWorkingTeam)
     {
         //
     }

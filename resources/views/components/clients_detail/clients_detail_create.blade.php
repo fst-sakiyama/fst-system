@@ -11,14 +11,6 @@
             {{ Form::open(['route'=>'clients_detail.store']) }}
             {{ Form::hidden('clientId',$clientId) }}
             <div class="form-group">
-              {{ Form::label('projectCode','案件コード',['class'=>'col-md-2']) }}
-              <span class="mr-2">：</span>
-              {{ Form::text('projectCode',null,['placeholder'=>'案件コードを入力','class'=>'col-md-4','id'=>'projectCode']) }}
-              @error('projectCode')
-                <span class="ml-2 text-danger">{{ $message }}</span>
-              @enderror
-            </div>
-            <div class="form-group">
               {{ Form::label('contractTypeId','契約形態を選択',['class'=>'col-md-2']) }}
               <span class="mr-2">：</span>
               {{ Form::select('contractTypeId',$masterContractTypes,null,['placeholder'=>'---契約形態を選択してください---','class'=>'col-md-4'])}}
@@ -43,6 +35,22 @@
               {{ Form::label('endDate','完了日',['class'=>'col-md-2']) }}
               <span class="mr-2">：</span>
               {{ Form::date('endDate',null,['class'=>'col-md-4','id'=>'endDate']) }}
+            </div>
+            <div class="form-group">
+              {{ Form::label('workingTeamId','対応チームを選択',['class'=>'col-md-2']) }}
+              <span class="mr-2">：</span>
+              {{ Form::select('workingTeamId',$masterWorkingTeams,null,['placeholder'=>'---対応チームを選択してください---','class'=>'col-md-4'])}}
+              @error('workingTeamId')
+                <span class="ml-2 text-danger">{{ $message }}</span>
+              @enderror
+            </div>
+            <div class="form-group">
+              {{ Form::label('slack_channel_name','Slackチャンネル名',['class'=>'col-md-2']) }}
+              <span class="mr-2">：</span>
+              {{ Form::text('slack_channel_name',null,['placeholder'=>'Slackチャンネル名を入力','class'=>'col-md-4','id'=>'slack_channel_name']) }}
+              @error('slack_channel_name')
+                <span class="ml-2 text-danger">{{ $message }}</span>
+              @enderror
             </div>
           </div>
         </div>

@@ -10,14 +10,6 @@
           {{ Form::open(array('route' => array('clients_detail.update', $item->projectId), 'method' => 'PUT')) }}
           {{ Form::hidden('clientId', $item->clientId) }}
           <div class="form-group">
-            {{ Form::label('projectCode','案件コード',['class'=>'col-md-2']) }}
-            <span class="mr-2">：</span>
-            {{ Form::text('projectCode',$item->projectCode,['placeholder'=>'案件コードを入力','class'=>'col-md-4','id'=>'projectCode']) }}
-            @error('projectCode')
-              <span class="ml-2 text-danger">{{ $message }}</span>
-            @enderror
-          </div>
-          <div class="form-group">
             {{ Form::label('contractTypeId','契約形態を選択',['class'=>'col-md-2']) }}
             <span class="mr-2">：</span>
             {{ Form::select('contractTypeId',$masterContractTypes,$item->contractTypeId,['placeholder'=>'---契約形態を選択してください---','class'=>'col-md-4'])}}
@@ -42,6 +34,22 @@
             {{ Form::label('endDate','完了日',['class'=>'col-md-2']) }}
             <span class="mr-2">：</span>
             {{ Form::date('endDate',$item->endDate,['class'=>'col-md-4','id'=>'endDate']) }}
+          </div>
+          <div class="form-group">
+            {{ Form::label('workingTeamId','対応チームを選択',['class'=>'col-md-2']) }}
+            <span class="mr-2">：</span>
+            {{ Form::select('workingTeamId',$masterWorkingTeams,$item->workingTeamId,['placeholder'=>'---対応チームを選択してください---','class'=>'col-md-4'])}}
+            @error('workingTeamId')
+              <span class="ml-2 text-danger">{{ $message }}</span>
+            @enderror
+          </div>
+          <div class="form-group">
+            {{ Form::label('slack_channel_name','Slackチャンネル名',['class'=>'col-md-2']) }}
+            <span class="mr-2">：</span>
+            {{ Form::text('slack_channel_name',$item->slack_channel_name,['placeholder'=>'Slackチャンネル名を入力','class'=>'col-md-4','id'=>'slack_channel_name']) }}
+            @error('slack_channel_name')
+              <span class="ml-2 text-danger">{{ $message }}</span>
+            @enderror
           </div>
         </div>
         <div class="card-footer">

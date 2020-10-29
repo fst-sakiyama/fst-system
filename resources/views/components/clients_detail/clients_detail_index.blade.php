@@ -23,7 +23,7 @@
         <table class="table mb-0 table-hover">
           <thead>
             <tr>
-              <th>コード</th>
+              <th>Slack<br>Prefix</th>
               <th>契約形態</th>
               <th>案件名</th>
               <th>開始日</th>
@@ -36,20 +36,18 @@
           @foreach($items as $item)
             <tr>
               <td>
-                @php
-                  if(null !== ($item->projectCode)){
-                    echo 'P'.sprintf('%03d',$item->projectCode);
-                  }
-                @endphp
+                @if(null !== ($item->client->slack_prefix))
+                  {{ $item->client->slack_prefix }}
+                @endif
               </td>
               <td>{{$item->contractType->contractType}}</td>
               <td><a href="{{asset('/file_posts?id=')}}{{$item->projectId}}">{{$item->projectName}}</td>
               <td>{{$item->startDate}}</td>
               <td>{{$item->endDate}}</td>
-              <td><a href="{{ route('clients_detail.edit',$item->projectId) }}" class="btn btn-success btn-sm">修正</a></td>
+              <td><a href="{{ route('clients_detail.edit',$item->projectId) }}" class="btn btn-success btn-sm py-0">修正</a></td>
               <td>
                 {{Form::open(['route'=>['clients_detail.destroy',$item->projectId],'method'=>'DELETE','id'=>'form_'.$item->projectId])}}
-                {{Form::submit('削除',['class' => 'btn btn-danger btn-sm deleteConf','data-id'=>$item->projectId])}}
+                {{Form::submit('削除',['class' => 'btn btn-danger btn-sm deleteConf py-0','data-id'=>$item->projectId])}}
                 {{Form::close()}}
               </td>
             </tr>

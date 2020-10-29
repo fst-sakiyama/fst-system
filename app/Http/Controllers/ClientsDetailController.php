@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MasterClient;
 use App\Models\MasterProject;
 use App\Models\MasterContractType;
+use App\Models\MasterWorkingTeam;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
@@ -33,7 +34,7 @@ class ClientsDetailController extends Controller
                   ->where('clientId',$clientId)
                   ->first();
       $items = MasterProject::where('clientId',$clientId)
-                ->orderBy('projectCode')
+                ->orderBy('order_of_row')
                 ->paginate(30);
       return view('clients_detail.index',compact('clientId','clientName','items'));
     }
@@ -48,7 +49,9 @@ class ClientsDetailController extends Controller
       $clientId = $request->id;
       $masterContractTypes = MasterContractType::select('contractTypeId','contractType')->get();
       $masterContractTypes = $masterContractTypes->pluck('contractType','contractTypeId');
-      return view('clients_detail.create',compact('clientId','masterContractTypes'));
+      $masterWorkingTeams = MasterWorkingTeam::select('workingTeamId','workingTeam')->get();
+      $masterWorkingTeams = $masterWorkingTeams->pluck('workingTeam','workingTeamId');
+      return view('clients_detail.create',compact('clientId','masterContractTypes','masterWorkingTeams'));
     }
 
     /**
@@ -94,7 +97,9 @@ class ClientsDetailController extends Controller
       $item = MasterProject::find($id);
       $masterContractTypes = MasterContractType::select('contractTypeId','contractType')->get();
       $masterContractTypes = $masterContractTypes->pluck('contractType','contractTypeId');
-      return view('clients_detail.edit',compact('item','masterContractTypes'));
+      $masterWorkingTeams = MasterWorkingTeam::select('workingTeamId','workingTeam')->get();
+      $masterWorkingTeams = $masterWorkingTeams->pluck('workingTeam','workingTeamId');
+      return view('clients_detail.edit',compact('item','masterContractTypes','masterWorkingTeams'));
     }
 
     /**

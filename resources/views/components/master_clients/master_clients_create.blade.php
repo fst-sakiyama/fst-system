@@ -10,10 +10,10 @@
           <div class="mt-3">
             {{ Form::open(['route'=>'master_clients.store']) }}
             <div class="form-group">
-              {{ Form::label('clientCode','顧客コード',['class'=>'col-md-2']) }}
+              {{ Form::label('slack_prefix','SlackPrefix',['class'=>'col-md-2']) }}
               <span class="mr-2">：</span>
-              {{ Form::text('clientCode',null,['placeholder'=>'顧客コードを入力','class'=>'col-md-4','id'=>'clientCode']) }}
-              @error('clientCode')
+              {{ Form::text('slack_prefix',null,['placeholder'=>'SlackPrefixを入力','class'=>'col-md-4','id'=>'slack_prefix']) }}
+              @error('slack_prefix')
                 <span class="ml-2 text-danger">{{ $message }}</span>
               @enderror
             </div>
@@ -24,24 +24,6 @@
               @error('clientName')
                 <span class="ml-2 text-danger">{{ $message }}</span>
               @enderror
-            </div>
-            <div class="form-group">
-              {{ Form::label('clientNameKana','顧客名かな',['class'=>'col-md-2']) }}
-              <span class="mr-2">：</span>
-              {{ Form::text('clientNameKana',null,['placeholder'=>'よみをひらがなで入力','class'=>'col-md-4','id'=>'clientName']) }}
-              @error('clientNameKana')
-                <span class="ml-2 text-danger">{{ $message }}</span>
-              @enderror
-            </div>
-            <div class="form-group">
-              {{ Form::label('contractStartDate','契約開始日',['class'=>'col-md-2']) }}
-              <span class="mr-2">：</span>
-              {{ Form::date('contractStartDate',null,['class'=>'col-md-4','id'=>'contractStartDate']) }}
-            </div>
-            <div class="form-group">
-              {{ Form::label('contractEndDate','契約完了日',['class'=>'col-md-2']) }}
-              <span class="mr-2">：</span>
-              {{ Form::date('contractEndDate',null,['class'=>'col-md-4','id'=>'contractEndDate']) }}
             </div>
           </div>
         </div>

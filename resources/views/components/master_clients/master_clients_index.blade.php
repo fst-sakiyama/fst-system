@@ -18,10 +18,8 @@
         <table class="table mb-0 table-hover">
           <thead>
             <tr>
-              <th>コード</th>
+              <th>Slack<br>prefix</th>
               <th>顧客名</th>
-              <th>契約開始日</th>
-              <th>契約終了日</th>
               <th>修正</th>
               <th>削除</th>
             </tr>
@@ -30,21 +28,17 @@
           @foreach($items as $item)
             <tr>
               <td>
-                @php
-                  if(null !== ($item->clientCode)){
-                    echo 'C'.sprintf('%03d',$item->clientCode);
-                  }
-                @endphp
+                @if(null !== ($item->slack_prefix))
+                  {{ '#'.$item->slack_prefix }}
+                @endif
               </td>
               <td><a href="{{asset('/clients_detail?id=')}}{{$item->clientId}}">{{$item->clientName}}</td>
-              <td>{{$item->contractStartDate}}</td>
-              <td>{{$item->contractEndDate}}</td>
-              <td><a href="{{ route('master_clients.edit',$item->clientId) }}" class="btn btn-success btn-sm">修正</a></td>
+              <td><a href="{{ route('master_clients.edit',$item->clientId) }}" class="btn btn-success btn-sm py-0">修正</a></td>
               <td>
                 <form action="{{ route('master_clients.destroy', $item->clientId) }}" id="form_{{ $item->clientId }}" method="post">
                   {{ csrf_field() }}
                   {{ method_field('delete') }}
-                  <a href="#" data-id="{{ $item->clientId }}" class="btn btn-danger deleteConf btn-sm">削除</a>
+                  <a href="#" data-id="{{ $item->clientId }}" class="btn btn-danger deleteConf btn-sm py-0">削除</a>
                 </form>
               </td>
             </tr>
