@@ -14,7 +14,7 @@ class CreateMasterWorkingTeamsTable extends Migration
     public function up()
     {
         Schema::create('master_working_teams', function (Blueprint $table) {
-            $table->id('workingTeamId');
+            $table->increments('workingTeamId');
             $table->string('workingTeam');
             $table->timestamps();
         });

@@ -14,7 +14,7 @@ class AddColumnWorkingTeamMasterProjectsTable extends Migration
     public function up()
     {
         Schema::table('master_projects', function (Blueprint $table) {
-            $table->unsignedInteger('workingTeamId');
+            $table->integer('workingTeamId')->unsigned();
 
             $table->foreign('workingTeamId')
                   ->references('workingTeamId')->on('master_working_teams')
