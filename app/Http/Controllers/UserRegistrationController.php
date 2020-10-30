@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Models\MasterWorkingTeam;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -42,7 +43,9 @@ class UserRegistrationController extends Controller
 
   public function create(Request $request)
   {
-    return view('/user_regist/create');
+    $workingTeams = MasterWorkingTeam::select('workingTeamId','workingTeam')->get();
+    $workingTeams = $workingTeams->pluck('workingTeam','workingTeamId');
+    return view('/user_regist/create',compact('workingTeams'));
   }
 
   public function store(Request $request)
@@ -69,8 +72,9 @@ class UserRegistrationController extends Controller
   public function edit($id)
   {
     $item = User::find($id);
-
-    return view('/user_regist/edit',compact('item'));
+    $workingTeams = MasterWorkingTeam::select('workingTeamId','workingTeam')->get();
+    $workingTeams = $workingTeams->pluck('workingTeam','workingTeamId');
+    return view('/user_regist/edit',compact('item','workingTeams'));
   }
 
   public function update(Request $request,$id)

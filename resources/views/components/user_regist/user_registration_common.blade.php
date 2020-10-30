@@ -15,6 +15,17 @@
                           @csrf
 
                           <div class="form-group row">
+                            {{ Form::label('own_department','所属チーム',['class'=>'col-md-4 col-form-label text-md-right']) }}
+                            <div class="col-md-6">
+                              @php if($item){$str=$item->own_department;}else{$str=null;}@endphp
+                              {{ Form::select('own_department',$workingTeams,$str,['placeholder'=>'---所属チームを選択---','class'=>'form-control'])}}
+                              @error('own_department')
+                                <span class="ml-2 text-danger">{{ $message }}</span>
+                              @enderror
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
                               <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                               <div class="col-md-6">

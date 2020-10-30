@@ -51,6 +51,14 @@
               <span class="ml-2 text-danger">{{ $message }}</span>
             @enderror
           </div>
+          <div class="form-group">
+            {{ Form::label('project_detail','案件詳細',['class'=>'col-md-2']) }}
+            <span class="mr-2">：</span>
+            {{ Form::textarea('project_detail',$item->project_detail,['placeholder'=>'案件説明を入力','class'=>'col-md-4','id'=>'project_detail']) }}
+            @error('project_detail')
+              <span class="ml-2 text-danger">{{ $message }}</span>
+            @enderror
+          </div>
         </div>
         <div class="card-footer">
           <div class="form-group text-center">

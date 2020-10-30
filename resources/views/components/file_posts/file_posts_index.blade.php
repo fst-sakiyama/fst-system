@@ -8,10 +8,21 @@
         <div class="card-header">
           <div class="row">
             <div class="col-md">
-              <h5>{{ $clientProject->client->clientName }}　様　{{ $clientProject->projectName }}</h5>
+              <h5>{{ $clientProject->client->clientName }}　様<br>{{ $clientProject->projectName }}</h5>
             </div>
             <div class="col-md text-right">
               <a href="{{asset('/upload?id=')}}{{$clientProject->projectId}}"><button type="button" class="w-50 btn btn-primary">ファイル新規作成・更新・削除</button></a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md">
+              @if($clientProject->project_detail)
+                {!! nl2br(e($clientProject->project_detail)) !!}
+              @else
+                <div class="text-secondary">案件説明が登録されておりません。</div>
+              @endif
             </div>
           </div>
         </div>

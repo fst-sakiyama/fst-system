@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTestsTable extends Migration
+class AddColumnProjectDetailMasterProjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateTestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tests', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('master_projects', function (Blueprint $table) {
+            $table->text('project_detail')->nullable();
         });
     }
 
@@ -26,6 +25,8 @@ class CreateTestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tests');
+        Schema::table('master_projects', function (Blueprint $table) {
+            $table->dropColumn('project_detail');
+        });
     }
 }

@@ -6,7 +6,7 @@
 
 @include('components.common.header')
 
-@include('components.user_regist.user_registration_common',['item'=>$item])
+@include('components.user_regist.user_registration_common',['item'=>$item,'workingTeams'=>$workingTeams])
 
 @section('pageJs')
 <script type="text/javascript" src="{{asset('js/add_jquery.js')}}"></script>
