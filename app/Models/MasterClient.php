@@ -15,6 +15,11 @@ class MasterClient extends Model
     protected $primaryKey = 'clientId';
     protected $guarded = array('clientId');
 
+    public function getSlPrefixAttribute()
+    {
+      return str_pad($this->slack_prefix, 3, '0', STR_PAD_LEFT);
+    }
+
     public function projects()
     {
       return $this->hasMany('App\Models\MasterProject','clientId','clientId');

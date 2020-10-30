@@ -27,6 +27,8 @@ class MasterClientsController extends Controller
     {
         $items = MasterClient::orderByRaw('order_of_row IS NULL asc')
                   ->orderBy('order_of_row')
+                  ->orderByRaw('slack_prefix IS NULL asc')
+                  ->orderBy('slack_prefix')
                   ->orderBy('updated_at')
                   ->paginate(30);
         return view('master_clients.index',compact('items'));

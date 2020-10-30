@@ -19,9 +19,9 @@ class MasterWorkingTeamSeeder extends Seeder
       $MasterContractType=new MasterWorkingTeam;
       $MasterContractType::insert([
         ['workingTeam'=>'社内','created_at'=>$now,'updated_at'=>$now,],
+        ['workingTeam'=>'営業','created_at'=>$now,'updated_at'=>$now,],
         ['workingTeam'=>'開発','created_at'=>$now,'updated_at'=>$now,],
         ['workingTeam'=>'運用','created_at'=>$now,'updated_at'=>$now,],
-        ['workingTeam'=>'開発＋運用','created_at'=>$now,'updated_at'=>$now,],
       ]);
     }
 }

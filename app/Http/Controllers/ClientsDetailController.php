@@ -34,7 +34,9 @@ class ClientsDetailController extends Controller
                   ->where('clientId',$clientId)
                   ->first();
       $items = MasterProject::where('clientId',$clientId)
+                ->orderByRaw('order_of_row IS NULL asc')
                 ->orderBy('order_of_row')
+                ->orderBy('updated_at')
                 ->paginate(30);
       return view('clients_detail.index',compact('clientId','clientName','items'));
     }

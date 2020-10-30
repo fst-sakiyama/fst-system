@@ -28,17 +28,17 @@
           @foreach($items as $item)
             <tr>
               <td>
-                @if(null !== ($item->slack_prefix))
-                  {{ '#'.$item->slack_prefix }}
+                @if($item->slack_prefix)
+                  {{ '#'.$item->sl_prefix }}
                 @endif
               </td>
               <td><a href="{{asset('/clients_detail?id=')}}{{$item->clientId}}">{{$item->clientName}}</td>
-              <td><a href="{{ route('master_clients.edit',$item->clientId) }}" class="btn btn-success btn-sm py-0">修正</a></td>
+              <td><a href="{{ route('master_clients.edit',$item->clientId) }}" class="btn btn-success btn-sm py-0"><i class="fas fa-edit"></i> 修正</a></td>
               <td>
                 <form action="{{ route('master_clients.destroy', $item->clientId) }}" id="form_{{ $item->clientId }}" method="post">
                   {{ csrf_field() }}
                   {{ method_field('delete') }}
-                  <a href="#" data-id="{{ $item->clientId }}" class="btn btn-danger deleteConf btn-sm py-0">削除</a>
+                  <a href="#" data-id="{{ $item->clientId }}" class="btn btn-danger deleteConf btn-sm py-0"><i class="fas fa-trash-alt"></i> 削除</a>
                 </form>
               </td>
             </tr>
