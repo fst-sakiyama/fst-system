@@ -16,7 +16,8 @@ class Users_TeamOpe_Seeder extends Seeder
      */
     public function run()
     {
-      $now=Carbon::now();
+      // $now=Carbon::now();
+      $now= new Carbon('2020-10-01');
       $user=new User;
       $user::insert([
         ['name'=>'中川泰誠','email'=>'nakagawa@faith-sol-tech.com','password'=>Hash::make('nakagawa123'),'role'=>3,'order_of_row'=>1,'display_shift'=>TRUE,'own_department'=>4,'created_at'=>$now,'updated_at'=>$now,],
