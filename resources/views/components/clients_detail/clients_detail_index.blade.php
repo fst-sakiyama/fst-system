@@ -23,13 +23,13 @@
         <table class="table mb-0 table-hover">
           <thead>
             <tr>
-              <th style="width:80px">Slack<br>Prefix</th>
-              <th style="width:80px">契約形態</th>
+              <th style="width:80px;">Slack<br>Prefix</th>
+              <th style="width:80px;">契約形態</th>
               <th>案件名</th>
-              <th style="width:80px">チーム</th>
-              <th style="width:100px">開始日</th>
-              <th style="width:100px">終了日</th>
-              <th class="small" style="width:120px">(チャンネル名)</th>
+              <th style="width:80px;">チーム</th>
+              <th style="width:100px;">開始日</th>
+              <th style="width:100px;">終了日</th>
+              <th class="small" style="width:120px;">(チャンネル名)</th>
               <th>修正</th>
               <th>削除</th>
             </tr>

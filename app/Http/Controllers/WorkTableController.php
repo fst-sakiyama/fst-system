@@ -6,6 +6,7 @@ use App\User;
 use App\Models\ShiftTable;
 use App\Models\WorkTable;
 use App\Models\MasterShift;
+use App\Models\MasterProject;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -118,7 +119,7 @@ class WorkTableController extends Controller
     public function store(Request $request)
     {
         if($request->goingWorkHour < $request->workTableRest3StartHour && $request->leavingWorkHour > $request->workTableRest3StartHour){
-          
+
         } else {
           return redirect()->back()->with('message','勤務時間外に休憩しています')->withInput();
         }
@@ -238,7 +239,10 @@ class WorkTableController extends Controller
         $masterShifts = MasterShift::all();
         $masterShift = MasterShift::select('shiftId','shiftName')->get()->pluck('shiftName','shiftId');
 
-        return view('work_table.edit',compact('userId','masterShifts','masterShift','workTable'));
+        $teamId = User::find($userId)->own_department;
+        $masterProjects = MasterProject::where('workingTeamId',$teamId)->get();
+
+        return view('work_table.edit',compact('userId','masterShifts','masterShift','workTable','masterProjects'));
     }
 
     /**

@@ -3,15 +3,23 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use WorkTable;
+use App\Models\MasterProject;
 
 class WorkLoad extends Component
 {
-    public $calcWorkHour = '';
+    public $test;
+    public $modelTest;
+    public $testCalcWorkHour;
 
-    public function mount()
+    public function mount(MasterProject $masterProject)
     {
-        
+        $this->test = 'test';
+    }
+
+    public function updatedModelTest($value)
+    {
+        $this->test=$value;
+        $this->testCalcWorkHour-=$value;
     }
 
     public function render()

@@ -48,6 +48,7 @@
                   {{ Form::button('編集を登録する',['class'=>'btn btn-primary','type'=>'submit']) }}
                   {{ Form::close() }}
 
+
                 </div>
 
               </div>
@@ -56,15 +57,51 @@
 
           <div class="tab-pane fade" id="workLoad" role="tabpanel" aria-labelledby="workLoad-tab">
             <div class="card">
-              <div class="row mt-2 mb-2">
-
-
-                <livewire:work-load>
-
-
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <div class="" id='wl-calcWorkHour'></div>
+                    <div class="" id='wl-sumClcWorkhour'></div>
+                  </div>
+                </div>
               </div>
-              <div class="card-footer d-flex justify-content-center align-middle">
 
+
+
+                <table class="table table-hover">
+                  <thead style="display:block;">
+                    <tr>
+                      <th>顧客名</th>
+                      <th>案件名</th>
+                      <th>工数(分)</th>
+                    </tr>
+                  </thead>
+                  <tbody style="display:block;overflow-y:scroll;height:600px;">
+                    @foreach($masterProjects as $masterProject)
+
+                      <tr>
+                        <td>
+                          {{ $masterProject->client->clientName }}
+                        </td>
+                        <td>
+                          {{ $masterProject->projectName }}
+                        </td>
+                        <td>
+
+                          <livewire:work-load :masterProject=$masterProject>
+
+                        </td>
+                      </tr>
+
+                    @endforeach
+                  </tbody>
+                </table>
+
+
+
+
+
+              <div class="card-footer d-flex justify-content-center align-middle">
 
 
               </div>

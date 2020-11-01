@@ -104,7 +104,7 @@
 
     <div class="">
       {{ floor($calcWorkHour/3600).'時間'.(($calcWorkHour%3600)/60).'分' }}<br>
-      <div id = 'calcWorkHour'>{{$calcWorkHour}}</div>
+      <div id = 'calcWorkHour'>{{$calcWorkHour/60}}</div>
     </div>
 
     </div>
