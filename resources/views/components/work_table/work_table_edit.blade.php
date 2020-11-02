@@ -45,8 +45,7 @@
                 </div>
                 <div class="card-footer d-flex justify-content-center align-middle">
 
-                  {{ Form::button('編集を登録する',['class'=>'btn btn-primary','type'=>'submit']) }}
-                  {{ Form::close() }}
+
 
 
                 </div>
@@ -59,12 +58,31 @@
             <div class="card">
               <div class="card-body">
                 <div class="row">
-                  <div class="col">
-                    <div class="" id='wl-calcWorkHour'></div>
-                    <div class="" id='wl-sumClcWorkhour'></div>
+                  <div class="col-10 text-right">
+                    稼働時間（分）
+                  </div>
+                  <div class="col-2">
+                    <div class="h5 text-right mr-5" id='wl-calcWorkMin'>0</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-10 text-right">
+                    稼働工数（分）
+                  </div>
+                  <div class="col-2">
+                    <div class="h5 text-right mr-5" id='wl-sumCalcWorkMin'>0</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-10 text-right">
+                    未振分（分）
+                  </div>
+                  <div class="col-2">
+                    <div class="h5 text-right mr-5" id='wl-subCalcWorkMin'>0</div>
                   </div>
                 </div>
               </div>
+
 
 
 
@@ -110,6 +128,12 @@
 
         </div>
 
+        <div class="card-footer d-flex justify-content-center align-middle">
+
+          {{ Form::button('編集を登録する',['class'=>'btn btn-primary','type'=>'submit']) }}
+          {{ Form::close() }}
+                    
+        </div>
 
       </div>
     </div>

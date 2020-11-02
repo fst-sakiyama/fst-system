@@ -118,6 +118,7 @@ class WorkTableController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         if($request->goingWorkHour < $request->workTableRest3StartHour && $request->leavingWorkHour > $request->workTableRest3StartHour){
 
         } else {
