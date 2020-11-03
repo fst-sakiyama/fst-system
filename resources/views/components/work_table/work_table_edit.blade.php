@@ -43,12 +43,6 @@
 
 
                 </div>
-                <div class="card-footer d-flex justify-content-center align-middle">
-
-
-
-
-                </div>
 
               </div>
             </div>
@@ -56,73 +50,64 @@
 
           <div class="tab-pane fade" id="workLoad" role="tabpanel" aria-labelledby="workLoad-tab">
             <div class="card">
+
               <div class="card-body">
-                <div class="row">
-                  <div class="col-10 text-right">
-                    稼働時間（分）
-                  </div>
-                  <div class="col-2">
-                    <div class="h5 text-right mr-5" id='wl-calcWorkMin'>0</div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-10 text-right">
-                    稼働工数（分）
-                  </div>
-                  <div class="col-2">
-                    <div class="h5 text-right mr-5" id='wl-sumCalcWorkMin'>0</div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-10 text-right">
-                    未振分（分）
-                  </div>
-                  <div class="col-2">
-                    <div class="h5 text-right mr-5" id='wl-subCalcWorkMin'>0</div>
+                <div class="form-group form-inline">
+                  <div class="row">
+                    <div class="col-2 text-right">
+                      {{ Form::label('calcWorkMin','稼働時間',['class'=>'col-form-label']) }}
+                    </div>
+                    <div class="col-2 form-inline">
+                      {{ Form::text('calcWorkMin',0,['id'=>'wl-calcWorkMin','class'=>'form-control col-6 text-right','disabled']) }}<span class="ml-2">分</span>
+                      {{ Form::hidden('calcWorkMin',0,['id'=>'hidden-wl-calcWorkMin'])}}
+                    </div>
+                    <div class="col-2 text-right">
+                      {{ Form::label('calcWorkMin','稼働工数',['class'=>'col-form-label']) }}
+                    </div>
+                    <div class="col-2 form-inline">
+                      {{ Form::text('sumCalcWorkMin',0,['id'=>'wl-sumCalcWorkMin','class'=>'form-control col-6 text-right','disabled']) }}<span class="ml-2">分</span>
+                      {{ Form::hidden('sumCalcWorkMin',0,['id'=>'hidden-wl-sumCalcWorkMin'])}}
+                    </div>
+                    <div class="col-2 text-right">
+                      {{ Form::label('calcWorkMin','未振分け',['class'=>'col-form-label'])}}
+                    </div>
+                    <div class="col-2 form-inline">
+                      {{ Form::text('subCalcWorkMin',0,['id'=>'wl-subCalcWorkMin','class'=>'form-control col-6 text-right','disabled']) }}<span class="ml-2">分</span>
+                      {{ Form::hidden('subCalcWorkMin',0,['id'=>'hidden-wl-subCalcWorkMin'])}}
+                    </div>
                   </div>
                 </div>
               </div>
 
+              <table class="table table-sm table-hover" style="table-layout:fixed;">
+                <thead style="display:block;">
+                  <tr>
+                    <th class="clientName">顧客名</th>
+                    <th class="projectName">案件名</th>
+                    <th class="workLoad">工数(分)</th>
+                  </tr>
+                </thead>
+                <tbody style="display:block;overflow-y:scroll;height:600px;">
+                  @foreach($masterProjects as $masterProject)
 
-
-
-                <table class="table table-hover">
-                  <thead style="display:block;">
                     <tr>
-                      <th>顧客名</th>
-                      <th>案件名</th>
-                      <th>工数(分)</th>
+                      <td class="clientName">
+                        {{ $masterProject->client->clientName }}
+                      </td>
+                      <td class="projectName">
+                        {{ $masterProject->projectName }}
+                      </td>
+                      <td class="workLoad">
+
+                        <livewire:work-load :masterProject=$masterProject>
+
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody style="display:block;overflow-y:scroll;height:600px;">
-                    @foreach($masterProjects as $masterProject)
 
-                      <tr>
-                        <td>
-                          {{ $masterProject->client->clientName }}
-                        </td>
-                        <td>
-                          {{ $masterProject->projectName }}
-                        </td>
-                        <td>
+                  @endforeach
+                </tbody>
+              </table>
 
-                          <livewire:work-load :masterProject=$masterProject>
-
-                        </td>
-                      </tr>
-
-                    @endforeach
-                  </tbody>
-                </table>
-
-
-
-
-
-              <div class="card-footer d-flex justify-content-center align-middle">
-
-
-              </div>
             </div>
           </div>
 
@@ -132,7 +117,7 @@
 
           {{ Form::button('編集を登録する',['class'=>'btn btn-primary','type'=>'submit']) }}
           {{ Form::close() }}
-                    
+
         </div>
 
       </div>

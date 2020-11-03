@@ -9,7 +9,7 @@ class MasterWorkingTeam extends Model
 {
     use HasFactory;
 
-    protected $connection='mysql_one';
+    protected $connection='mysql_two';
     protected $primaryKey='workingTeamId';
     protected $guarded=array('workingTeamId');
 

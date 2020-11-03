@@ -1,6 +1,24 @@
 $('#workLoad-tab').on('click',function(){
   var item = $('#calcWorkHour').text();
-  $('#wl-calcWorkMin').html(item);
+  // $('#wl-calcWorkMin').html(item);
+  $('[id$=calcWorkMin]').val(item);
+
+  var sumItem = 0;
+  $('.calcWorkMin').each(function(){
+    var str = $(this).val();
+    if(str){
+      sumItem += parseInt(str);
+    }
+  });
+  $('[id$=sumCalcWorkMin]').val(sumItem);
+  var item = $('#wl-calcWorkMin').val();
+  var subItem = item - sumItem;
+  if(subItem<0){
+    $('[id$=subCalcWorkMin]').addClass("text-danger");
+  } else {
+    $('[id$=subCalcWorkMin]').removeClass("text-danger");
+  }
+  $('[id$=subCalcWorkMin]').val(subItem);
 });
 
 $('.calcWorkMin').on('blur',function(){
@@ -11,13 +29,20 @@ $('.calcWorkMin').on('blur',function(){
       sumItem += parseInt(str);
     }
   });
-  $('#wl-sumCalcWorkMin').html(sumItem);
-  var item = $('#wl-calcWorkMin').html();
+  $('[id$=sumCalcWorkMin]').val(sumItem);
+  var item = $('#wl-calcWorkMin').val();
   var subItem = item - sumItem;
   if(subItem<0){
-    $('#wl-subCalcWorkMin').addClass("text-danger");
+    $('[id$=subCalcWorkMin]').addClass("text-danger");
   } else {
-    $('#wl-subCalcWorkMin').removeClass("text-danger");    
+    $('[id$=subCalcWorkMin]').removeClass("text-danger");
   }
-  $('#wl-subCalcWorkMin').html(subItem);
+  $('[id$=subCalcWorkMin]').val(subItem);
+});
+
+$(document).ready(function(){
+  var inner = window.innerWidth;
+  $('.clientName').attr('style','width:'+inner*0.3+'px;');
+  $('.projectName').attr('style','width:'+inner*0.5+'px;');
+  $('.workLoad').attr('style','width:'+inner*0.2+'px;');
 });

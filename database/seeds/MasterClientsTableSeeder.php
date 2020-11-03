@@ -42,6 +42,15 @@ class MasterClientsTableSeeder extends Seeder
       $now=Carbon::now();
       $MasterClient=new MasterClient;
       $MasterClient::insert([
+        ['clientName'=>'なし','slack_prefix'=>null,'slack_abbreviated'=>null,'created_at'=>$now,'updated_at'=>$now,],
+        ['clientName'=>'社内業務','slack_prefix'=>null,'slack_abbreviated'=>null,'created_at'=>$now,'updated_at'=>$now,],
+        ['clientName'=>'営業業務','slack_prefix'=>null,'slack_abbreviated'=>null,'created_at'=>$now,'updated_at'=>$now,],
+        ['clientName'=>'開発業務','slack_prefix'=>null,'slack_abbreviated'=>null,'created_at'=>$now,'updated_at'=>$now,],
+        ['clientName'=>'運用業務','slack_prefix'=>null,'slack_abbreviated'=>null,'created_at'=>$now,'updated_at'=>$now,],
+        ['clientName'=>'社内請求業務','slack_prefix'=>null,'slack_abbreviated'=>null,'created_at'=>$now,'updated_at'=>$now,],
+        ['clientName'=>'営業請求業務','slack_prefix'=>null,'slack_abbreviated'=>null,'created_at'=>$now,'updated_at'=>$now,],
+        ['clientName'=>'開発請求業務','slack_prefix'=>null,'slack_abbreviated'=>null,'created_at'=>$now,'updated_at'=>$now,],
+        ['clientName'=>'運用請求業務','slack_prefix'=>null,'slack_abbreviated'=>null,'created_at'=>$now,'updated_at'=>$now,],
         ['clientName'=>'(株)ITコア','slack_prefix'=>null,'slack_abbreviated'=>null,'created_at'=>$now,'updated_at'=>$now,],
         ['clientName'=>'(株)アドバンテック','slack_prefix'=>'112','slack_abbreviated'=>'advn','created_at'=>$now,'updated_at'=>$now,],
         ['clientName'=>'伊豆技研工業(株)','slack_prefix'=>null,'slack_abbreviated'=>null,'created_at'=>$now,'updated_at'=>$now,],

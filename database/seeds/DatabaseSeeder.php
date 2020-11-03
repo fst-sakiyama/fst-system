@@ -1,5 +1,8 @@
 <?php
 
+// use Illuminate\Database\Seeder;
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,15 +14,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(MasterRoleTableSeeder::class);
+        $this->call(MasterWorkingTeamSeeder::class);
+        $this->call(users_init_seeder::class);
+        $this->call(Users_TeamOpe_Seeder::class);
+        $this->call(MasterShiftsTableSeeder::class);
         $this->call(MasterClientsTableSeeder::class);
         $this->call(MasterContractTypesTableSeeder::class);
-        $this->call(MasterProjectsTableSeeder::class);
         $this->call(MasterFileClassificationsTableSeeder::class);
-        $this->call(MasterRequestClassificationsTableSeeder::class);
-        $this->call(MasterRoleTableSeeder::class);
-        $this->call(MasterRoleTableUpdateSeeder::class);
-        $this->call(MasterShiftsTableSeeder::class);
-        $this->call(ShiftTablesSeeder::class);
+        $this->call(MasterProjectsTableSeeder::class);
 
     }
 }

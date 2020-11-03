@@ -118,6 +118,12 @@ class WorkTableController extends Controller
      */
     public function store(Request $request)
     {
+        $items = $request->projectId;
+        foreach($items as $key => $value){
+          if($value){
+            dump($key.' '.$value);
+          }
+        }
         dd($request);
         if($request->goingWorkHour < $request->workTableRest3StartHour && $request->leavingWorkHour > $request->workTableRest3StartHour){
 
