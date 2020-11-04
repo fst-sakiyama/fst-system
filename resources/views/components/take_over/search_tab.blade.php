@@ -14,9 +14,7 @@
       <select class="parent form-control col-md-6" name="clientId">
         <option value="" selected="selected">---顧客名を選択してください---</option>
         @foreach($masterClients as $item)
-          @empty(!($item->projects()->first()))
-            <option value="{{ $item->clientId }}" @if(old('clientId')==$item->clientId) selected @endif>{{ $item->clientName }}</option>
-          @endempty
+          <option value="{{ $item->clientId }}" @if(old('clientId')==$item->clientId) selected @endif>{{ $item->clientName }}</option>
         @endforeach
       </select>
     </div>
@@ -26,7 +24,7 @@
       <select class="children form-control col-md-6" name='projectId' disabled>
         <option value="" selected="selected">---案件名を選択してください---</option>
         @foreach($masterProjects as $item)
-          <option value="{{ $item->projectId }}" data-val="{{ $item->clientId }}" @if(old('projectId')==$item->projectId) selected @endif>{{ $item->projectName }}</option>
+          <option value="{{ $item->teamProjectId }}" data-val="{{ $item->clientId }}" @if(old('projectId')==$item->projectId) selected @endif>{{ $item->projectName }}</option>
         @endforeach
       </select>
       @error('projectId')

@@ -15,8 +15,7 @@ class CreateAddFilePosts extends Migration
     {
         Schema::create('add_file_posts', function (Blueprint $table) {
           $table->increments('addFilePostId');
-          $table->integer('projectId')->unsigned()->default(0);
-          $table->integer('fileClassificationId')->unsigned()->default(0);
+          $table->integer('teamProjectId')->unsigned()->default(0);
           $table->string('fileName');
           $table->string('fileURL');
           $table->timestamps();
@@ -26,15 +25,11 @@ class CreateAddFilePosts extends Migration
           $table->integer('deleted_by')->unsigned()->nullable();
           $table->integer('restored_by')->unsigned()->nullable();
 
-          $table->foreign('projectId')
-                  ->references('projectId')->on('master_projects')
+          $table->foreign('teamProjectId')
+                  ->references('teamProjectId')->on('team_projects')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
 
-          $table->foreign('fileClassificationId')
-                  ->references('fileClassificationId')->on('master_file_classifications')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
         });
     }
 

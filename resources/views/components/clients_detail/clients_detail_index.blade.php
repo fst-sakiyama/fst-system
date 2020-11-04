@@ -43,7 +43,7 @@
                 @endif
               </td>
               <td>{{$item->project->contractType->contractType}}</td>
-              <td><a href="{{asset('/file_posts?id=')}}{{$item->projectId}}">{{$item->project->projectName}}</td>
+              <td><a href="{{asset('/file_posts?id=')}}{{$item->teamProjectId}}">{{$item->project->projectName}}</td>
               <td>
                 @if(null !== ($item->workingTeam))
                   {{$item->workingTeam->workingTeam}}
@@ -52,10 +52,10 @@
               <td>{{$item->startDate}}</td>
               <td>{{$item->endDate}}</td>
               <td class="small">{{$item->slack_channel_name}}</td>
-              <td><a href="{{ route('clients_detail.edit',$item->projectId) }}" class="btn btn-success btn-sm py-0"><i class="fas fa-edit"></i> 修正</a></td>
+              <td><a href="{{ route('clients_detail.edit',$item->teamProjectId) }}" class="btn btn-success btn-sm py-0"><i class="fas fa-edit"></i> 修正</a></td>
               <td>
-                {{Form::open(['route'=>['clients_detail.destroy',$item->projectId],'method'=>'DELETE','id'=>'form_'.$item->projectId])}}
-                {!! Form::button('<i class="fas fa-trash-alt"></i> 削除',['class' => 'btn btn-danger btn-sm deleteConf py-0','data-id'=>$item->projectId,'type'=>'submit']) !!}
+                {{Form::open(['route'=>['clients_detail.destroy',$item->teamProjectId],'method'=>'DELETE','id'=>'form_'.$item->teamProjectId])}}
+                {!! Form::button('<i class="fas fa-trash-alt"></i> 削除',['class' => 'btn btn-danger btn-sm deleteConf py-0','data-id'=>$item->teamProjectId,'type'=>'submit']) !!}
                 {{Form::close()}}
               </td>
             </tr>

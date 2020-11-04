@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MasterFileClassification;
 use App\Models\MasterProject;
+use App\Models\TeamProject;
 use App\Models\FilePost;
 use Storage;
 use File;
@@ -29,8 +30,8 @@ class UploaderController extends Controller
     public function index(Request $request)
     {
       $masterFileClassifications = MasterFileClassification::all();
-      $masterProject = MasterProject::where('projectId',$request->id)->first();
-      $filePosts = FilePost::where('projectId',$request->id)->paginate(30);
+      $masterProject = TeamProject::where('projectId',$request->id)->first();
+      $filePosts = FilePost::where('teamProjectId',$request->id)->paginate(30);
       return view('uploader.index',compact('masterFileClassifications','masterProject','filePosts'));
     }
 
@@ -61,15 +62,15 @@ class UploaderController extends Controller
                   ->withErrors($validator);
       }
 
-      $projectId = $request -> projectId;
-      $fileClassificationId = $request -> fileClassificationId;
+      $projectId = $request->teamProjectId;
+      $fileClassificationId = $request->fileClassificationId;
       $folderName = MasterFileClassification::where('fileClassificationId',$fileClassificationId)
                       ->first();
       $file = $request->file('file');
       $fileName = $file->getClientOriginalName();
       $path = Storage::disk('s3')->putFile('/'.($folderName->folderName), $file, 'public');
       $filePost = new FilePost;
-      $filePost->projectId = $projectId;
+      $filePost->teamProjectId = $projectId;
       $filePost->fileClassificationId = $fileClassificationId;
       $filePost->fileName = $fileName;
       $filePost->fileURL = Storage::disk('s3')->url($path);

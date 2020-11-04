@@ -25,9 +25,7 @@ if(empty($takeOverTheOperation->wellKnown)){
               <select class="parent form-control col-md-6" name="clientId">
                 <option value="" selected="selected">---顧客名を選択してください---</option>
                 @foreach($masterClients as $item)
-                  @empty(!($item->projects()->first()))
-                    <option value="{{ $item->clientId }}" @if($takeOverTheOperation->project->clientId ==$item->clientId || old('clientId')==$item->clientId) selected @endif>{{ $item->clientName }}</option>
-                  @endempty
+                  <option value="{{ $item->clientId }}" @if($takeOverTheOperation->project->project->clientId ==$item->clientId || old('clientId')==$item->clientId) selected @endif>{{ $item->clientName }}</option>
                 @endforeach
               </select>
             </div>
@@ -36,9 +34,9 @@ if(empty($takeOverTheOperation->wellKnown)){
               {{ Form::label('projectId','案件名',['class'=>'col-md-2']) }}
               <span class="badge badge-danger mr-1">※必須</span>
               <select class="children form-control col-md-6" name='projectId' @if(empty($takeOverTheOperation->project->clientId) && empty(old('clientId'))) disabled @endif>
-                <option value=""  @if(empty($takeOverTheOperation->project->clientId) && empty(old('clientId'))) selected @endif>---案件名を選択してください---</option>
+                <option value=""  @if(empty($takeOverTheOperation->project->project->clientId) && empty(old('clientId'))) selected @endif>---案件名を選択してください---</option>
                 @foreach($masterProjects as $item)
-                  <option value="{{ $item->projectId }}" data-val="{{ $item->clientId }}" @if($takeOverTheOperation->project->projectId ==$item->projectId || old('projectId')==$item->projectId) selected @endif>{{ $item->projectName }}</option>
+                  <option value="{{ $item->teamProjectId }}" data-val="{{ $item->clientId }}" @if($takeOverTheOperation->project->project->projectId ==$item->projectId || old('projectId')==$item->projectId) selected @endif>{{ $item->project->projectName }}</option>
                 @endforeach
               </select>
               @error('projectId')

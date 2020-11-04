@@ -17,7 +17,7 @@ class FilePost extends Model
 
   public function project()
   {
-    return $this->belongsTo('App\Models\MasterProject','teamProjectId','teamProjectId');
+    return $this->belongsTo('App\Models\TeamProject','teamProjectId','teamProjectId');
   }
 
   public function fileClassification()

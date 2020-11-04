@@ -82,7 +82,7 @@ class AddTakeOverTheOperationController extends Controller
               $fileURL = Storage::disk('s3')->url($path);
               $addFilePost = new AddFilePost;
               $addFilePost->fill([
-                'projectId' => $request->projectId,
+                'teamProjectId' => $request->projectId,
                 'fileName' => $fileName,
                 'fileURL' => $fileURL,
               ])->save();
@@ -197,7 +197,7 @@ class AddTakeOverTheOperationController extends Controller
               $fileURL = Storage::disk('s3')->url($path);
               $addFilePost = new AddFilePost;
               $addFilePost->fill([
-                'projectId' => $request->projectId,
+                'teamProjectId' => $request->projectId,
                 'fileName' => $fileName,
                 'fileURL' => $fileURL,
               ])->save();

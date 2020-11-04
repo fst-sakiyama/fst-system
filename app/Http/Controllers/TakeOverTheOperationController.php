@@ -83,8 +83,13 @@ class TakeOverTheOperationController extends Controller
                           ->orderBy('deleted_at')
                           ->orderBy('created_at')
                           ->paginate(20);
-      $masterClients = MasterClient::all();
-      $masterProjects = MasterProject::all();
+      $masterClients = TeamProject::where('workingTeamId',4)
+                        ->join('master_projects','team_projects.projectId','=','master_projects.projectId')
+                        ->join('master_clients','master_projects.clientId','=','master_clients.clientId')
+                        ->distinct()->addSelect('master_clients.clientId','master_clients.clientName')->get();
+      $masterProjects = TeamProject::where('workingTeamId',4)
+                        ->join('master_projects','team_projects.projectId','=','master_projects.projectId')
+                        ->get();
       return view('take_over.index',compact('dispDate','takeOvers','takeOversTimeLimit','takeOversTrashToday','wellKnowns','takeOversTrash','wellKnownsTrash','masterClients','masterProjects'));
     }
 
@@ -100,7 +105,6 @@ class TakeOverTheOperationController extends Controller
                         ->join('master_projects','team_projects.projectId','=','master_projects.projectId')
                         ->join('master_clients','master_projects.clientId','=','master_clients.clientId')
                         ->distinct()->addSelect('master_clients.clientId','master_clients.clientName')->get();
-      $masterProjects = MasterProject::all();
       $masterProjects = TeamProject::where('workingTeamId',4)
                         ->join('master_projects','team_projects.projectId','=','master_projects.projectId')
                         ->get();
@@ -131,10 +135,9 @@ class TakeOverTheOperationController extends Controller
 
       DB::beginTransaction();
       try{
-
         $takeOver = new TakeOverTheOperation;
         $takeOver->fill([
-          'projectId' => $request->projectId,
+          'teamProjectId' => $request->projectId,
           'takeOverContent' => $request->takeOverContent,
           'timeLimit' => $request->timeLimit,
           'wellKnown' => $request->wellKnown,
@@ -151,15 +154,15 @@ class TakeOverTheOperationController extends Controller
               $path = Storage::disk('s3')->putFile('/takeOver', $file, 'public');
               $fileURL = Storage::disk('s3')->url($path);
               $addFilePost = new AddFilePost;
-              $addFilePost->fill([
-                'projectId' => $request->projectId,
-                'fileName' => $fileName,
-                'fileURL' => $fileURL,
-              ])->save();
+              $addFilePost->teamProjectId = $request->projectId;
+              $addFilePost->fileName = $fileName;
+              $addFilePost->fileURL = $fileURL;
+              $addFilePost->save();
               $addFilePostId[] = $addFilePost->addFilePostId;
             }
           }
         }
+
         if($addFilePostId){
           $takeOver = TakeOverTheOperation::find($takeOverId);
           $takeOver->files()->sync($addFilePostId);
@@ -220,8 +223,13 @@ class TakeOverTheOperationController extends Controller
     public function doEdit(Request $request)
     {
       $dispDate = $request->dispDate;
-      $masterClients = MasterClient::all();
-      $masterProjects = MasterProject::all();
+      $masterClients = TeamProject::where('workingTeamId',4)
+                        ->join('master_projects','team_projects.projectId','=','master_projects.projectId')
+                        ->join('master_clients','master_projects.clientId','=','master_clients.clientId')
+                        ->distinct()->addSelect('master_clients.clientId','master_clients.clientName')->get();
+      $masterProjects = TeamProject::where('workingTeamId',4)
+                        ->join('master_projects','team_projects.projectId','=','master_projects.projectId')
+                        ->get();
       $takeOverTheOperation = TakeOverTheOperation::find($request->id);
       return view('take_over.edit',compact('dispDate','masterClients','masterProjects','takeOverTheOperation'));
     }
@@ -254,7 +262,7 @@ class TakeOverTheOperationController extends Controller
       try{
         $takeOver = TakeOverTheOperation::find($id);
         $takeOver->fill([
-          'projectId' => $request->projectId,
+          'teamProjectId' => $request->projectId,
           'takeOverContent' => $request->takeOverContent,
           'timeLimit' => $request->timeLimit,
           'wellKnown' => $wellKnown,
@@ -271,7 +279,7 @@ class TakeOverTheOperationController extends Controller
               $fileURL = Storage::disk('s3')->url($path);
               $addFilePost = new AddFilePost;
               $addFilePost->fill([
-                'projectId' => $request->projectId,
+                'teamProjectId' => $request->projectId,
                 'fileName' => $fileName,
                 'fileURL' => $fileURL,
               ])->save();

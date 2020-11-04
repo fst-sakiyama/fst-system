@@ -15,7 +15,7 @@ class CreateTakeOverTheOperations extends Migration
     {
         Schema::create('take_over_the_operations', function (Blueprint $table) {
           $table->increments('takeOverId');
-          $table->integer('projectId')->unsigned();
+          $table->integer('teamProjectId')->unsigned();
           $table->text('takeOverContent');
           $table->date('timeLimit')->nullable();
           $table->date('wellKnown')->nullable();
@@ -26,8 +26,8 @@ class CreateTakeOverTheOperations extends Migration
           $table->integer('deleted_by')->unsigned()->nullable();
           $table->integer('restored_by')->unsigned()->nullable();
 
-          $table->foreign('projectId')
-                ->references('projectId')->on('master_projects')
+          $table->foreign('teamProjectId')
+                ->references('teamProjectId')->on('team_projects')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });

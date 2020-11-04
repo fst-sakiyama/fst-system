@@ -28,7 +28,7 @@
               <select class="children form-control col-md-6" name='projectId' disabled>
                 <option value="" selected="selected">---案件名を選択してください---</option>
                 @foreach($masterProjects as $item)
-                  <option value="{{ $item->teamProjectId }}" data-val="{{ $item->clientId }}" @if(old('projectId')==$item->projectId) selected @endif>{{ $item->projectName }}</option>
+                  <option value="{{ $item->teamProjectId }}" data-val="{{ $item->clientId }}" @if(old('projectId')==$item->teamProjectId) selected @endif>{{ $item->projectName }}</option>
                 @endforeach
               </select>
               @error('projectId')
