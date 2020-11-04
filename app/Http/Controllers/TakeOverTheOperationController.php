@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TakeOverTheOperation;
 use App\Models\MasterClient;
 use App\Models\MasterProject;
+use App\Models\TeamProject;
 use App\Models\AddFilePost;
 use App\Models\ReferenceLink;
 use Illuminate\Http\Request;
@@ -95,8 +96,14 @@ class TakeOverTheOperationController extends Controller
     public function create(Request $request)
     {
       $dispDate = $request->dispDate;
-      $masterClients = MasterClient::all();
+      $masterClients = TeamProject::where('workingTeamId',4)
+                        ->join('master_projects','team_projects.projectId','=','master_projects.projectId')
+                        ->join('master_clients','master_projects.clientId','=','master_clients.clientId')
+                        ->distinct()->addSelect('master_clients.clientId','master_clients.clientName')->get();
       $masterProjects = MasterProject::all();
+      $masterProjects = TeamProject::where('workingTeamId',4)
+                        ->join('master_projects','team_projects.projectId','=','master_projects.projectId')
+                        ->get();
       return view('take_over.create',compact('dispDate','masterClients','masterProjects'));
     }
 

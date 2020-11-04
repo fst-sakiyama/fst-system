@@ -38,12 +38,12 @@
           @foreach($items as $item)
             <tr>
               <td>
-                @if(null !== ($item->client->slack_prefix))
-                  {{ $item->client->sl_prefix }}
+                @if(null !== ($item->project->client->slack_prefix))
+                  {{ $item->project->client->sl_prefix }}
                 @endif
               </td>
-              <td>{{$item->contractType->contractType}}</td>
-              <td><a href="{{asset('/file_posts?id=')}}{{$item->projectId}}">{{$item->projectName}}</td>
+              <td>{{$item->project->contractType->contractType}}</td>
+              <td><a href="{{asset('/file_posts?id=')}}{{$item->projectId}}">{{$item->project->projectName}}</td>
               <td>
                 @if(null !== ($item->workingTeam))
                   {{$item->workingTeam->workingTeam}}

@@ -19,7 +19,7 @@ class TakeOverTheOperation extends Model
 
   public function project()
   {
-    return $this->belongsTo('App\Models\MasterProject','projectId','projectId');
+    return $this->belongsTo('App\Models\MasterProject','teamProjectId','teamProjectId');
   }
 
   public function takeOverTheOperations()

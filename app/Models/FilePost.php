@@ -17,7 +17,7 @@ class FilePost extends Model
 
   public function project()
   {
-    return $this->belongsTo('App\Models\MasterProject','projectId','projectId');
+    return $this->belongsTo('App\Models\MasterProject','teamProjectId','teamProjectId');
   }
 
   public function fileClassification()
@@ -44,5 +44,5 @@ class FilePost extends Model
   {
       return $this->belongsTo('App\User', 'restored_by');
   }
-  
+
 }

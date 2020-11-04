@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MasterClient;
 use App\Models\MasterProject;
+use App\Models\TeamProject;
 use App\Models\MasterContractType;
 use App\Models\MasterWorkingTeam;
 use Illuminate\Http\Request;
@@ -33,11 +34,19 @@ class ClientsDetailController extends Controller
       $clientName = MasterClient::select('clientName')
                   ->where('clientId',$clientId)
                   ->first();
-      $items = MasterProject::where('clientId',$clientId)
-                ->orderByRaw('order_of_row IS NULL asc')
-                ->orderBy('order_of_row')
-                ->orderBy('updated_at')
+      // $items = MasterProject::where('clientId',$clientId)
+      //           ->orderByRaw('order_of_row IS NULL asc')
+      //           ->orderBy('order_of_row')
+      //           ->orderBy('updated_at')
+      //           ->paginate(30);
+      $items = TeamProject::select('team_projects.*')
+                ->join('master_projects','team_projects.projectId','=','master_projects.projectId')
+                ->where('master_projects.clientId',$clientId)
+                ->orderByRaw('master_projects.order_of_row IS NULL asc')
+                ->orderBy('master_projects.order_of_row')
+                ->orderBy('workingTeamId')
                 ->paginate(30);
+
       return view('clients_detail.index',compact('clientId','clientName','items'));
     }
 

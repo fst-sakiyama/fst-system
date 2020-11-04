@@ -12,32 +12,37 @@ class MasterProject extends Model
   protected $primaryKey = 'projectId';
   protected $guarded = array('projectId');
 
-  public function workingTeam()
-  {
-    return $this->belongsTo('App\Models\MasterWorkingTeam','workingTeamId','workingTeamId');
-  }
-  public function filePosts()
-  {
-    return $this->hasMany('App\Models\FilePost','projectId','projectId');
-  }
-
-  public function addFilePosts()
-  {
-    return $this->hasMany('App\Models\AddFilePost','projectId','projectId');
-  }
-
-  public function TakeOverTheOperations()
-  {
-    return $this->hasMany('App\Models\TakeOverTheOperation','projectId','projectId');
-  }
-
   public function contractType()
   {
     return $this->belongsTo('App\Models\MasterContractType','contractTypeId','contractTypeId');
   }
-
   public function client()
   {
     return $this->belongsTo('App\Models\MasterClient','clientId','clientId');
   }
+  public function teamProjects()
+  {
+    return $this->hasMany('App\Models\TeamProject','projectId','projectId');
+  }
+
+  public function created_by()
+  {
+      return $this->belongsTo('App\User', 'created_by');
+  }
+
+  public function updated_by()
+  {
+      return $this->belongsTo('App\User', 'updated_by');
+  }
+
+  public function deleted_by()
+  {
+      return $this->belongsTo('App\User', 'deleted_by');
+  }
+
+  public function restored_by()
+  {
+      return $this->belongsTo('App\User', 'restored_by');
+  }
+
 }

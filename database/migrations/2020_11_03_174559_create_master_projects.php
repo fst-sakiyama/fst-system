@@ -17,11 +17,9 @@ class CreateMasterProjects extends Migration
           $table->increments('projectId');
           $table->integer('clientId')->unsigned();
           $table->integer('contractTypeId')->unsigned();
-          $table->integer('workingTeamId')->unsigned();
           $table->string('projectName');
           $table->date('startDate')->nullable();
           $table->date('endDate')->nullable();
-          $table->string('slack_channel_name')->nullable();
           $table->integer('order_of_row')->nullable();
           $table->text('project_detail')->nullable();
           $table->timestamps();
@@ -41,10 +39,6 @@ class CreateMasterProjects extends Migration
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
 
-          $table->foreign('workingTeamId')
-                ->references('workingTeamId')->on('company_data.master_working_teams')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
         });
     }
 
