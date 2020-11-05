@@ -20,7 +20,7 @@ class FilePostsController extends Controller
     {
         $clientProject = MasterProject::where('projectId',$request->id)
                         ->first();
-        $items = FilePost::where('projectId',$request->id)
+        $items = FilePost::where('teamProjectId',$request->id)
                   ->get();
         return view('file_posts.index',compact('clientProject','items'));
     }

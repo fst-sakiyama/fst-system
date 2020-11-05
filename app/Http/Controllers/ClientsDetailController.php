@@ -34,11 +34,7 @@ class ClientsDetailController extends Controller
       $clientName = MasterClient::select('clientName')
                   ->where('clientId',$clientId)
                   ->first();
-      // $items = MasterProject::where('clientId',$clientId)
-      //           ->orderByRaw('order_of_row IS NULL asc')
-      //           ->orderBy('order_of_row')
-      //           ->orderBy('updated_at')
-      //           ->paginate(30);
+
       $items = TeamProject::select('team_projects.*')
                 ->join('master_projects','team_projects.projectId','=','master_projects.projectId')
                 ->where('master_projects.clientId',$clientId)
@@ -105,7 +101,7 @@ class ClientsDetailController extends Controller
      */
     public function edit($id)
     {
-      $item = MasterProject::find($id);
+      $item = TeamProject::find($id);
       $masterContractTypes = MasterContractType::select('contractTypeId','contractType')->get();
       $masterContractTypes = $masterContractTypes->pluck('contractType','contractTypeId');
       $masterWorkingTeams = MasterWorkingTeam::select('workingTeamId','workingTeam')->get();

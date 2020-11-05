@@ -21,7 +21,6 @@ class CreateMasterProjects extends Migration
           $table->date('startDate')->nullable();
           $table->date('endDate')->nullable();
           $table->integer('order_of_row')->nullable();
-          $table->text('project_detail')->nullable();
           $table->timestamps();
           $table->softDeletes();
           $table->integer('created_by')->unsigned()->nullable();
