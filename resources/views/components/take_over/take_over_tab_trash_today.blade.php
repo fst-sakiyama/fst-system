@@ -1,5 +1,5 @@
 <div class="card-header">
-  {{ $item->created_at->format('Y.m.d') }} - {{ mb_substr($item->project->projectName,0,12) }}
+  {{ $item->created_at->format('Y.m.d') }} - {{ mb_substr($item->project->project->projectName,0,12) }}
 </div>
 <div class="card-body img-brownCatDoComp">
 
@@ -61,7 +61,6 @@
   </div>
   <div class="row mb-0 mr-1 float-right">
     <div class="small">
-      <!--{{ $item->project->client->clientName }}-->
       @empty(!($item->created_by))
         作成者：{{ app\User::find($item->created_by)->name }}
       @endempty

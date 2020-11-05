@@ -19,4 +19,23 @@ class WorkTable extends Model
         return $this->belongTo('MasterShift','shiftId','shiftId');
     }
 
+    public function created_by()
+    {
+        return $this->belongsTo('App\User', 'created_by');
+    }
+
+    public function updated_by()
+    {
+        return $this->belongsTo('App\User', 'updated_by');
+    }
+
+    public function deleted_by()
+    {
+        return $this->belongsTo('App\User', 'deleted_by');
+    }
+
+    public function restored_by()
+    {
+        return $this->belongsTo('App\User', 'restored_by');
+    }
 }

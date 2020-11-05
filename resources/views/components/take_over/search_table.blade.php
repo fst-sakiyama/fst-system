@@ -15,9 +15,9 @@
 			<td class="col"><a class="searchTable" data-class = "{{'item_'.$item->takeOverId}}" style="cursor:pointer;">@empty($item->wellKnown) 引継 @else 周知 @endempty</a></td>
 			<td class="col"><a class="searchTable" data-class = "{{'item_'.$item->takeOverId}}" style="cursor:pointer;">{{ $item->created_at->format('Y.m.d') }}</a></td>
 			<td class="col"><a class="searchTable" data-class = "{{'item_'.$item->takeOverId}}" style="cursor:pointer;">@if(!(empty($item->deleted_at))){{ $item->deleted_at->format('Y.m.d') }} @endif</a></td>
-			<td class="col-2"><a class="searchTable" data-class = "{{'item_'.$item->takeOverId}}" style="cursor:pointer;">{{ mb_substr($item->project->projectName,0,12) }}</a></td>
+			<td class="col-2"><a class="searchTable" data-class = "{{'item_'.$item->takeOverId}}" style="cursor:pointer;">{{ mb_substr($item->project->project->projectName,0,12) }}</a></td>
 			<td class="col-4"><a class="searchTable" data-class = "{{'item_'.$item->takeOverId}}" style="cursor:pointer;">{{ mb_substr($item->takeOverContent,0,24) }}@if(mb_strlen($item->takeOverContent)>24)...@endif</a></td>
-			<td class="col-2"><a class="searchTable" data-class = "{{'item_'.$item->takeOverId}}" style="cursor:pointer;"><span class="small">{{ mb_substr($item->project->client->clientName,0,8) }}</span></td>
+			<td class="col-2"><a class="searchTable" data-class = "{{'item_'.$item->takeOverId}}" style="cursor:pointer;"><span class="small">{{ mb_substr($item->project->project->client->clientName,0,8) }}</span></td>
 		</tr>
 	@endforeach
 	</tbody>

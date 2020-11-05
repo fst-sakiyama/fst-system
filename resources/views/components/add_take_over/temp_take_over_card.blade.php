@@ -2,7 +2,7 @@
   <div class="card mt-1">
 
     <div class="card-header">
-      {{ $takeOverTheOperation->created_at->format('Y.m.d') }} - {{ mb_substr($takeOverTheOperation->project->projectName,0,12) }}
+      {{ $takeOverTheOperation->created_at->format('Y.m.d') }} - {{ mb_substr($takeOverTheOperation->project->project->projectName,0,12) }}
     </div>
 
     <div class="card-body img-brownCat">
@@ -57,7 +57,6 @@
     <div class="card-footer" style="position:relative;">
       <div class="row mb-0 mr-1 float-right">
         <div class="small">
-          <!--{{ $takeOverTheOperation->project->client->clientName }}-->
           @empty(!($takeOverTheOperation->created_by))
             作成者：{{ app\User::find($takeOverTheOperation->created_by)->name }}
           @endempty

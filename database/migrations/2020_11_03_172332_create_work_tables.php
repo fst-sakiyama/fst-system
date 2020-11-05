@@ -37,6 +37,10 @@ class CreateWorkTables extends Migration
           $table->string('specialReason',255)->nullable();
           $table->string('remarks',255)->nullable();
           $table->timestamps();
+          $table->integer('created_by')->unsigned()->nullable();
+          $table->integer('updated_by')->unsigned()->nullable();
+          $table->integer('deleted_by')->unsigned()->nullable();
+          $table->integer('restored_by')->unsigned()->nullable();
 
           $table->unique(['workTableWorkDay','workTableUserId']);
 

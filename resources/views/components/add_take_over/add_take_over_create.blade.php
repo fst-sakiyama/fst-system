@@ -10,7 +10,7 @@
           {{ Form::open(['route'=>'add_take_over.store','enctype'=>'multipart/form-data']) }}
           {{ Form::hidden('dispDate',$dispDate) }}
           {{ Form::hidden('takeOverId',$takeOverTheOperation->takeOverId)}}
-          {{ Form::hidden('projectId',$takeOverTheOperation->projectId)}}
+          {{ Form::hidden('projectId',$takeOverTheOperation->teamProjectId)}}
           <div class="row mt-2">
             @include('components.add_take_over.temp_take_over_card',['takeOverTheOperation'=>$takeOverTheOperation])
 
