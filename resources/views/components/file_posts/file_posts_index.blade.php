@@ -8,10 +8,10 @@
         <div class="card-header">
           <div class="row">
             <div class="col-md">
-              <h5>{{ $clientProject->client->clientName }}　様<br>{{ $clientProject->projectName }}</h5>
+              <h5>{{ $clientProject->project->client->clientName }}　様<br>{{ $clientProject->project->projectName }}</h5>
             </div>
             <div class="col-md text-right">
-              <a href="{{asset('/upload?id=')}}{{$clientProject->projectId}}"><button type="button" class="w-50 btn btn-primary">ファイル新規作成・更新・削除</button></a>
+              <a href="{{asset('/upload?id=')}}{{$clientProject->teamProjectId}}"><button type="button" class="w-50 btn btn-primary">ファイル新規作成・更新・削除</button></a>
             </div>
           </div>
         </div>

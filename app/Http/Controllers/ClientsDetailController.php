@@ -56,8 +56,7 @@ class ClientsDetailController extends Controller
       $clientId = $request->id;
       $masterContractTypes = MasterContractType::select('contractTypeId','contractType')->get();
       $masterContractTypes = $masterContractTypes->pluck('contractType','contractTypeId');
-      $masterWorkingTeams = MasterWorkingTeam::select('workingTeamId','workingTeam')->get();
-      $masterWorkingTeams = $masterWorkingTeams->pluck('workingTeam','workingTeamId');
+      $masterWorkingTeams = MasterWorkingTeam::all();
       return view('clients_detail.create',compact('clientId','masterContractTypes','masterWorkingTeams'));
     }
 
@@ -77,6 +76,14 @@ class ClientsDetailController extends Controller
                   ->withErrors($validator)
                   ->withInput();
       }
+
+      // 配列の受け取り方
+      if($request->workingTeamId){
+        foreach($request->workingTeamId as $key=>$val){
+          dump($key.' '.$val.' '.$request->slack_channel_name[$key].' '.$request->project_detail[$key]);
+        }
+      }
+      dd($request);
 
       MasterProject::create($request->all());
       return redirect()->route('clients_detail.index',['id'=>$request->clientId]);

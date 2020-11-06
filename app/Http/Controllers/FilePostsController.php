@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MasterClient;
 use App\Models\MasterProject;
+use App\Models\TeamProject;
 use App\Models\FilePost;
 use App\Models\MasterFileClassification;
 use Storage;
@@ -18,7 +19,7 @@ class FilePostsController extends Controller
      */
     public function index(Request $request)
     {
-        $clientProject = MasterProject::where('projectId',$request->id)
+        $clientProject = TeamProject::where('teamProjectId',$request->id)
                         ->first();
         $items = FilePost::where('teamProjectId',$request->id)
                   ->get();

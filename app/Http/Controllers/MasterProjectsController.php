@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MasterContractType;
 use App\Models\MasterProject;
+use App\Models\TeamProject;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -15,16 +17,23 @@ class MasterProjectsController extends Controller
      */
     public function index()
     {
-      $items = MasterProject::select('master_projects.*')
-                ->join('master_clients','master_projects.clientId','=','master_clients.clientId')
-                ->orderByRaw('master_clients.order_of_row IS NULL asc')
-                ->orderBy('master_clients.order_of_row')
-                ->orderByRaw('master_clients.slack_prefix IS NULL asc')
-                ->orderBy('master_clients.slack_prefix')
-                ->orderBy('master_clients.clientName')
-                ->orderBy('updated_at')
-                ->paginate(30);
-      return view('master_projects.index',compact('items'));
+      $contractTypes = MasterContractType::all();
+
+      foreach($contractTypes as $contractTypeId)
+      {
+        $id = $contractTypeId->contractTypeId;
+        $items[$id] = TeamProject::whereHas('project',function($query) use($id){
+          $query->where('contractTypeId',$id);
+          $query->whereHas('client',function($query){
+            $query->orderByRaw('order_of_row IS NULL asc');
+            $query->orderBy('order_of_row');
+            $query->orderByRaw('slack_prefix IS NULL asc');
+            $query->orderBy('slack_prefix');
+          });
+        })->get();
+      }
+
+      return view('master_projects.index',compact('contractTypes','items'));
     }
 
     /**
