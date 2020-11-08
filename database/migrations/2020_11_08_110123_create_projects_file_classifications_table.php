@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMasterContractTypes extends Migration
+class CreateProjectsFileClassificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateMasterContractTypes extends Migration
      */
     public function up()
     {
-        Schema::create('master_contract_types', function (Blueprint $table) {
-          $table->increments('contractTypeId');
-          $table->string('contractType');
-          $table->string('contractTypeImage');
+        Schema::create('projects_file_classifications', function (Blueprint $table) {
+          $table->increments('projectsFileClassificationId');
+          $table->string('fileClassification');
+          $table->string('folderName');
+          $table->integer('order_of_row')->nullable();
           $table->timestamps();
           $table->softDeletes();
         });
@@ -29,6 +30,6 @@ class CreateMasterContractTypes extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('master_contract_types');
+        Schema::dropIfExists('projects_file_classifications');
     }
 }

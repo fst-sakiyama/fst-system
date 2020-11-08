@@ -90,7 +90,7 @@ Route::group(['middleware' => ['auth', 'can:user-higher']], function () {
     // ファイルアップロード関連
     Route::get('/file_posts/restore','FilePostsController@restore')->name('file_posts.restore');
     Route::resource('/file_posts', 'FilePostsController')->only([
-        'index','destroy'
+        'index','store','destroy'
     ]);
 
     // 追加ファイルアップロード関連

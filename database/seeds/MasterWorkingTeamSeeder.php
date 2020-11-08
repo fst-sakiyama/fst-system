@@ -16,12 +16,12 @@ class MasterWorkingTeamSeeder extends Seeder
     public function run()
     {
       $now=Carbon::now();
-      $MasterContractType=new MasterWorkingTeam;
-      $MasterContractType::insert([
-        ['workingTeam'=>'社内','created_at'=>$now,'updated_at'=>$now,],
-        ['workingTeam'=>'営業','created_at'=>$now,'updated_at'=>$now,],
-        ['workingTeam'=>'開発','created_at'=>$now,'updated_at'=>$now,],
-        ['workingTeam'=>'運用','created_at'=>$now,'updated_at'=>$now,],
+      $MasterWorkingTeam=new MasterWorkingTeam;
+      $MasterWorkingTeam::insert([
+        ['workingTeam'=>'社内','workingTeamImage'=>'inHouse.png','created_at'=>$now,'updated_at'=>$now,],
+        ['workingTeam'=>'営業','workingTeamImage'=>'sales.png','created_at'=>$now,'updated_at'=>$now,],
+        ['workingTeam'=>'開発','workingTeamImage'=>'dev.png','created_at'=>$now,'updated_at'=>$now,],
+        ['workingTeam'=>'運用','workingTeamImage'=>'ope.png','created_at'=>$now,'updated_at'=>$now,],
       ]);
     }
 }

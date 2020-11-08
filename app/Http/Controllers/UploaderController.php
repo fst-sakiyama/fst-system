@@ -29,7 +29,7 @@ class UploaderController extends Controller
      */
     public function index(Request $request)
     {
-      $masterFileClassifications = MasterFileClassification::all();
+      $masterFileClassifications = MasterFileClassification::orderBy('order_of_row')->get();
       $masterProject = TeamProject::where('projectId',$request->id)->first();
       $filePosts = FilePost::where('teamProjectId',$request->id)->paginate(30);
       return view('uploader.index',compact('masterFileClassifications','masterProject','filePosts'));
@@ -106,7 +106,7 @@ class UploaderController extends Controller
       *拡張子のみ表示
       *dd(File::extension($item->fileName));
       **/
-      $masterFileClassifications = MasterFileClassification::select('fileClassificationId','fileClassification')->get();
+      $masterFileClassifications = MasterFileClassification::select('fileClassificationId','fileClassification')->orderBy('order_of_row')->get();
       $masterFileClassifications = $masterFileClassifications->pluck('fileClassification','fileClassificationId');
       return view('uploader.edit',compact('item','masterFileClassifications'));
     }

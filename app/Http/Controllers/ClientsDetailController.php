@@ -10,6 +10,7 @@ use App\Models\MasterWorkingTeam;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class ClientsDetailController extends Controller
 {
@@ -35,13 +36,14 @@ class ClientsDetailController extends Controller
                   ->where('clientId',$clientId)
                   ->first();
 
-      $items = TeamProject::select('team_projects.*')
-                ->join('master_projects','team_projects.projectId','=','master_projects.projectId')
-                ->where('master_projects.clientId',$clientId)
-                ->orderByRaw('master_projects.order_of_row IS NULL asc')
-                ->orderBy('master_projects.order_of_row')
-                ->orderBy('workingTeamId')
-                ->paginate(30);
+      $items = MasterProject::where('clientId',$clientId)
+                    ->orderBy('clientId')
+                    ->whereHas('client',function($query){
+                              $query->orderByRaw('order_of_row IS NULL asc');
+                              $query->orderBy('order_of_row');
+                              $query->orderBy('updated_at','desc');
+                              $query->orderBy('created_at','desc');
+                      })->get();
 
       return view('clients_detail.index',compact('clientId','clientName','items'));
     }
@@ -77,15 +79,43 @@ class ClientsDetailController extends Controller
                   ->withInput();
       }
 
-      // 配列の受け取り方
-      if($request->workingTeamId){
-        foreach($request->workingTeamId as $key=>$val){
-          dump($key.' '.$val.' '.$request->slack_channel_name[$key].' '.$request->project_detail[$key]);
-        }
+      if(!$request->workingTeamId){
+        return redirect()->back()->with('message','対応チームは必ず一つ以上選択してください。')->withInput();
       }
-      dd($request);
 
-      MasterProject::create($request->all());
+      DB::beginTransaction();
+
+      try{
+          $masterProject = new MasterProject;
+
+          $masterProject->fill([
+              'clientId' => $request->clientId,
+              'contractTypeId' => $request->contractTypeId,
+              'projectName' => $request->projectName,
+              'startDate' => $request->startDate,
+              'endDate' => $request->endDate,
+          ])->save();
+          $masterProjectId = $masterProject->projectId;
+
+          foreach($request->workingTeamId as $key=>$val){
+              $teamProject = new TeamProject;
+              $teamProject->fill([
+                  'projectId' => $masterProjectId,
+                  'workingTeamId' => $val,
+                  'slack_channel_name' => $request->slack_channel_name[$key],
+                  'project_detail' => $request->project_detail[$key],
+              ])->save();
+          }
+
+          DB::commit();
+
+      }catch(\Exception $e) {
+
+        DB::rollback();
+        dd('エラーが発生しました');
+
+      }
+
       return redirect()->route('clients_detail.index',['id'=>$request->clientId]);
     }
 
@@ -108,11 +138,10 @@ class ClientsDetailController extends Controller
      */
     public function edit($id)
     {
-      $item = TeamProject::find($id);
+      $item = MasterProject::find($id);
       $masterContractTypes = MasterContractType::select('contractTypeId','contractType')->get();
       $masterContractTypes = $masterContractTypes->pluck('contractType','contractTypeId');
-      $masterWorkingTeams = MasterWorkingTeam::select('workingTeamId','workingTeam')->get();
-      $masterWorkingTeams = $masterWorkingTeams->pluck('workingTeam','workingTeamId');
+      $masterWorkingTeams = MasterWorkingTeam::all();
       return view('clients_detail.edit',compact('item','masterContractTypes','masterWorkingTeams'));
     }
 
@@ -134,7 +163,46 @@ class ClientsDetailController extends Controller
                   ->withInput();
       }
 
-      MasterProject::find($id)->fill($request->all())->save();
+      if(!$request->workingTeamId){
+        return redirect()->back()->with('message','対応チームは必ず一つ以上選択してください。')->withInput();
+      }
+
+      DB::beginTransaction();
+
+      try{
+          $masterProject = MasterProject::find($id);
+
+          $masterProject->fill([
+              'clientId' => $request->clientId,
+              'contractTypeId' => $request->contractTypeId,
+              'projectName' => $request->projectName,
+              'startDate' => $request->startDate,
+              'endDate' => $request->endDate,
+          ])->save();
+
+          foreach($request->teamProjectId as $val){
+              TeamProject::find($val)->delete();
+          }
+
+          foreach($request->workingTeamId as $key=>$val){
+              $teamProject = new TeamProject;
+              $teamProject->fill([
+                  'projectId' => $id,
+                  'workingTeamId' => $val,
+                  'slack_channel_name' => $request->slack_channel_name[$key],
+                  'project_detail' => $request->project_detail[$key],
+              ])->save();
+          }
+
+          DB::commit();
+
+      }catch(\Exception $e) {
+
+        DB::rollback();
+        dd('エラーが発生しました');
+
+      }
+
       return redirect()->route('clients_detail.index',['id'=>$request->clientId]);
     }
 

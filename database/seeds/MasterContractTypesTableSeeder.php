@@ -23,10 +23,10 @@ class MasterContractTypesTableSeeder extends Seeder
         $now=Carbon::now();
         $MasterContractType=new MasterContractType;
         $MasterContractType::insert([
-          ['contractType'=>'継続','created_at'=>$now,'updated_at'=>$now,],
-          ['contractType'=>'入札','created_at'=>$now,'updated_at'=>$now,],
-          ['contractType'=>'短期','created_at'=>$now,'updated_at'=>$now,],
-          ['contractType'=>'その他','created_at'=>$now,'updated_at'=>$now,],
+          ['contractType'=>'継続','contractTypeImage'=>'continue.png','created_at'=>$now,'updated_at'=>$now,],
+          ['contractType'=>'入札','contractTypeImage'=>'bid.png','created_at'=>$now,'updated_at'=>$now,],
+          ['contractType'=>'短期','contractTypeImage'=>'short.png','created_at'=>$now,'updated_at'=>$now,],
+          ['contractType'=>'その他','contractTypeImage'=>'contractType_other.png','created_at'=>$now,'updated_at'=>$now,],
         ]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

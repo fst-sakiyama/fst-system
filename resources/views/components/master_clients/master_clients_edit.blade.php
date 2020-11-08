@@ -9,26 +9,23 @@
         <div class="mt-3">
           {{ Form::open(array('route' => array('master_clients.update', $item->clientId), 'method' => 'PUT')) }}
           {{ Form::hidden('clientId', $item->clientId) }}
-          <div class="form-group">
-            {{ Form::label('clientName','顧客名',['class'=>'col-md-2']) }}
-            <span class="mr-2">：</span>
-            {{ Form::text('clientName',$item->clientName,['placeholder'=>'顧客名を入力','class'=>'col-md-4','id'=>'clientName']) }}
+          <div class="form-group form-inline">
+            {{ Form::label('clientName','顧客名',['class'=>'col-form-label col-4']) }}
+            {{ Form::text('clientName',$item->clientName,['placeholder'=>'顧客名を入力','class'=>'form-control col-md-4','id'=>'clientName']) }}
             @error('clientName')
               <span class="ml-2 text-danger">{{ $message }}</span>
             @enderror
           </div>
-          <div class="form-group">
-            {{ Form::label('slack_prefix','SlackPrefix',['class'=>'col-md-2']) }}
-            <span class="mr-2">：</span>
-            {{ Form::text('slack_prefix',$item->slack_prefix,['placeholder'=>'数字3桁を入力','class'=>'col-md-4','id'=>'slack_prefix']) }}
+          <div class="form-group form-inline">
+            {{ Form::label('slack_prefix','SlackPrefix',['class'=>'col-form-label col-4']) }}
+            {{ Form::text('slack_prefix',$item->slack_prefix,['placeholder'=>'数字3桁を入力','class'=>'form-control col-md-4','id'=>'slack_prefix']) }}
             @error('slack_prefix')
               <span class="ml-2 text-danger">{{ $message }}</span>
             @enderror
           </div>
-          <div class="form-group">
-            {{ Form::label('slack_abbreviated','Slack表記略称',['class'=>'col-md-2']) }}
-            <span class="mr-2">：</span>
-            {{ Form::text('slack_abbreviated',$item->slack_abbreviated,['placeholder'=>'Slack表記略称を入力','class'=>'col-md-4','id'=>'slack_abbreviated']) }}
+          <div class="form-group form-inline">
+            {{ Form::label('slack_abbreviated','Slack表記略称',['class'=>'col-form-label col-4']) }}
+            {{ Form::text('slack_abbreviated',$item->slack_abbreviated,['placeholder'=>'Slack表記略称を入力','class'=>'form-control col-md-4','id'=>'slack_abbreviated']) }}
             @error('slack_abbreviated')
               <span class="ml-2 text-danger">{{ $message }}</span>
             @enderror

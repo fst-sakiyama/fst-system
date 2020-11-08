@@ -16,6 +16,7 @@ class CreateMasterWorkingTeams extends Migration
         Schema::connection('mysql_two')->create('master_working_teams', function (Blueprint $table) {
           $table->increments('workingTeamId');
           $table->string('workingTeam');
+          $table->string('workingTeamImage');
           $table->timestamps();
         });
     }

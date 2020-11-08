@@ -11,12 +11,11 @@ class MasterClientsController extends Controller
 {
   private $messages = [
     'clientName.required' => '※顧客名は必須です。',
-    // 'clientCode.unique' => '※すでに使用されています。',
-    // 'clientCode.max' => '※0～999の範囲で入力してください。',
+    'slack_prefix.digits' => '※3桁の半角数字で入力してください。'
   ];
   private $rules = [
     'clientName' => 'required',
-    // 'clientCode' => 'unique:master_clients,clientCode|integer|nullable|max:999',
+    'slack_prefix' => 'digits:3'
   ];
     /**
      * Display a listing of the resource.
@@ -27,9 +26,8 @@ class MasterClientsController extends Controller
     {
         $items = MasterClient::orderByRaw('order_of_row IS NULL asc')
                   ->orderBy('order_of_row')
-                  ->orderByRaw('slack_prefix IS NULL asc')
-                  ->orderBy('slack_prefix')
-                  ->orderBy('updated_at')
+                  ->orderBy('updated_at','desc')
+                  ->orderBy('created_at','desc')
                   ->paginate(30);
         return view('master_clients.index',compact('items'));
     }

@@ -19,7 +19,7 @@
             <div class="border p-1 {{ $requestPlate->requestClassification->requestColorClass }}">
               <div class="row ml-1 d-flex justify-content-between">
                 <div class="col-6 align-self-center">
-                  <img class="" alt="{{ $requestPlate->requestClassification->requestClassification}}" src="{{ asset( 'images/'.$requestPlate->requestClassification->requestImage ) }}" width="70px">
+                  <img class="" alt="{{ $requestPlate->requestClassification->requestClassification}}" src="{{ asset( 'images/'.$requestPlate->requestClassification->requestImage ) }}" width="60px">
                   <span class="ml-2">{{ $requestPlate->created_at->format('Y-m-d') }}</span>
                 </div>
               </div>

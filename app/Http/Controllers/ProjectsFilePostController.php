@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MasterContractType;
-use App\Models\MasterProject;
-use App\Models\TeamProject;
-use App\Models\MasterWorkingTeam;
+use App\Models\ProjectsFilePost;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 
-class MasterProjectsController extends Controller
+class ProjectsFilePostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,22 +14,7 @@ class MasterProjectsController extends Controller
      */
     public function index()
     {
-      $contractTypes = MasterContractType::all();
-
-      foreach($contractTypes as $contractTypeId)
-      {
-        $id = $contractTypeId->contractTypeId;
-        $items[$id] = MasterProject::where('contractTypeId',$id)
-                      ->orderBy('clientId')
-                      ->whereHas('client',function($query){
-                                $query->orderByRaw('order_of_row IS NULL asc');
-                                $query->orderBy('order_of_row');
-                                $query->orderBy('updated_at','desc');
-                                $query->orderBy('created_at','desc');
-                        })->get();
-      }
-
-      return view('master_projects.index',compact('contractTypes','items'));
+        //
     }
 
     /**
@@ -60,10 +41,10 @@ class MasterProjectsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\ProjectsFilePost  $projectsFilePost
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ProjectsFilePost $projectsFilePost)
     {
         //
     }
@@ -71,10 +52,10 @@ class MasterProjectsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\ProjectsFilePost  $projectsFilePost
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ProjectsFilePost $projectsFilePost)
     {
         //
     }
@@ -83,10 +64,10 @@ class MasterProjectsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\ProjectsFilePost  $projectsFilePost
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ProjectsFilePost $projectsFilePost)
     {
         //
     }
@@ -94,10 +75,10 @@ class MasterProjectsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\ProjectsFilePost  $projectsFilePost
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ProjectsFilePost $projectsFilePost)
     {
         //
     }

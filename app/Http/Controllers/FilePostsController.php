@@ -7,6 +7,7 @@ use App\Models\MasterClient;
 use App\Models\MasterProject;
 use App\Models\TeamProject;
 use App\Models\FilePost;
+use App\Models\ProjectsFileClassification;
 use App\Models\MasterFileClassification;
 use Storage;
 
@@ -19,11 +20,26 @@ class FilePostsController extends Controller
      */
     public function index(Request $request)
     {
-        $clientProject = TeamProject::where('teamProjectId',$request->id)
-                        ->first();
-        $items = FilePost::where('teamProjectId',$request->id)
-                  ->get();
-        return view('file_posts.index',compact('clientProject','items'));
+        $masterFileClassification = MasterFileClassification::select('fileClassificationId','fileClassification')
+                  ->orderBy('order_of_row')
+                  ->get()
+                  ->pluck('fileClassification','fileClassificationId');
+
+        $projectsFileClassification = ProjectsFileClassification::select('projectsFileClassificationId','fileClassification')
+                  ->orderBy('order_of_row')
+                  ->get()
+                  ->pluck('fileClassification','projectsFileClassificationId');
+
+        $masterProject = MasterProject::find($request->id);
+
+        $teamProjects = TeamProject::where('projectId',$request->id)->get();
+
+        foreach($teamProjects as $teamProject){
+          $id = $teamProject->teamProjectId;
+          $items[$id] = FilePost::where('teamProjectId',$id);
+        }
+
+        return view('file_posts.index',compact('masterFileClassification','projectsFileClassification','masterProject','teamProjects','items'));
     }
 
     /**
@@ -44,7 +60,7 @@ class FilePostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**

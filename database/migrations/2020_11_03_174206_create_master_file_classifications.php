@@ -17,6 +17,7 @@ class CreateMasterFileClassifications extends Migration
           $table->increments('fileClassificationId');
           $table->string('fileClassification');
           $table->string('folderName');
+          $table->integer('order_of_row')->nullable();
           $table->timestamps();
           $table->softDeletes();
         });

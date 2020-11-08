@@ -10,6 +10,7 @@
 
 @section('pageJs')
 <script type="text/javascript" src="{{asset('js/add_jquery.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/add_cookie.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/add_linkTable.js')}}"></script>
 @endsection
 

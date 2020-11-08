@@ -7,7 +7,7 @@
 
 <div class="contents">
   <div class="container container-top">
-		<h1>@include('components.returnLinkButton',['item'=>'/master_projects'])</h1>
+		<h1>@include('components.returnButton')</h1>
     <div class="col">
       <div class="card">
         <div class="card-header">
@@ -15,55 +15,36 @@
             <div class="col-md">
               <h5>{{ $clientName }} | 案件一覧</h5>
             </div>
-            <div class="col-md text-right">
-              <a href="{{asset('/clients_detail/create?id=')}}{{$clientId}}"><button type="button" class="w-50 btn btn-primary">{{ $clientName_str }} | 新規登録</button></a>
-            </div>
           </div>
         </div>
         <table class="table mb-0 table-hover">
           <thead>
             <tr>
-              <th style="width:80px;">Slack<br>Prefix</th>
-              <th style="width:80px;">契約形態</th>
-              <th>案件名</th>
-              <th style="width:80px;">チーム</th>
-              <th style="width:100px;">開始日</th>
-              <th style="width:100px;">終了日</th>
-              <th class="small" style="width:120px;">(チャンネル名)</th>
-              <th>修正</th>
-              <th>削除</th>
+              <th style="width:10%;">契約形態</th>
+              <th style="width:40%;">案件名</th>
+              <th style="width:10%;">開始日</th>
+              <th style="width:10%;">終了日</th>
+              <th style="width:10%;">稼働</th>
             </tr>
           </thead>
           <tbody>
           @foreach($items as $item)
-            <tr>
-              <td>
-                @if(null !== ($item->project->client->slack_prefix))
-                  {{ $item->project->client->sl_prefix }}
-                @endif
-              </td>
-              <td>{{$item->project->contractType->contractType}}</td>
-              <td><a href="{{asset('/file_posts?id=')}}{{$item->teamProjectId}}">{{$item->project->projectName}}</td>
-              <td>
-                @if(null !== ($item->workingTeam))
-                  {{$item->workingTeam->workingTeam}}
-                @endif
-              </td>
+            <tr data-href="{{asset('/file_posts?id=')}}{{$item->projectId}}" style="cursor:pointer;">
+              <td><img class="" alt="{{ $item->contractType }}" src="{{ asset( 'images/'.$item->contractType->contractTypeImage ) }}" width="40px"></td>
+              <td>{{$item->projectName}}</td>
               <td>{{$item->startDate}}</td>
               <td>{{$item->endDate}}</td>
-              <td class="small">{{$item->slack_channel_name}}</td>
-              <td><a href="{{ route('clients_detail.edit',$item->teamProjectId) }}" class="btn btn-success btn-sm py-0"><i class="fas fa-edit"></i> 修正</a></td>
               <td>
-                {{Form::open(['route'=>['clients_detail.destroy',$item->teamProjectId],'method'=>'DELETE','id'=>'form_'.$item->teamProjectId])}}
-                {!! Form::button('<i class="fas fa-trash-alt"></i> 削除',['class' => 'btn btn-danger btn-sm deleteConf py-0','data-id'=>$item->teamProjectId,'type'=>'submit']) !!}
-                {{Form::close()}}
+                @foreach($item->teamProjects as $workingTeam)
+                  <img class="" alt="{{ $workingTeam->workingTeam->workingTeam }}" src="{{ asset( 'images/'.$workingTeam->workingTeam->workingTeamImage ) }}" width="40px">
+                @endforeach
               </td>
             </tr>
           @endforeach
           </tbody>
         </table>
         <div class="card-footer d-flex justify-content-center align-middle">
-          {{ $items->onEachSide(2)->links('pagination::bootstrap-4') }}
+
         </div>
       </div>
     </div>
