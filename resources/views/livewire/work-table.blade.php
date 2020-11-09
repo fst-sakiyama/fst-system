@@ -5,7 +5,6 @@
     @if(session()->has('message'))
         <div class="alert alert-info mb-3">
             {{session('message')}}
-            {{ old('workTableRest3StartHour') }}
         </div>
     @endif
 

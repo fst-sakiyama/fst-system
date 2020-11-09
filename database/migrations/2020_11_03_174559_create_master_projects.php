@@ -20,6 +20,7 @@ class CreateMasterProjects extends Migration
           $table->string('projectName');
           $table->date('startDate')->nullable();
           $table->date('endDate')->nullable();
+          $table->text('project_detail')->nullable();
           $table->integer('order_of_row')->nullable();
           $table->timestamps();
           $table->softDeletes();

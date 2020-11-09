@@ -13,11 +13,8 @@
 
         <div class="card-header">
           <div class="row">
-            <div class="col-md-10">
+            <div class="col-md">
               <h5>{{ $masterProject->client->clientName }}　様<br>{{ $masterProject->projectName }}</h5>
-            </div>
-            <div class="col-md-2 text-right">
-              <!-- <a href="{{asset('/upload?id=')}}"><button type="button" class="w-50 btn btn-primary">ファイル新規作成・更新・削除</button></a> -->
             </div>
           </div>
         </div>
@@ -49,14 +46,22 @@
 
                 <div class="card">
                   <div class="card-body">
+
+                    @if(session()->has('message'))
+                        <div class="alert alert-danger mb-3">
+                            {{session('message')}}
+                        </div>
+                    @endif
+
                     {{ Form::button('ファイルの追加フォームを開く',['class'=>'slideButton btn btn-outline-info btn-sm','data-id'=>'0','style'=>'cursor:pointer;']) }}
                     <div class="slideBlock0 mt-4" style="display:none;">
                       {{ Form::open(['route'=>'file_posts.store','enctype'=>'multipart/form-data']) }}
+                        {{ Form::hidden('projectId',$masterProject->projectId) }}
 
                         <div class="form-group">
-                          {{ Form::label('projectsFileClassificationId['.$masterProject->projectId.']','種別',['class'=>'col-md-2 col-form-label']) }}
-                          {{ Form::select('projectsFileClassificationId['.$masterProject->projectId.']',$projectsFileClassification,null,['placeholder'=>'---ファイル種別を選択してください---','class'=>'col-md-6 custom-select'])}}
-                          @error('projectsFileClassificationId['.$masterProject->projectId.']')
+                          {{ Form::label('fileClassificationId','種別',['class'=>'col-md-2 col-form-label']) }}
+                          {{ Form::select('fileClassificationId',$projectsFileClassification,null,['placeholder'=>'---ファイル種別を選択してください---','class'=>'col-md-6 custom-select'])}}
+                          @error('fileClassificationId')
                             <span class="ml-2 text-danger">{{ $message }}</span>
                           @enderror
                         </div>
@@ -65,8 +70,8 @@
                           {{ Form::label('filePosts','ファイル',['class'=>'col-md-2 col-form-label']) }}
                           <div class="input-group">
                               <div class="custom-file">
-                                  {{ Form::file('masterFile['.$masterProject->projectId.']',['class'=>'custom-file-input','id'=>'customFile','multiple'=>'multiple','name'=>'masterFiles['.$masterProject->projectId.']']) }}
-                                  {{ Form::label('masterFile['.$masterProject->projectId.']','ファイル選択...複数選択可',['class'=>'custom-file-label','for'=>'customFile','data-browse'=>'参照']) }}
+                                  {{ Form::file('masterFile',['class'=>'custom-file-input','id'=>'customFile','multiple'=>'multiple','name'=>'files[]']) }}
+                                  {{ Form::label('masterFile','ファイル選択...複数選択可',['class'=>'custom-file-label','for'=>'customFile','data-browse'=>'参照']) }}
                               </div>
                               <div class="input-group-append">
                                   {{ Form::button('取消',['class'=>'btn btn-outline-secondary reset']) }}
@@ -111,15 +116,24 @@
 
                 <div class="card">
                   <div class="card-body">
+
+                    @if(session()->has('message'))
+                        <div class="alert alert-danger mb-3">
+                            {{session('message')}}
+                        </div>
+                    @endif
+
                     {{ Form::button('ファイルの追加フォームを開く',['class'=>'slideButton btn btn-outline-info btn-sm','data-id'=>$teamProject->teamProjectId,'style'=>'cursor:pointer;']) }}
                     <div class="slideBlock{{$teamProject->teamProjectId}} mt-4" style="display:none;">
                       {{ Form::open(['route'=>'file_posts.store','enctype'=>'multipart/form-data']) }}
+                        {{ Form::hidden('teamProjectId',$teamProject->teamProjectId) }}
 
                         {{ $teamProject->project_detail }}
                         <div class="form-group">
-                          {{ Form::label('masterFileClassificationId['.$teamProject->teamProjectId.']','種別',['class'=>'col-md-2 col-form-label']) }}
-                          {{ Form::select('masterFileClassificationId['.$teamProject->teamProjectId.']',$masterFileClassification,null,['placeholder'=>'---ファイル種別を選択してください---','class'=>'col-md-6 custom-select'])}}
-                          @error('masterFileClassificationId['.$teamProject->teamProjectId.']')
+                          <!-- $teamProject->teamProjectIdを取得 -->
+                          {{ Form::label('fileClassificationId','種別',['class'=>'col-md-2 col-form-label']) }}
+                          {{ Form::select('fileClassificationId',$masterFileClassification,null,['placeholder'=>'---ファイル種別を選択してください---','class'=>'col-md-6 custom-select'])}}
+                          @error('fileClassificationId')
                             <span class="ml-2 text-danger">{{ $message }}</span>
                           @enderror
                         </div>
@@ -128,12 +142,15 @@
                           {{ Form::label('filePosts','ファイル',['class'=>'col-md-2 col-form-label']) }}
                           <div class="input-group">
                               <div class="custom-file">
-                                  {{ Form::file('projectFile['.$masterProject->teamProjectId.']',['class'=>'custom-file-input','id'=>'customFile','multiple'=>'multiple','name'=>'projectFiles['.$masterProject->teamProjectId.']']) }}
-                                  {{ Form::label('projectFile['.$masterProject->teamProjectId.']','ファイル選択...複数選択可',['class'=>'custom-file-label','for'=>'customFile','data-browse'=>'参照']) }}
+                                  {{ Form::file('projectFile',['class'=>'custom-file-input','id'=>'customFile','multiple'=>'multiple','name'=>'files[]']) }}
+                                  {{ Form::label('projectFile','ファイル選択...複数選択可',['class'=>'custom-file-label','for'=>'customFile','data-browse'=>'参照']) }}
                               </div>
                               <div class="input-group-append">
                                   {{ Form::button('取消',['class'=>'btn btn-outline-secondary reset']) }}
                               </div>
+                              @error('files')
+                                <span class="ml-2 text-danger">{{ $message }}</span>
+                              @enderror
                           </div>
                         </div>
 

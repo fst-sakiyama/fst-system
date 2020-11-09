@@ -7,9 +7,13 @@ use App\Models\MasterClient;
 use App\Models\MasterProject;
 use App\Models\TeamProject;
 use App\Models\FilePost;
+use App\Models\ProjectsFilePost;
 use App\Models\ProjectsFileClassification;
 use App\Models\MasterFileClassification;
 use Storage;
+use File;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class FilePostsController extends Controller
 {
@@ -60,7 +64,69 @@ class FilePostsController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $classId = $request->fileClassificationId;
+        $files = $request->file('files');
+
+        if(!$classId){
+            return redirect()->back()->with('message','※ファイル種別を選択してください。')->withInput();
+        }
+        if(!$files){
+            return redirect()->back()->with('message','※ファイルを一つ以上選択してください。')->withInput();
+        }
+
+        DB::beginTransaction();
+
+        try{
+            if($request->projectId){
+                $id = $request->projectId;
+                $folderName = ProjectsFileClassification::find($classId)->folderName;
+                for($i=0; $i<count($files); $i++){
+                  $file = $files[$i];
+                  if($file){
+                    $fileName = $file->getClientOriginalName();
+                    $path = Storage::disk('s3')->putFile('/'.$folderName, $file, 'public');
+                    $fileURL = Storage::disk('s3')->url($path);
+                    $projectsFilePost = new ProjectsFilePost;
+                    $projectsFilePost->fill([
+                        'projectId' => $id,
+                        'projectsFileClassificationId' => $classId,
+                        'fileName' => $fileName,
+                        'fileURL' => $fileURL,
+                    ])->save();
+                  }
+                }
+            } elseif($request->teamProjectId){
+                $id = $request->teamProjectId;
+                $folderName = MasterFileClassification::find($classId)->folderName;
+                for($i=0; $i<count($files); $i++){
+                  $file = $files[$i];
+                  if($file){
+                    $fileName = $file->getClientOriginalName();
+                    $path = Storage::disk('s3')->putFile('/'.$folderName, $file, 'public');
+                    $fileURL = Storage::disk('s3')->url($path);
+                    $filePost = new FilePost;
+                    $filePost->fill([
+                        'teamProjectId' => $id,
+                        'fileClassificationId' => $classId,
+                        'fileName' => $fileName,
+                        'fileURL' => $fileURL,
+                    ])->save();
+                  }
+                }
+            } else {
+                return redirect()->back()->with('message','※正常に終了しませんでした。')->withInput();
+            }
+
+            DB::commit();
+
+          }catch(\Exception $e) {
+
+            DB::rollback();
+            dd('エラーが発生しました');
+
+          }
+
+        return redirect()->back();
     }
 
     /**

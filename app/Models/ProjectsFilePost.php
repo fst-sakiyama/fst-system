@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Traits\AuthorObservable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProjectsFilePost extends Model
 {

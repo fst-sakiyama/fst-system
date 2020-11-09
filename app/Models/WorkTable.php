@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\AuthorObservable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class WorkTable extends Model
 {
     use HasFactory;
-
+    use AuthorObservable;
+    
     protected $connection='mysql_two';
     protected $primaryKey='workTableId';
     protected $dates=['workDay'];

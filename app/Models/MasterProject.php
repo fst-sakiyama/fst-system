@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\AuthorObservable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MasterProject extends Model
 {
   use SoftDeletes;
+  use AuthorObservable;
+
   protected $connection = 'mysql_one';
   protected $primaryKey = 'projectId';
   protected $guarded = array('projectId');
