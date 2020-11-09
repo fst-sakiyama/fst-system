@@ -5,6 +5,6 @@ $('.slideButton').on('click',function(){
     if(str ==='ファイルの追加フォームを開く'){
       $(this).html('ファイルの追加フォームを閉じる')
     }else{
-      $(this).html('ファイルの追加フォームを開く')      
+      $(this).html('ファイルの追加フォームを開く')
     }
 });

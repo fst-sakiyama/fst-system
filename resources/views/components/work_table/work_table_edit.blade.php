@@ -88,18 +88,18 @@
                   </tr>
                 </thead>
                 <tbody style="display:block;overflow-y:scroll;height:600px;">
-                  @foreach($masterProjects as $masterProject)
+                  @foreach($teamProjects as $teamProject)
 
                     <tr>
                       <td class="clientName">
-                        {{ $masterProject->client->clientName }}
+                        {{ $teamProject->project->client->clientName }}
                       </td>
                       <td class="projectName">
-                        {{ $masterProject->projectName }}
+                        {{ $teamProject->project->projectName }}
                       </td>
                       <td class="workLoad">
 
-                        <livewire:work-load :masterProject=$masterProject>
+                        <livewire:work-load :teamProject=$teamProject>
 
                       </td>
                     </tr>

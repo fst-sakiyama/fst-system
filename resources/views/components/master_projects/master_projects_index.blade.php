@@ -31,7 +31,7 @@
           @php $i++; @endphp
         @endforeach
 
-        @php $i=1; $prevId=null @endphp
+        @php $i=1; $prevId=null; @endphp
 
         @foreach($contractTypes as $contractType)
           @if($i === 1)

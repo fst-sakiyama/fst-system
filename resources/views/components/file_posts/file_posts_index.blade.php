@@ -2,7 +2,7 @@
 
 @php
   $i=1;
-  $length = count($teamProjects);
+  $length = count($projectsFilePosts);
 @endphp
 
 <div class="contents">
@@ -90,17 +90,31 @@
                   <table class="table table-sm table-hover">
                     <thead>
                       <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th>ファイル名</th>
+                        <th>最終更新日</th>
+                        <th>最終更新者</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
+                      @foreach($projectsFileClassifications as $items)
+                        @php $i=1; @endphp
+                        @foreach($projectsFilePosts[$items->projectsFileClassificationId] as $item)
+                          @if($i===1)
+                            <tr>
+                              <td colspan="2" class="table-dark h5">{{ $items->fileClassification }}</td>
+                              <td>{{ $cnt[$items->projectsFileClassificationId] }}</td>
+                            </tr>
+                          @endif
+                          @if($item->fileName)
+                            <tr>
+                              <td>{{ $item->fileName }}</td>
+                              <td>{{ $item->updated_at }}</td>
+                              <td>{{ App\User::find($item->updated_by)->name }}</td>
+                            </tr>
+                          @endif
+                          @php $i++; @endphp
+                        @endforeach
+                      @endforeach
                     </tbody>
                   </table>
                 </div>

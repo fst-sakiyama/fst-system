@@ -36,6 +36,21 @@ class FilePostsController extends Controller
 
         $masterProject = MasterProject::find($request->id);
 
+        $projectsFileClassifications = ProjectsFileClassification::orderBy('order_of_row')->get();
+
+        $postsSql = DB::table('projects_file_posts')->where('projectId','=',':projectId')->toSql();
+
+        foreach($projectsFileClassifications as $item){
+            $id = $item->projectsFileClassificationId;
+            $projectsFilePosts[$id] = DB::table(DB::raw('('.$postsSql.') AS posts'))
+                                      ->rightJoin('projects_file_classifications', 'posts.projectsFileClassificationId', '=', 'projects_file_classifications.projectsFileClassificationId')
+                                      ->setBindings([':projectId'=>$request->id])
+                                      ->where('projects_file_classifications.projectsFileClassificationId',$id)
+                                      ->orderBy('order_of_row')
+                                      ->get();
+            $cnt[$id] = ProjectsFilePost::where('projectId',$request->id)->where('projectsFileClassificationId',$id)->count();
+        }
+
         $teamProjects = TeamProject::where('projectId',$request->id)->get();
 
         foreach($teamProjects as $teamProject){
@@ -43,7 +58,7 @@ class FilePostsController extends Controller
           $items[$id] = FilePost::where('teamProjectId',$id);
         }
 
-        return view('file_posts.index',compact('masterFileClassification','projectsFileClassification','masterProject','teamProjects','items'));
+        return view('file_posts.index',compact('masterFileClassification','projectsFileClassification','masterProject','projectsFileClassifications','projectsFilePosts','cnt','teamProjects','items'));
     }
 
     /**

@@ -6,7 +6,7 @@
 
 @include('components.common.header')
 
-@include('components.file_posts.file_posts_index',['masterFileClassification'=>$masterFileClassification,'projectsFileClassification'=>$projectsFileClassification,'masterProject'=>$masterProject,'teamProjects'=>$teamProjects,'items'=>$items])
+@include('components.file_posts.file_posts_index',['masterFileClassification'=>$masterFileClassification,'projectsFileClassification'=>$projectsFileClassification,'masterProject'=>$masterProject,'projectsFileClassifications'=>$projectsFileClassifications,'projectsFilePosts'=>$projectsFilePosts,'cnt'=>$cnt,'teamProjects'=>$teamProjects,'items'=>$items])
 
 @section('pageJs')
 <script type="text/javascript" src="{{asset('js/add_jquery.js')}}"></script>

@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\MasterProject;
+use App\Models\TeamProject;
 
 class WorkLoad extends Component
 {
@@ -11,9 +11,9 @@ class WorkLoad extends Component
     public $testCalcWorkHour;
     public $projectId;
 
-    public function mount(MasterProject $masterProject)
+    public function mount(TeamProject $teamProject)
     {
-        $this->projectId = $masterProject->projectId;
+        $this->projectId = $teamProject->projectId;
     }
 
     public function updatedModelTest($value)

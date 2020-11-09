@@ -7,6 +7,7 @@ use App\Models\ShiftTable;
 use App\Models\WorkTable;
 use App\Models\MasterShift;
 use App\Models\MasterProject;
+use App\Models\TeamProject;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -247,9 +248,9 @@ class WorkTableController extends Controller
         $masterShift = MasterShift::select('shiftId','shiftName')->get()->pluck('shiftName','shiftId');
 
         $teamId = User::find($userId)->own_department;
-        $masterProjects = MasterProject::where('workingTeamId',$teamId)->get();
+        $teamProjects = TeamProject::where('workingTeamId',$teamId)->get();
 
-        return view('work_table.edit',compact('userId','masterShifts','masterShift','workTable','masterProjects'));
+        return view('work_table.edit',compact('userId','masterShifts','masterShift','workTable','teamProjects'));
     }
 
     /**
