@@ -39,7 +39,7 @@
         </div>
 
         <div class="tab-content" id="myTab-content">
-
+          <!-- 総合ページ -->
           <div class="tab-pane fade show active" id="item" role="tabpanel" aria-labelledby="item-tab">
             <div class="row">
               <div class="col">
@@ -58,9 +58,9 @@
                       {{ Form::open(['route'=>'file_posts.store','enctype'=>'multipart/form-data']) }}
                         {{ Form::hidden('projectId',$masterProject->projectId) }}
 
-                        <div class="form-group">
-                          {{ Form::label('fileClassificationId','種別',['class'=>'col-md-2 col-form-label']) }}
-                          {{ Form::select('fileClassificationId',$projectsFileClassification,null,['placeholder'=>'---ファイル種別を選択してください---','class'=>'col-md-6 custom-select'])}}
+                        <div class="form-group form-inline">
+                          {{ Form::label('fileClassificationId','フォルダ',['class'=>'col-md-2 col-form-label']) }}
+                          {{ Form::select('fileClassificationId',$projectsFileClassification,null,['placeholder'=>'---フォルダ---','class'=>'col-md-2 custom-select'])}}
                           @error('fileClassificationId')
                             <span class="ml-2 text-danger">{{ $message }}</span>
                           @enderror
@@ -74,7 +74,7 @@
                                   {{ Form::label('masterFile','ファイル選択...複数選択可',['class'=>'custom-file-label','for'=>'customFile','data-browse'=>'参照']) }}
                               </div>
                               <div class="input-group-append">
-                                  {{ Form::button('取消',['class'=>'btn btn-outline-secondary reset']) }}
+                                  {{ Form::button('取消',['class'=>'btn btn-outline-secondary','id'=>'inputFileReset']) }}
                               </div>
                           </div>
                         </div>
@@ -90,26 +90,36 @@
                   <table class="table table-sm table-hover">
                     <thead>
                       <tr>
-                        <th>ファイル名</th>
-                        <th>最終更新日</th>
-                        <th>最終更新者</th>
+                        <th style="width:60%">ファイル名</th>
+                        <th style="width:25%">最終更新日</th>
+                        <th style="width:15%">最終更新者</th>
                       </tr>
                     </thead>
                     <tbody>
                       @foreach($projectsFileClassifications as $items)
-                        @php $i=1; @endphp
-                        @foreach($projectsFilePosts[$items->projectsFileClassificationId] as $item)
+                        @php $i=1; $x=$items->projectsFileClassificationId; @endphp
+                        @foreach($projectsFilePosts[$x][0] as $item)
                           @if($i===1)
-                            <tr>
-                              <td colspan="2" class="table-dark h5">{{ $items->fileClassification }}</td>
-                              <td>{{ $cnt[$items->projectsFileClassificationId] }}</td>
+                            @php $var = $projectsFilePosts[$x][1]; @endphp
+                            <tr {{ $var===0 ? '' : 'data-link='.$x }} style="{{ $var===0 ? '' : 'cursor:pointer;' }}" class="{{ $var===0 ? 'table-secondary' : 'table-success' }}">
+                              <td class="h5">
+                                {{ $items->fileClassification }}
+                              </td>
+                              <td class="small">
+                                @if($projectsFilePosts[$items->projectsFileClassificationId][1] !== 0)
+                                最終更新日：{{ $projectsFilePosts[$items->projectsFileClassificationId][2] }}
+                                @endif
+                              </td>
+                              <td class="small">
+                                ファイル数：{{ $projectsFilePosts[$items->projectsFileClassificationId][1] }}
+                              </td>
                             </tr>
                           @endif
                           @if($item->fileName)
-                            <tr>
-                              <td>{{ $item->fileName }}</td>
-                              <td>{{ $item->updated_at }}</td>
-                              <td>{{ App\User::find($item->updated_by)->name }}</td>
+                            <tr class="slideRow{{ $x }} d-none">
+                              <td style="width:60%">{{ $item->fileName }}</td>
+                              <td style="width:25%">{{ $item->updated_at }}</td>
+                              <td style="width:15%">{{ App\User::find($item->updated_by)->name }}</td>
                             </tr>
                           @endif
                           @php $i++; @endphp
@@ -123,6 +133,7 @@
             </div>
           </div>
 
+        <!-- 各チームのページ -->
         @foreach($teamProjects as $teamProject)
           <div class="tab-pane fade" id="item{{$teamProject->teamProjectId}}" role="tabpanel" aria-labelledby="item{{$teamProject->teamProjectId}}-tab">
             <div class="row">
@@ -143,10 +154,9 @@
                         {{ Form::hidden('teamProjectId',$teamProject->teamProjectId) }}
 
                         {{ $teamProject->project_detail }}
-                        <div class="form-group">
-                          <!-- $teamProject->teamProjectIdを取得 -->
-                          {{ Form::label('fileClassificationId','種別',['class'=>'col-md-2 col-form-label']) }}
-                          {{ Form::select('fileClassificationId',$masterFileClassification,null,['placeholder'=>'---ファイル種別を選択してください---','class'=>'col-md-6 custom-select'])}}
+                        <div class="form-group form-inline">
+                          {{ Form::label('fileClassificationId','フォルダ',['class'=>'col-md-2 col-form-label']) }}
+                          {{ Form::select('fileClassificationId',$masterFileClassification,null,['placeholder'=>'---フォルダ---','class'=>'col-md-2 custom-select'])}}
                           @error('fileClassificationId')
                             <span class="ml-2 text-danger">{{ $message }}</span>
                           @enderror
@@ -156,15 +166,12 @@
                           {{ Form::label('filePosts','ファイル',['class'=>'col-md-2 col-form-label']) }}
                           <div class="input-group">
                               <div class="custom-file">
-                                  {{ Form::file('projectFile',['class'=>'custom-file-input','id'=>'customFile','multiple'=>'multiple','name'=>'files[]']) }}
-                                  {{ Form::label('projectFile','ファイル選択...複数選択可',['class'=>'custom-file-label','for'=>'customFile','data-browse'=>'参照']) }}
+                                  {{ Form::file('projectFile',['class'=>'custom-file-input','id'=>'customFile'.$teamProject->teamProjectId,'multiple'=>'multiple','name'=>'files[]']) }}
+                                  {{ Form::label('projectFile','ファイル選択...複数選択可',['class'=>'custom-file-label customFile'.$teamProject->teamProjectId,'for'=>'customFile'.$teamProject->teamProjectId,'data-browse'=>'参照']) }}
                               </div>
                               <div class="input-group-append">
-                                  {{ Form::button('取消',['class'=>'btn btn-outline-secondary reset']) }}
+                                  {{ Form::button('取消',['class'=>'btn btn-outline-secondary','id'=>'inputFileReset'.$teamProject->teamProjectId]) }}
                               </div>
-                              @error('files')
-                                <span class="ml-2 text-danger">{{ $message }}</span>
-                              @enderror
                           </div>
                         </div>
 

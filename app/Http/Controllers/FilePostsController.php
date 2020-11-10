@@ -42,22 +42,30 @@ class FilePostsController extends Controller
 
         foreach($projectsFileClassifications as $item){
             $id = $item->projectsFileClassificationId;
-            $projectsFilePosts[$id] = DB::table(DB::raw('('.$postsSql.') AS posts'))
+            $projectsFilePosts[$id][0] = DB::table(DB::raw('('.$postsSql.') AS posts'))
                                       ->rightJoin('projects_file_classifications', 'posts.projectsFileClassificationId', '=', 'projects_file_classifications.projectsFileClassificationId')
                                       ->setBindings([':projectId'=>$request->id])
                                       ->where('projects_file_classifications.projectsFileClassificationId',$id)
                                       ->orderBy('order_of_row')
+                                      ->select('projects_file_classifications.*','posts.*')
                                       ->get();
-            $cnt[$id] = ProjectsFilePost::where('projectId',$request->id)->where('projectsFileClassificationId',$id)->count();
+            $projectsFilePosts[$id][1] = ProjectsFilePost::where('projectId',$request->id)->where('projectsFileClassificationId',$id)->count();
+            $projectsFilePosts[$id][2] = ProjectsFilePost::where('projectId',$request->id)->where('projectsFileClassificationId',$id)->max('updated_at');
         }
 
         $teamProjects = TeamProject::where('projectId',$request->id)->get();
+
+        $masterFileClassifications = MasterFileClassification::orderBy('order_of_row')->get();
+
+        $postsSql = DB::table('file_posts')->where('teamProjectId','=',':teamProjectId')->toSql();
+
+        
 
         foreach($teamProjects as $teamProject){
           $id = $teamProject->teamProjectId;
           $items[$id] = FilePost::where('teamProjectId',$id);
         }
-
+        $cnt = '';
         return view('file_posts.index',compact('masterFileClassification','projectsFileClassification','masterProject','projectsFileClassifications','projectsFilePosts','cnt','teamProjects','items'));
     }
 
