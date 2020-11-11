@@ -3,7 +3,6 @@
 @php
   $i=1;
   $length = count($projectsFilePosts);
-  $projectId = $masterProject->projectId;
 @endphp
 
 <div class="contents">
@@ -91,10 +90,9 @@
                   <table class="table table-sm table-hover">
                     <thead>
                       <tr>
-                        <th style="width:50%">ファイル名</th>
-                        <th style="width:18%">作成日</th>
-                        <th style="width:18%">最終更新日</th>
-                        <th style="width:14%">最終更新者</th>
+                        <th style="width:60%">ファイル名</th>
+                        <th style="width:25%">最終更新日</th>
+                        <th style="width:15%">最終更新者</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -107,7 +105,7 @@
                               <td class="h5">
                                 <i class="fas fa-folder"></i><span class="ml-2">{{ $items->fileClassification }}</span>
                               </td>
-                              <td class="small text-right pr-5" colspan="2">
+                              <td class="small">
                                 @if($projectsFilePosts[$x][1] !== 0)
                                 最終更新日：{{ $projectsFilePosts[$x][2] }}
                                 @endif
@@ -118,11 +116,10 @@
                             </tr>
                           @endif
                           @if($item->fileName)
-                            @php $projectsFilePostId = $item->projectsFilePostId; @endphp
-                            <tr class="slideRow{{ $x }} d-none" data-href="{{ route('file_projectsFileShow.projectsFileShow',['id'=>$projectsFilePostId]) }}" style="cursor:pointer;">
-
-                              <livewire:projects-file-posts :item=$item :id=$projectsFilePostId :projectId=$projectId>
-
+                            <tr class="slideRow{{ $x }} d-none" data-href="{{ route('file_projectsFileShow.projectsFileShow',['id'=>$item->projectsFilePostId]) }}">
+                              <td style="width:60%">{{ $item->fileName }}</td>
+                              <td style="width:25%">{{ $item->updated_at }}</td>
+                              <td style="width:15%">{{ App\User::find($item->updated_by)->name }}</td>
                             </tr>
                           @endif
                           @php $i++; @endphp
@@ -190,10 +187,9 @@
                   <table class="table table-sm table-hover">
                     <thead>
                       <tr>
-                        <th style="width:50%">ファイル名</th>
-                        <th style="width:18%">作成日</th>
-                        <th style="width:18%">最終更新日</th>
-                        <th style="width:14%">最終更新者</th>
+                        <th style="width:60%">ファイル名</th>
+                        <th style="width:25%">最終更新日</th>
+                        <th style="width:15%">最終更新者</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -206,7 +202,7 @@
                               <td class="h5">
                                 <i class="fas fa-folder"></i><span class="ml-2">{{ $items->fileClassification }}</span>
                               </td>
-                              <td class="small text-right pr-5" colspan="2">
+                              <td class="small">
                                 @if($masterFilePosts[$teamProjectId][$x][1] !== 0)
                                 最終更新日：{{ $masterFilePosts[$teamProjectId][$x][2] }}
                                 @endif
@@ -217,11 +213,10 @@
                             </tr>
                           @endif
                           @if($item->fileName)
-                            @php $filePostId = $item->filePostId; @endphp
-                            <tr class="slideRow{{ $x }} d-none" data-href="{{ route('file_show.show',['id'=>$filePostId]) }}" style="cursor:pointer;">
-
-                              <livewire:file-posts :item=$item :id=$filePostId :projectId=$projectId>
-
+                            <tr class="slideRow{{ $x }} d-none" data-href="{{ route('file_show.show',['id'=>$item->filePostId]) }}">
+                              <td style="width:60%">{{ $item->fileName }}</td>
+                              <td style="width:25%">{{ $item->updated_at }}</td>
+                              <td style="width:15%">{{ App\User::find($item->updated_by)->name }}</td>
                             </tr>
                           @endif
                           @php $i++; @endphp

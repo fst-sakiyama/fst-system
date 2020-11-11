@@ -38,7 +38,7 @@ class FilePostsController extends Controller
 
         $projectsFileClassifications = ProjectsFileClassification::orderBy('order_of_row')->get();
 
-        $postsSql = DB::table('projects_file_posts')->where('projectId','=',':projectId')->toSql();
+        $postsSql = DB::table('projects_file_posts')->whereNull('deleted_at')->where('projectId','=',':projectId')->toSql();
 
         foreach($projectsFileClassifications as $item){
             $id = $item->projectsFileClassificationId;
@@ -57,16 +57,27 @@ class FilePostsController extends Controller
 
         $masterFileClassifications = MasterFileClassification::orderBy('order_of_row')->get();
 
-        $postsSql = DB::table('file_posts')->where('teamProjectId','=',':teamProjectId')->toSql();
+        $postsSql = DB::table('file_posts')->whereNull('deleted_at')->where('teamProjectId','=',':teamProjectId')->toSql();
 
-        
+        foreach ($teamProjects as $teamProject) {
 
-        foreach($teamProjects as $teamProject){
-          $id = $teamProject->teamProjectId;
-          $items[$id] = FilePost::where('teamProjectId',$id);
+            $teamProjectId = $teamProject->teamProjectId;
+
+            foreach($masterFileClassifications as $item){
+                $id = $item->fileClassificationId;
+                $masterFilePosts[$teamProjectId][$id][0] = DB::table(DB::raw('('.$postsSql.') AS posts'))
+                                          ->rightJoin('master_file_classifications', 'posts.fileClassificationId', '=', 'master_file_classifications.fileClassificationId')
+                                          ->setBindings([':teamProjectId'=>$teamProjectId])
+                                          ->where('master_file_classifications.fileClassificationId',$id)
+                                          ->orderBy('order_of_row')
+                                          ->select('master_file_classifications.*','posts.*')
+                                          ->get();
+                $masterFilePosts[$teamProjectId][$id][1] = FilePost::where('teamProjectId',$teamProjectId)->where('fileClassificationId',$id)->count();
+                $masterFilePosts[$teamProjectId][$id][2] = FilePost::where('teamProjectId',$teamProjectId)->where('fileClassificationId',$id)->max('updated_at');
+            }
         }
-        $cnt = '';
-        return view('file_posts.index',compact('masterFileClassification','projectsFileClassification','masterProject','projectsFileClassifications','projectsFilePosts','cnt','teamProjects','items'));
+
+        return view('file_posts.index',compact('masterFileClassification','projectsFileClassification','masterProject','projectsFileClassifications','projectsFilePosts','masterFileClassifications','masterFilePosts','teamProjects'));
     }
 
     /**
@@ -172,6 +183,38 @@ class FilePostsController extends Controller
     public function edit($id)
     {
         //
+    }
+
+    public function pr_change(Request $request)
+    {
+      $item = ProjectsFilePost::find($request->id);
+      $item->fileName = $request->fileName;
+      $item->save();
+
+      return response()->json(['url'=>url('/file_posts?id='.$request->projectId)]);
+    }
+
+    public function change(Request $request)
+    {
+      $item = FilePost::find($request->id);
+      $item->fileName = $request->fileName;
+      $item->save();
+
+      return response()->json(['url'=>url('/file_posts?id='.$request->projectId)]);
+    }
+
+    public function pr_del(Request $request)
+    {
+      ProjectsFilePost::find($request->id)->delete();
+
+      return response()->json(['url'=>url('/file_posts?id='.$request->projectId)]);
+    }
+
+    public function del(Request $request)
+    {
+      FilePost::find($request->id)->delete();
+
+      return response()->json(['url'=>url('/file_posts?id='.$request->projectId)]);
     }
 
     /**

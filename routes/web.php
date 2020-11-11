@@ -58,6 +58,7 @@ Route::group(['middleware' => ['auth', 'can:user-higher']], function () {
     Route::get('/file_show', 'FileShowController@show')->name('file_show.show');
     Route::get('/file_addShow', 'FileShowController@addShow')->name('file_addShow.addShow');
     Route::get('/file_infoShow', 'FileShowController@infoShow')->name('file_infoShow.infoShow');
+    Route::get('/file_projectsFileShow', 'FileShowController@projectsFileShow')->name('file_projectsFileShow.projectsFileShow');
 
     // パスワード変更関連
     Route::get('/change_password','ChangePasswordController@index')->name('change_password.index');
@@ -88,6 +89,10 @@ Route::group(['middleware' => ['auth', 'can:user-higher']], function () {
     Route::get('/projects_detail','ProjectsDetailController@index')->name('project_detail');
 
     // ファイルアップロード関連
+    Route::post('/file_posts/pr_change','FilePostsController@pr_change')->name('file_posts.pr_change');
+    Route::post('/file_posts/change','FilePostsController@change')->name('file_posts.change');
+    Route::post('/file_posts/pr_del','FilePostsController@pr_del')->name('file_posts.pr_del');
+    Route::post('/file_posts/del','FilePostsController@del')->name('file_posts.del');
     Route::get('/file_posts/restore','FilePostsController@restore')->name('file_posts.restore');
     Route::resource('/file_posts', 'FilePostsController')->only([
         'index','store','destroy'

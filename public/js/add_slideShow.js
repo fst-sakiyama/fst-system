@@ -3,8 +3,8 @@ $('.slideButton').on('click',function(){
     var str = $(this).html();
     $('.slideBlock'+val).slideToggle();
     if(str ==='ファイルの追加フォームを開く'){
-      $(this).html('ファイルの追加フォームを閉じる')
+      $(this).html('ファイルの追加フォームを閉じる');
     }else{
-      $(this).html('ファイルの追加フォームを開く')
+      $(this).html('ファイルの追加フォームを開く');
     }
 });
