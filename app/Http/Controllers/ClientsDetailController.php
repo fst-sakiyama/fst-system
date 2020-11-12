@@ -94,6 +94,7 @@ class ClientsDetailController extends Controller
               'projectName' => $request->projectName,
               'startDate' => $request->startDate,
               'endDate' => $request->endDate,
+              'project_detail' => $request->master_project_detail,
           ])->save();
           $masterProjectId = $masterProject->projectId;
 
@@ -178,6 +179,7 @@ class ClientsDetailController extends Controller
               'projectName' => $request->projectName,
               'startDate' => $request->startDate,
               'endDate' => $request->endDate,
+              'project_detail' => $request->master_project_detail,
           ])->save();
 
           foreach($request->teamProjectId as $val){

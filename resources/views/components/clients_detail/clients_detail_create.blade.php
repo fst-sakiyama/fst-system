@@ -32,6 +32,10 @@
               {{ Form::label('endDate','完了日',['class'=>'col-md-4 col-form-label']) }}
               {{ Form::date('endDate',null,['class'=>'col-md-6','id'=>'endDate']) }}
             </div>
+            <div class="form-group">
+              {{ Form::label('master_project_detail','案件詳細',['class'=>'col-md-4 col-form-label']) }}
+              {{ Form::textarea('master_project_detail',null,['placeholder'=>'案件説明を入力','class'=>'col-md-6','id'=>'master_project_detail']) }}
+            </div>
 
             <div class="row mx-3 my-4">
               <div class="col">

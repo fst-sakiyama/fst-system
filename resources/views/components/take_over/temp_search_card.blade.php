@@ -1,5 +1,5 @@
 <div class="card-header">
-  {{ $item->created_at->format('Y.m.d') }} - {{ mb_substr($item->project->project->projectName,0,12) }}
+  {{ $item->created_at->format('Y.m.d') }} - <a href="{{ asset('/file_posts?id=').$item->project->projectId }}" target="takeover">{{ mb_substr($item->project->project->projectName,0,12) }}</a>
 </div>
 
 <div class="card-body img-brownCatSearch">

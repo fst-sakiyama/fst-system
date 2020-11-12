@@ -11,7 +11,6 @@
           {{ Form::hidden('clientId', $item->clientId) }}
           <div class="form-group">
             {{ Form::label('contractTypeId','契約形態を選択',['class'=>'col-md-4 col-form-label']) }}
-            <span class="mr-2">：</span>
             {{ Form::select('contractTypeId',$masterContractTypes,$item->contractTypeId,['placeholder'=>'---契約形態を選択してください---','class'=>'col-md-6'])}}
             @error('contractTypeId')
               <span class="ml-2 text-danger">{{ $message }}</span>
@@ -19,7 +18,6 @@
           </div>
           <div class="form-group">
             {{ Form::label('projectName','案件名',['class'=>'col-md-4 col-form-label']) }}
-            <span class="mr-2">：</span>
             {{ Form::text('projectName',$item->projectName,['placeholder'=>'案件名を入力','class'=>'col-md-6','id'=>'clientName']) }}
             @error('projectName')
               <span class="ml-2 text-danger">{{ $message }}</span>
@@ -27,13 +25,15 @@
           </div>
           <div class="form-group">
             {{ Form::label('startDate','開始日',['class'=>'col-md-4 col-form-label']) }}
-            <span class="mr-2">：</span>
             {{ Form::date('startDate',$item->startDate,['class'=>'col-md-6','id'=>'startDate']) }}
           </div>
           <div class="form-group">
             {{ Form::label('endDate','完了日',['class'=>'col-md-4 col-form-label']) }}
-            <span class="mr-2">：</span>
             {{ Form::date('endDate',$item->endDate,['class'=>'col-md-6','id'=>'endDate']) }}
+          </div>
+          <div class="form-group">
+            {{ Form::label('master_project_detail','案件詳細',['class'=>'col-md-4 col-form-label']) }}
+            {{ Form::textarea('master_project_detail',$item->project_detail,['placeholder'=>'案件説明を入力','class'=>'col-md-6','id'=>'master_project_detail']) }}
           </div>
 
           <div class="row mx-3 my-4">

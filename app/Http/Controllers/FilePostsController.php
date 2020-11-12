@@ -101,13 +101,6 @@ class FilePostsController extends Controller
         $classId = $request->fileClassificationId;
         $files = $request->file('files');
 
-        if(!$classId){
-            return redirect()->back()->with('message','※ファイル種別を選択してください。')->withInput();
-        }
-        if(!$files){
-            return redirect()->back()->with('message','※ファイルを一つ以上選択してください。')->withInput();
-        }
-
         DB::beginTransaction();
 
         try{
@@ -190,8 +183,11 @@ class FilePostsController extends Controller
       $item = ProjectsFilePost::find($request->id);
       $item->fileName = $request->fileName;
       $item->save();
+      $item = ProjectsFilePost::find($request->id);
+      $fileName = $item->fileName;
+      $updated_at = $item->updated_at;
 
-      return response()->json(['url'=>url('/file_posts?id='.$request->projectId)]);
+      return response()->json(['fileName'=>$fileName,'updated_at'=>$updated_at]);
     }
 
     public function change(Request $request)
@@ -199,8 +195,11 @@ class FilePostsController extends Controller
       $item = FilePost::find($request->id);
       $item->fileName = $request->fileName;
       $item->save();
+      $item = FilePost::find($request->id);
+      $fileName = $item->fileName;
+      $updated_at = $item->updated_at;
 
-      return response()->json(['url'=>url('/file_posts?id='.$request->projectId)]);
+      return response()->json(['fileName'=>$fileName,'updated_at'=>$updated_at]);
     }
 
     public function pr_del(Request $request)

@@ -47,44 +47,67 @@
 
                 <div class="card">
                   <div class="card-body">
+                    <div class="row mb-1">
+                      <div class="col">
+                        @if($masterProject->project_detail)
+                          {!! nl2br(e($masterProject->project_detail)) !!}
+                        @else
+                          案件の詳細情報が登録されておりません。
+                        @endif
+                      </div>
+                    </div>
 
-                    @if(session()->has('message'))
+                    <div id='pr_messageFolder{{$masterProject->projectId}}' class="row my-1 d-none">
+                      <div class="col">
                         <div class="alert alert-danger mb-3">
-                            {{session('message')}}
+                          ※フォルダを選択してください。
                         </div>
-                    @endif
+                      </div>
+                    </div>
 
-                    {{ Form::button('ファイルの追加フォームを開く',['class'=>'slideButton btn btn-outline-info btn-sm','data-id'=>'0','style'=>'cursor:pointer;']) }}
-                    <div class="slideBlock0 mt-4" style="display:none;">
-                      {{ Form::open(['route'=>'file_posts.store','enctype'=>'multipart/form-data']) }}
-                        {{ Form::hidden('projectId',$masterProject->projectId) }}
-
-                        <div class="form-group form-inline">
-                          {{ Form::label('fileClassificationId','フォルダ',['class'=>'col-md-2 col-form-label']) }}
-                          {{ Form::select('fileClassificationId',$projectsFileClassification,null,['placeholder'=>'---フォルダ---','class'=>'col-md-2 custom-select'])}}
-                          @error('fileClassificationId')
-                            <span class="ml-2 text-danger">{{ $message }}</span>
-                          @enderror
+                    <div id='pr_messageFile{{$masterProject->projectId}}' class="row my-1 d-none">
+                      <div class="col">
+                        <div class="alert alert-danger mb-3">
+                          ※ファイルを一つ以上選択してください。
                         </div>
+                      </div>
+                    </div>
 
-                        <div class="form-group form-inline">
-                          {{ Form::label('filePosts','ファイル',['class'=>'col-md-2 col-form-label']) }}
-                          <div class="input-group">
-                              <div class="custom-file">
-                                  {{ Form::file('masterFile',['class'=>'custom-file-input','id'=>'customFile','multiple'=>'multiple','name'=>'files[]']) }}
-                                  {{ Form::label('masterFile','ファイル選択...複数選択可',['class'=>'custom-file-label','for'=>'customFile','data-browse'=>'参照']) }}
+                    <div class="row mt-4 ml-3">
+                      <div class="col">
+                        {{ Form::button('ファイルの追加フォームを開く',['class'=>'slideButton btn btn-outline-info btn-sm','data-id'=>'0','style'=>'cursor:pointer;']) }}
+                        <div class="slideBlock0 mt-4" style="display:none;">
+                          {{ Form::open(['route'=>'file_posts.store','enctype'=>'multipart/form-data']) }}
+                            {{ Form::hidden('projectId',$masterProject->projectId) }}
+
+                            <div class="form-group form-inline">
+                              {{ Form::label('fileClassificationId','フォルダ',['class'=>'col-md-2 col-form-label']) }}
+                              {{ Form::select('fileClassificationId',$projectsFileClassification,null,['placeholder'=>'---フォルダ---','class'=>'col-md-2 custom-select','id'=>'pr_folder'.$masterProject->projectId])}}
+                              @error('fileClassificationId')
+                                <span class="ml-2 text-danger">{{ $message }}</span>
+                              @enderror
+                            </div>
+
+                            <div class="form-group form-inline">
+                              {{ Form::label('filePosts','ファイル',['class'=>'col-md-2 col-form-label']) }}
+                              <div class="input-group">
+                                  <div class="custom-file">
+                                      {{ Form::file('masterFile',['class'=>'custom-file-input','id'=>'pr_customFile'.$masterProject->projectId,'multiple'=>'multiple','name'=>'files[]']) }}
+                                      {{ Form::label('masterFile','ファイル選択...複数選択可',['class'=>'custom-file-label pr_label'.$masterProject->projectId,'for'=>'pr_customFile'.$masterProject->projectId,'data-browse'=>'参照']) }}
+                                  </div>
+                                  <div class="input-group-append">
+                                      {{ Form::button('取消',['class'=>'btn btn-outline-secondary','id'=>'pr_inputFileReset'.$masterProject->projectId]) }}
+                                  </div>
                               </div>
-                              <div class="input-group-append">
-                                  {{ Form::button('取消',['class'=>'btn btn-outline-secondary','id'=>'inputFileReset']) }}
-                              </div>
-                          </div>
-                        </div>
+                            </div>
 
-                        <div class="form-group text-center">
-                          {{ Form::submit('新規登録',['class'=>'w-25 btn btn-primary btn-sm']) }}
-                        </div>
+                            <div id='pr_submit{{$masterProject->projectId}}' class="form-group text-center">
+                              {{ Form::button('新規登録',['class'=>'w-25 btn btn-primary btn-sm','type'=>'submit']) }}
+                            </div>
 
-                      {{ Form::close() }}
+                          {{ Form::close() }}
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -145,45 +168,69 @@
 
                 <div class="card">
                   <div class="card-body">
+                    <div class="row mb-1">
+                      <div class="col">
+                        @if($teamProject->project_detail)
+                          {!! nl2br(e($teamProject->project_detail)) !!}
+                        @else
+                          案件の詳細情報が登録されておりません。
+                        @endif
+                      </div>
+                    </div>
 
-                    @if(session()->has('message'))
+                    <div id='messageFolder{{$teamProject->teamProjectId}}' class="row my-1 d-none">
+                      <div class="col">
                         <div class="alert alert-danger mb-3">
-                            {{session('message')}}
+                          ※フォルダを選択してください。
                         </div>
-                    @endif
+                      </div>
+                    </div>
 
-                    {{ Form::button('ファイルの追加フォームを開く',['class'=>'slideButton btn btn-outline-info btn-sm','data-id'=>$teamProject->teamProjectId,'style'=>'cursor:pointer;']) }}
-                    <div class="slideBlock{{$teamProject->teamProjectId}} mt-4" style="display:none;">
-                      {{ Form::open(['route'=>'file_posts.store','enctype'=>'multipart/form-data']) }}
-                        {{ Form::hidden('teamProjectId',$teamProjectId) }}
 
-                        {{ $teamProject->project_detail }}
-                        <div class="form-group form-inline">
-                          {{ Form::label('fileClassificationId','フォルダ',['class'=>'col-md-2 col-form-label']) }}
-                          {{ Form::select('fileClassificationId',$masterFileClassification,null,['placeholder'=>'---フォルダ---','class'=>'col-md-2 custom-select'])}}
-                          @error('fileClassificationId')
-                            <span class="ml-2 text-danger">{{ $message }}</span>
-                          @enderror
+                    <div id='messageFile{{$teamProject->teamProjectId}}' class="row my-1 d-none">
+                      <div class="col">
+                        <div class="alert alert-danger mb-3">
+                          ※ファイルを一つ以上選択してください。
                         </div>
+                      </div>
+                    </div>
 
-                        <div class="form-group form-inline">
-                          {{ Form::label('filePosts','ファイル',['class'=>'col-md-2 col-form-label']) }}
-                          <div class="input-group">
-                              <div class="custom-file">
-                                  {{ Form::file('projectFile',['class'=>'custom-file-input','id'=>'customFile'.$teamProject->teamProjectId,'multiple'=>'multiple','name'=>'files[]']) }}
-                                  {{ Form::label('projectFile','ファイル選択...複数選択可',['class'=>'custom-file-label customFile'.$teamProject->teamProjectId,'for'=>'customFile'.$teamProject->teamProjectId,'data-browse'=>'参照']) }}
+                    <div class="row mt-4 ml-3">
+                      <div class="col">
+                        {{ Form::button('ファイルの追加フォームを開く',['class'=>'slideButton btn btn-outline-info btn-sm','data-id'=>$teamProject->teamProjectId,'style'=>'cursor:pointer;']) }}
+                        <div class="slideBlock{{$teamProject->teamProjectId}} mt-4" style="display:none;">
+                          {{ Form::open(['route'=>'file_posts.store','enctype'=>'multipart/form-data']) }}
+                            {{ Form::hidden('teamProjectId',$teamProjectId) }}
+
+                            {{ $teamProject->project_detail }}
+                            <div class="form-group form-inline">
+                              {{ Form::label('fileClassificationId','フォルダ',['class'=>'col-md-2 col-form-label']) }}
+                              {{ Form::select('fileClassificationId',$masterFileClassification,null,['placeholder'=>'---フォルダ---','class'=>'col-md-2 custom-select','id'=>'folder'.$teamProject->teamProjectId])}}
+                              @error('fileClassificationId')
+                                <span class="ml-2 text-danger">{{ $message }}</span>
+                              @enderror
+                            </div>
+
+                            <div class="form-group form-inline">
+                              {{ Form::label('filePosts','ファイル',['class'=>'col-md-2 col-form-label']) }}
+                              <div class="input-group">
+                                  <div class="custom-file">
+                                      {{ Form::file('projectFile',['class'=>'custom-file-input','id'=>'customFile'.$teamProject->teamProjectId,'multiple'=>'multiple','name'=>'files[]']) }}
+                                      {{ Form::label('projectFile','ファイル選択...複数選択可',['class'=>'custom-file-label label'.$teamProject->teamProjectId,'for'=>'customFile'.$teamProject->teamProjectId,'data-browse'=>'参照']) }}
+                                  </div>
+                                  <div class="input-group-append">
+                                      {{ Form::button('取消',['class'=>'btn btn-outline-secondary','id'=>'inputFileReset'.$teamProject->teamProjectId]) }}
+                                  </div>
                               </div>
-                              <div class="input-group-append">
-                                  {{ Form::button('取消',['class'=>'btn btn-outline-secondary','id'=>'inputFileReset'.$teamProject->teamProjectId]) }}
-                              </div>
-                          </div>
-                        </div>
+                            </div>
 
-                        <div class="form-group text-center">
-                          {{ Form::submit('新規登録',['class'=>'w-25 btn btn-primary btn-sm']) }}
-                        </div>
+                            <div id='submit{{$teamProject->teamProjectId}}' class="form-group text-center">
+                              {{ Form::button('新規登録',['class'=>'w-25 btn btn-primary btn-sm','type'=>'submit']) }}
+                            </div>
 
-                      {{ Form::close() }}
+                          {{ Form::close() }}
+                        </div>
+                      </div>
                     </div>
                   </div>
 

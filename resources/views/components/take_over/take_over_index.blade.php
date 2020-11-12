@@ -22,7 +22,7 @@
         </div>
         <div class="row">
           <div class="col-8">
-            <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+            <ul class="nav nav-tabs nav-justified nav-pills" id="myTab" role="tablist">
               <li class="nav-item">
                 <a class="nav-link active" id="takeOver-tab" data-toggle="tab" href="#takeOver" role="tab" aria-controls="takeOver">引継ぎ事項</a>
               </li>

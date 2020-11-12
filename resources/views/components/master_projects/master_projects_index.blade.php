@@ -110,7 +110,7 @@
 
 
         <div class="card-footer d-flex justify-content-center align-middle">
-          テスト
+          案件一覧
         </div>
       </div>
     </div>
