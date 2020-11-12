@@ -47,6 +47,19 @@
 
                 <div class="card">
                   <div class="card-body">
+
+                    <div class="d-flex justify-content-end">
+                      <div class="pr-1" style="cursor:pointer">
+                        <i class="fas fa-pen text-info"></i>
+                      </div>
+                      <div class="pr-3 d-none" style="cursor:pointer">
+                        <i class="fas fa-check text-success"></i>
+                      </div>
+                      <div class="pr-1 d-none" style="cursor:pointer">
+                        <i class="fas fa-times-circle text-danger"></i>
+                      </div>
+                    </div>
+
                     <div class="row mb-1">
                       <div class="col">
                         @if($masterProject->project_detail)
@@ -55,6 +68,10 @@
                           案件の詳細情報が登録されておりません。
                         @endif
                       </div>
+                    </div>
+
+                    <div class="form-group text-center d-none">
+                      {{ Form::textarea('project_detail',$masterProject->project_detail,['class'=>'form-control','style'=>'resize:none;']) }}
                     </div>
 
                     <div id='pr_messageFolder{{$masterProject->projectId}}' class="row my-1 d-none">
