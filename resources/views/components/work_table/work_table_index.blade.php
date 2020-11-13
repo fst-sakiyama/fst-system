@@ -5,11 +5,9 @@
   $prevMonth = $firstDay->copy()->subMonth();
   $nextMonth = $firstDay->copy()->addMonth();
 
-  function init_value($str1,$str2){
-    if(isset($str1) && $str1 != "null"){
+  function init_value($str1){
+    if(isset($str1)){
       return $str1;
-    } elseif(isset($str2)){
-      return $str2;
     } else {
       return '-';
     }
@@ -102,7 +100,7 @@
             @endif
             >
 
-              @php $item = $items[$date->timestamp]; @endphp
+              @php $item = $items[$date->timestamp]; $item->workTable ? $item=$item->workTable : $item; @endphp
 
               <td class="text-center">
                 <a href="{{ route('work_table.doEdit',['d'=>$date->timestamp,'uid'=>$userId]) }}" class="btn btn-primary btn-sm py-0" style="font-size:12px;"><i class="fa fa-edit" aria-hidden="true"></i> 編集</a>
@@ -115,43 +113,43 @@
               <td class="text-center">{{ $item->shiftName }}</td>
 
               <td class="text-center">
-                {{ create_time(init_value($item->goingWorkHour,$item->startHour),init_value($item->goingWorkMinute,$item->startMinute)) }}
+                {{ create_time(init_value($item->startHour),init_value($item->startMinute)) }}
               </td>
 
               <td class="text-center">
-                {{ create_time(init_value($item->leavingWorkHour,$item->endHour),init_value($item->leavingWorkMinute,$item->endMinute)) }}
+                {{ create_time(init_value($item->endHour),init_value($item->endMinute)) }}
               </td>
 
               <td class="text-center">
-                @php $val = init_value($item->workTableRest1StartHour,$item->rest1StartHour); @endphp
+                @php $val = init_value($item->rest1StartHour); @endphp
                 @if($val === '-')
                   -
                 @else
-                  {{ create_time($val,init_value($item->workTableRest1StartMinute,$item->rest1StartMinute)) }}
+                  {{ create_time($val,init_value($item->rest1StartMinute)) }}
                   ～
-                  {{ create_time(init_value($item->workTableRest1EndHour,$item->rest1EndHour),init_value($item->workTableRest1EndMinute,$item->rest1EndMinute)) }}
+                  {{ create_time(init_value($item->rest1EndHour),init_value($item->rest1EndMinute)) }}
                 @endif
               </td>
 
               <td class="text-center">
-                @php $val = init_value($item->workTableRest2StartHour,$item->rest2StartHour); @endphp
+                @php $val = init_value($item->rest2StartHour); @endphp
                 @if($val === '-')
                   -
                 @else
-                  {{ create_time($val,init_value($item->workTableRest2StartMinute,$item->rest2StartMinute)) }}
+                  {{ create_time($val,init_value($item->rest2StartMinute)) }}
                   ～
-                  {{ create_time(init_value($item->workTableRest2EndHour,$item->rest2EndHour),init_value($item->workTableRest2EndMinute,$item->rest2EndMinute)) }}
+                  {{ create_time(init_value($item->rest2EndHour),init_value($item->rest2EndMinute)) }}
                 @endif
               </td>
 
               <td class="text-center">
-                @php $val = init_value($item->workTableRest3StartHour,$item->rest3StartHour); @endphp
+                @php $val = init_value($item->rest3StartHour); @endphp
                 @if($val === '-')
                   -
                 @else
-                  {{ create_time($val,init_value($item->workTableRest3StartMinute,$item->rest3StartMinute)) }}
+                  {{ create_time($val,init_value($item->rest3StartMinute)) }}
                   ～
-                  {{ create_time(init_value($item->workTableRest3EndHour,$item->rest3EndHour),init_value($item->workTableRest3EndMinute,$item->rest3EndMinute)) }}
+                  {{ create_time(init_value($item->rest3EndHour),init_value($item->workTable->rest3EndMinute,$item->rest3EndMinute)) }}
                 @endif
               </td>
 

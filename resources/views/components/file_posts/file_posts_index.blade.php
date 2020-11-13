@@ -48,19 +48,19 @@
                 <div class="card">
                   <div class="card-body">
 
-                    <div class="d-flex justify-content-end">
-                      <div class="pr-1" style="cursor:pointer">
+                    <div class="d-flex justify-content-end mb-1">
+                      <div id='pr_textareaCorrect{{$masterProject->projectId}}' class="pr-1" style="cursor:pointer">
                         <i class="fas fa-pen text-info"></i>
                       </div>
-                      <div class="pr-3 d-none" style="cursor:pointer">
+                      <div id='pr_textareaSubmit{{$masterProject->projectId}}' class="pr-3 d-none" style="cursor:pointer">
                         <i class="fas fa-check text-success"></i>
                       </div>
-                      <div class="pr-1 d-none" style="cursor:pointer">
+                      <div id='pr_textareaCancel{{$masterProject->projectId}}' class="pr-1 d-none" style="cursor:pointer">
                         <i class="fas fa-times-circle text-danger"></i>
                       </div>
                     </div>
 
-                    <div class="row mb-1">
+                    <div id='pr_text{{$masterProject->projectId}}' class="row mb-1 ml-1">
                       <div class="col">
                         @if($masterProject->project_detail)
                           {!! nl2br(e($masterProject->project_detail)) !!}
@@ -70,7 +70,7 @@
                       </div>
                     </div>
 
-                    <div class="form-group text-center d-none">
+                    <div id='pr_textarea{{$masterProject->projectId}}' class="form-group text-center d-none mb-1 ml-1">
                       {{ Form::textarea('project_detail',$masterProject->project_detail,['class'=>'form-control','style'=>'resize:none;']) }}
                     </div>
 
@@ -119,7 +119,7 @@
                             </div>
 
                             <div id='pr_submit{{$masterProject->projectId}}' class="form-group text-center">
-                              {{ Form::button('新規登録',['class'=>'w-25 btn btn-primary btn-sm','type'=>'submit']) }}
+                              {{ Form::button('新規登録',['class'=>'w-25 btn btn-primary btn-sm submit-button','type'=>'submit']) }}
                             </div>
 
                           {{ Form::close() }}
@@ -185,7 +185,20 @@
 
                 <div class="card">
                   <div class="card-body">
-                    <div class="row mb-1">
+
+                    <div class="d-flex justify-content-end mb-1">
+                      <div id='textareaCorrect{{$teamProject->teamProjectId}}' class="pr-1" style="cursor:pointer">
+                        <i class="fas fa-pen text-info"></i>
+                      </div>
+                      <div id='textareaSubmit{{$teamProject->teamProjectId}}' class="pr-3 d-none" style="cursor:pointer">
+                        <i class="fas fa-check text-success"></i>
+                      </div>
+                      <div id='textareaCancel{{$teamProject->teamProjectId}}' class="pr-1 d-none" style="cursor:pointer">
+                        <i class="fas fa-times-circle text-danger"></i>
+                      </div>
+                    </div>
+
+                    <div id='text{{$teamProject->teamProjectId}}' class="row mb-1 ml-1">
                       <div class="col">
                         @if($teamProject->project_detail)
                           {!! nl2br(e($teamProject->project_detail)) !!}
@@ -193,6 +206,10 @@
                           案件の詳細情報が登録されておりません。
                         @endif
                       </div>
+                    </div>
+
+                    <div id='textarea{{$teamProject->teamProjectId}}' class="form-group text-center d-none mb-1 ml-1">
+                      {{ Form::textarea('project_detail',$teamProject->project_detail,['class'=>'form-control','style'=>'resize:none;']) }}
                     </div>
 
                     <div id='messageFolder{{$teamProject->teamProjectId}}' class="row my-1 d-none">
@@ -242,7 +259,7 @@
                             </div>
 
                             <div id='submit{{$teamProject->teamProjectId}}' class="form-group text-center">
-                              {{ Form::button('新規登録',['class'=>'w-25 btn btn-primary btn-sm','type'=>'submit']) }}
+                              {{ Form::button('新規登録',['class'=>'w-25 btn btn-primary btn-sm submit-button','type'=>'submit']) }}
                             </div>
 
                           {{ Form::close() }}

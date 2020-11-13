@@ -25,6 +25,12 @@ class TeamProject extends Model
     {
       return $this->belongsTo('App\Models\MasterWorkingTeam','workingTeamId','workingTeamId');
     }
+
+    public function workLoads()
+    {
+      return $this->hasMany('App\Models\WorkLoad','teamProjectId','teamProjectId');
+    }
+
     public function filePosts()
     {
       return $this->hasMany('App\Models\FilePost','teamProjectId','teamProjectId');

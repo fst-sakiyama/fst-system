@@ -10,60 +10,60 @@ class WorkTable extends Component
     public $masterShift = '';
     public $shiftId = '';
     public $workDay = '';
-    public $goingWorkHour = '';
-    public $goingWorkMinute = '';
-    public $oldGoingWorkHour = '';
-    public $oldGoingWorkMinute = '';
-    public $leavingWorkHour = '';
-    public $leavingWorkMinute = '';
-    public $oldLeavingWorkHour = '';
-    public $oldLeavingWorkMinute = '';
-    public $workTableRest1StartHour = '';
-    public $workTableRest1StartMinute ='';
-    public $oldWorkTableRest1StartHour = '';
-    public $oldWorkTableRest1StartMinute ='';
-    public $workTableRest1EndHour = '';
-    public $workTableRest1EndMinute ='';
-    public $oldWorkTableRest1EndHour = '';
-    public $oldWorkTableRest1EndMinute ='';
-    public $workTableRest2StartHour = '';
-    public $workTableRest2StartMinute ='';
-    public $oldWorkTableRest2StartHour = '';
-    public $oldWorkTableRest2StartMinute ='';
-    public $workTableRest2EndHour = '';
-    public $workTableRest2EndMinute ='';
-    public $oldWorkTableRest2EndHour = '';
-    public $oldWorkTableRest2EndMinute ='';
-    public $workTableRest3StartHour = '';
-    public $workTableRest3StartMinute ='';
-    public $oldWorkTableRest3StartHour = '';
-    public $oldWorkTableRest3StartMinute ='';
-    public $workTableRest3EndHour = '';
-    public $workTableRest3EndMinute ='';
-    public $oldWorkTableRest3EndHour = '';
-    public $oldWorkTableRest3EndMinute ='';
+    public $startHour = '';
+    public $startMinute = '';
+    public $oldstartHour = '';
+    public $oldstartMinute = '';
+    public $endHour = '';
+    public $endMinute = '';
+    public $oldendHour = '';
+    public $oldendMinute = '';
+    public $rest1StartHour = '';
+    public $rest1StartMinute ='';
+    public $oldrest1StartHour = '';
+    public $oldrest1StartMinute ='';
+    public $rest1EndHour = '';
+    public $rest1EndMinute ='';
+    public $oldrest1EndHour = '';
+    public $oldrest1EndMinute ='';
+    public $rest2StartHour = '';
+    public $rest2StartMinute ='';
+    public $oldrest2StartHour = '';
+    public $oldrest2StartMinute ='';
+    public $rest2EndHour = '';
+    public $rest2EndMinute ='';
+    public $oldrest2EndHour = '';
+    public $oldrest2EndMinute ='';
+    public $rest3StartHour = '';
+    public $rest3StartMinute ='';
+    public $oldrest3StartHour = '';
+    public $oldrest3StartMinute ='';
+    public $rest3EndHour = '';
+    public $rest3EndMinute ='';
+    public $oldrest3EndHour = '';
+    public $oldrest3EndMinute ='';
     public $lateEarlyLeave ='';
     public $checked = '';
     public $disabled = '';
     public $specialReason = '';
     public $remarks = '';
 
-    public $activeGoingWorkHour = '';
-    public $activeGoingWorkMinute = '';
-    public $activeLeavingWorkHour = '';
-    public $activeLeavingWorkMinute = '';
-    public $activeWorkTableRest1StartHour = '';
-    public $activeWorkTableRest1StartMinute ='';
-    public $activeWorkTableRest1EndHour = '';
-    public $activeWorkTableRest1EndMinute ='';
-    public $activeWorkTableRest2StartHour = '';
-    public $activeWorkTableRest2StartMinute ='';
-    public $activeWorkTableRest2EndHour = '';
-    public $activeWorkTableRest2EndMinute ='';
-    public $activeWorkTableRest3StartHour = '';
-    public $activeWorkTableRest3StartMinute ='';
-    public $activeWorkTableRest3EndHour = '';
-    public $activeWorkTableRest3EndMinute ='';
+    public $activestartHour = '';
+    public $activestartMinute = '';
+    public $activeendHour = '';
+    public $activeendMinute = '';
+    public $activerest1StartHour = '';
+    public $activerest1StartMinute ='';
+    public $activerest1EndHour = '';
+    public $activerest1EndMinute ='';
+    public $activerest2StartHour = '';
+    public $activerest2StartMinute ='';
+    public $activerest2EndHour = '';
+    public $activerest2EndMinute ='';
+    public $activerest3StartHour = '';
+    public $activerest3StartMinute ='';
+    public $activerest3EndHour = '';
+    public $activerest3EndMinute ='';
 
     public $calcWorkHour = '';
 
@@ -72,96 +72,96 @@ class WorkTable extends Component
       $this->workDay = $workTable->workDay;
       $this->shiftId = $workTable->shiftId;
 
-      if(isset($workTable->goingWorkHour) && isset($workTable->goingWorkMinute)){
-        $this->goingWorkHour = $workTable->goingWorkHour;
-        $this->goingWorkMinute = $workTable->goingWorkMinute;
+      if(isset($workTable->startHour) && isset($workTable->startMinute)){
+        $this->startHour = $workTable->startHour;
+        $this->startMinute = $workTable->startMinute;
       } else {
-        $this->goingWorkHour = $workTable->startHour;
-        $this->goingWorkMinute = $workTable->startMinute;
+        $this->startHour = $workTable->startHour;
+        $this->startMinute = $workTable->startMinute;
       }
 
-      $this->oldGoingWorkHour = $this->goingWorkHour;
-      $this->oldGoingWorkMinute = $this->goingWorkMinute;
-      $this->activeGoingWorkHour = $this->goingWorkHour;
-      $this->activeGoingWorkMinute = $this->goingWorkMinute;
+      $this->oldstartHour = $this->startHour;
+      $this->oldstartMinute = $this->startMinute;
+      $this->activestartHour = $this->startHour;
+      $this->activestartMinute = $this->startMinute;
 
-      if(isset($workTable->leavingWorkHour) && isset($workTable->leavingWorkMinute)){
-        $this->leavingWorkHour = $workTable->leavingWorkHour;
-        $this->leavingWorkMinute = $workTable->leavingWorkMinute;
+      if(isset($workTable->endHour) && isset($workTable->endMinute)){
+        $this->endHour = $workTable->endHour;
+        $this->endMinute = $workTable->endMinute;
       } else {
-        $this->leavingWorkHour = $workTable->endHour;
-        $this->leavingWorkMinute = $workTable->endMinute;
+        $this->endHour = $workTable->endHour;
+        $this->endMinute = $workTable->endMinute;
       }
 
-      $this->oldLeavingWorkHour = $this->leavingWorkHour;
-      $this->oldLeavingWorkMinute = $this->leavingWorkMinute;
-      $this->activeLeavingWorkHour = $this->leavingWorkHour;
-      $this->activeLeavingWorkMinute = $this->leavingWorkMinute;
+      $this->oldendHour = $this->endHour;
+      $this->oldendMinute = $this->endMinute;
+      $this->activeendHour = $this->endHour;
+      $this->activeendMinute = $this->endMinute;
 
-      // dd($workTable->workTableRest1StartHour.' '.$workTable->workTableRest1StartMinute.' '.$workTable->workTableRest1EndHour.' '.$workTable->workTableRest1EndMinute);
+      // dd($workTable->rest1StartHour.' '.$workTable->rest1StartMinute.' '.$workTable->rest1EndHour.' '.$workTable->rest1EndMinute);
 
-      if(isset($workTable->workTableRest1StartHour) && isset($workTable->workTableRest1StartMinute) && isset($workTable->workTableRest1EndHour) && isset($workTable->workTableRest1EndMinute)){
-        $this->workTableRest1StartHour = $workTable->workTableRest1StartHour;
-        $this->workTableRest1StartMinute = $workTable->workTableRest1StartMinute;
-        $this->workTableRest1EndHour = $workTable->workTableRest1EndHour;
-        $this->workTableRest1EndMinute = $workTable->workTableRest1EndMinute;
+      if(isset($workTable->rest1StartHour) && isset($workTable->rest1StartMinute) && isset($workTable->rest1EndHour) && isset($workTable->rest1EndMinute)){
+        $this->rest1StartHour = $workTable->rest1StartHour;
+        $this->rest1StartMinute = $workTable->rest1StartMinute;
+        $this->rest1EndHour = $workTable->rest1EndHour;
+        $this->rest1EndMinute = $workTable->rest1EndMinute;
       } else {
-        $this->workTableRest1StartHour = $workTable->rest1StartHour;
-        $this->workTableRest1StartMinute = $workTable->rest1StartMinute;
-        $this->workTableRest1EndHour = $workTable->rest1EndHour;
-        $this->workTableRest1EndMinute = $workTable->rest1EndMinute;
+        $this->rest1StartHour = $workTable->rest1StartHour;
+        $this->rest1StartMinute = $workTable->rest1StartMinute;
+        $this->rest1EndHour = $workTable->rest1EndHour;
+        $this->rest1EndMinute = $workTable->rest1EndMinute;
       }
 
-      $this->oldWorkTableRest1StartHour = $this->workTableRest1StartHour;
-      $this->oldWorkTableRest1StartMinute = $this->workTableRest1StartMinute;
-      $this->oldWorkTableRest1EndHour = $this->workTableRest1EndHour;
-      $this->oldWorkTableRest1EndMinute = $this->workTableRest1EndMinute;
-      $this->activeWorkTableRest1StartHour = $this->workTableRest1StartHour;
-      $this->activeWorkTableRest1StartMinute = $this->workTableRest1StartMinute;
-      $this->activeWorkTableRest1EndHour = $this->workTableRest1EndHour;
-      $this->activeWorkTableRest1EndMinute = $this->workTableRest1EndMinute;
+      $this->oldrest1StartHour = $this->rest1StartHour;
+      $this->oldrest1StartMinute = $this->rest1StartMinute;
+      $this->oldrest1EndHour = $this->rest1EndHour;
+      $this->oldrest1EndMinute = $this->rest1EndMinute;
+      $this->activerest1StartHour = $this->rest1StartHour;
+      $this->activerest1StartMinute = $this->rest1StartMinute;
+      $this->activerest1EndHour = $this->rest1EndHour;
+      $this->activerest1EndMinute = $this->rest1EndMinute;
 
-      if(isset($workTable->workTableRest2StartHour) && isset($workTable->workTableRest2StartMinute) && isset($workTable->workTableRest2EndHour) && isset($workTable->workTableRest2EndMinute)){
-        $this->workTableRest2StartHour = $workTable->workTableRest2StartHour;
-        $this->workTableRest2StartMinute = $workTable->workTableRest2StartMinute;
-        $this->workTableRest2EndtHour = $workTable->workTableRest2EndHour;
-        $this->workTableRest2EndMinute = $workTable->workTableRest2EndMinute;
+      if(isset($workTable->rest2StartHour) && isset($workTable->rest2StartMinute) && isset($workTable->rest2EndHour) && isset($workTable->rest2EndMinute)){
+        $this->rest2StartHour = $workTable->rest2StartHour;
+        $this->rest2StartMinute = $workTable->rest2StartMinute;
+        $this->rest2EndtHour = $workTable->rest2EndHour;
+        $this->rest2EndMinute = $workTable->rest2EndMinute;
       } else {
-        $this->workTableRest2StartHour = $workTable->rest2StartHour;
-        $this->workTableRest2StartMinute = $workTable->rest2StartMinute;
-        $this->workTableRest2EndHour = $workTable->rest2EndHour;
-        $this->workTableRest2EndMinute = $workTable->rest2EndMinute;
+        $this->rest2StartHour = $workTable->rest2StartHour;
+        $this->rest2StartMinute = $workTable->rest2StartMinute;
+        $this->rest2EndHour = $workTable->rest2EndHour;
+        $this->rest2EndMinute = $workTable->rest2EndMinute;
       }
 
-      $this->oldWorkTableRest2StartHour = $this->workTableRest2StartHour;
-      $this->oldWorkTableRest2StartMinute = $this->workTableRest2StartMinute;
-      $this->oldWorkTableRest2EndHour = $this->workTableRest2EndHour;
-      $this->oldWorkTableRest2EndMinute = $this->workTableRest2EndMinute;
-      $this->activeWorkTableRest2StartHour = $this->workTableRest2StartHour;
-      $this->activeWorkTableRest2StartMinute = $this->workTableRest2StartMinute;
-      $this->activeWorkTableRest2EndHour = $this->workTableRest2EndHour;
-      $this->activeWorkTableRest2EndMinute = $this->workTableRest2EndMinute;
+      $this->oldrest2StartHour = $this->rest2StartHour;
+      $this->oldrest2StartMinute = $this->rest2StartMinute;
+      $this->oldrest2EndHour = $this->rest2EndHour;
+      $this->oldrest2EndMinute = $this->rest2EndMinute;
+      $this->activerest2StartHour = $this->rest2StartHour;
+      $this->activerest2StartMinute = $this->rest2StartMinute;
+      $this->activerest2EndHour = $this->rest2EndHour;
+      $this->activerest2EndMinute = $this->rest2EndMinute;
 
-      if(isset($workTable->workTableRest3StartHour) && isset($workTable->workTableRest3StartMinute) && isset($workTable->workTableRest3EndHour) && isset($workTable->workTableRest3EndMinute)){
-        $this->workTableRest3StartHour = $workTable->workTableRest3StartHour;
-        $this->workTableRest3StartMinute = $workTable->workTableRest3StartMinute;
-        $this->workTableRest3EndtHour = $workTable->workTableRest3EndHour;
-        $this->workTableRest3EndMinute = $workTable->workTableRest3EndMinute;
+      if(isset($workTable->rest3StartHour) && isset($workTable->rest3StartMinute) && isset($workTable->rest3EndHour) && isset($workTable->rest3EndMinute)){
+        $this->rest3StartHour = $workTable->rest3StartHour;
+        $this->rest3StartMinute = $workTable->rest3StartMinute;
+        $this->rest3EndtHour = $workTable->rest3EndHour;
+        $this->rest3EndMinute = $workTable->rest3EndMinute;
       } else {
-        $this->workTableRest3StartHour = $workTable->rest3StartHour;
-        $this->workTableRest3StartMinute = $workTable->rest3StartMinute;
-        $this->workTableRest3EndHour = $workTable->rest3EndHour;
-        $this->workTableRest3EndMinute = $workTable->rest3EndMinute;
+        $this->rest3StartHour = $workTable->rest3StartHour;
+        $this->rest3StartMinute = $workTable->rest3StartMinute;
+        $this->rest3EndHour = $workTable->rest3EndHour;
+        $this->rest3EndMinute = $workTable->rest3EndMinute;
       }
 
-      $this->oldWorkTableRest3StartHour = $this->workTableRest3StartHour;
-      $this->oldWorkTableRest3StartMinute = $this->workTableRest3StartMinute;
-      $this->oldWorkTableRest3EndHour = $this->workTableRest3EndHour;
-      $this->oldWorkTableRest3EndMinute = $this->workTableRest3EndMinute;
-      $this->activeWorkTableRest3StartHour = $this->workTableRest3StartHour;
-      $this->activeWorkTableRest3StartMinute = $this->workTableRest3StartMinute;
-      $this->activeWorkTableRest3EndHour = $this->workTableRest3EndHour;
-      $this->activeWorkTableRest3EndMinute = $this->workTableRest3EndMinute;
+      $this->oldrest3StartHour = $this->rest3StartHour;
+      $this->oldrest3StartMinute = $this->rest3StartMinute;
+      $this->oldrest3EndHour = $this->rest3EndHour;
+      $this->oldrest3EndMinute = $this->rest3EndMinute;
+      $this->activerest3StartHour = $this->rest3StartHour;
+      $this->activerest3StartMinute = $this->rest3StartMinute;
+      $this->activerest3EndHour = $this->rest3EndHour;
+      $this->activerest3EndMinute = $this->rest3EndMinute;
 
       if($workTable->lateEarlyLeave == 1){
         $this->checked = true;
@@ -183,119 +183,119 @@ class WorkTable extends Component
     public function onShiftChange()
     {
       $item = MasterShift::find($this->shiftId);
-      // if($this->goingWorkHour!=$this->oldGoingWorkHour){
-      //   $this->goingWorkHour = $this->oldGoingWorkHour;
+      // if($this->startHour!=$this->oldstartHour){
+      //   $this->startHour = $this->oldstartHour;
       // }
-      if($this->goingWorkHour == $this->oldGoingWorkHour && $this->goingWorkMinute == $this->oldGoingWorkMinute){
-        $this->goingWorkHour = $item->startHour;
-        $this->goingWorkMinute = $item->startMinute;
-        $this->oldGoingWorkHour = $item->startHour;
-        $this->oldGoingWorkMinute = $item->startMinute;
-        $this->activeGoingWorkHour = $item->startHour;
-        $this->activeGoingWorkMinute = $item->startMinute;
+      if($this->startHour == $this->oldstartHour && $this->startMinute == $this->oldstartMinute){
+        $this->startHour = $item->startHour;
+        $this->startMinute = $item->startMinute;
+        $this->oldstartHour = $item->startHour;
+        $this->oldstartMinute = $item->startMinute;
+        $this->activestartHour = $item->startHour;
+        $this->activestartMinute = $item->startMinute;
       } else {
-        $this->oldGoingWorkHour = $this->goingWorkHour;
-        $this->oldGoingWorkMinute = $this->goingWorkMinute;
-        $this->activeGoingWorkHour = $this->goingWorkHour;
-        $this->activeGoingWorkMinute = $this->goingWorkMinute;
+        $this->oldstartHour = $this->startHour;
+        $this->oldstartMinute = $this->startMinute;
+        $this->activestartHour = $this->startHour;
+        $this->activestartMinute = $this->startMinute;
       }
 
-      if($this->leavingWorkHour == $this->oldLeavingWorkHour && $this->leavingWorkMinute == $this->oldLeavingWorkMinute){
-        $this->leavingWorkHour = $item->endHour;
-        $this->leavingWorkMinute = $item->endMinute;
-        $this->oldLeavingWorkHour = $item->endHour;
-        $this->oldLeavingWorkMinute = $item->endMinute;
-        $this->activeLeavingWorkHour = $item->endHour;
-        $this->activeLeavingWorkMinute = $item->endMinute;
+      if($this->endHour == $this->oldendHour && $this->endMinute == $this->oldendMinute){
+        $this->endHour = $item->endHour;
+        $this->endMinute = $item->endMinute;
+        $this->oldendHour = $item->endHour;
+        $this->oldendMinute = $item->endMinute;
+        $this->activeendHour = $item->endHour;
+        $this->activeendMinute = $item->endMinute;
       } else {
-        $this->oldLeavingWorkHour = $this->leavingWorkHour;
-        $this->oldLeavingWorkMinute = $this->leavingWorkMinute;
-        $this->activeLeavingWorkHour = $this->leavingWorkHour;
-        $this->activeLeavingWorkMinute = $this->leavingWorkMinute;
+        $this->oldendHour = $this->endHour;
+        $this->oldendMinute = $this->endMinute;
+        $this->activeendHour = $this->endHour;
+        $this->activeendMinute = $this->endMinute;
       }
 
-      if($this->workTableRest1StartHour == $this->oldWorkTableRest1StartHour && $this->workTableRest1StartMinute == $this->oldWorkTableRest1StartMinute){
-        $this->workTableRest1StartHour = $item->rest1StartHour;
-        $this->workTableRest1StartMinute = $item->rest1StartMinute;
-        $this->oldWorkTableRest1StartHour = $item->rest1StartHour;
-        $this->oldWorkTableRest1StartMinute = $item->rest1StartMinute;
-        $this->activeWorkTableRest1StartHour = $item->rest1StartHour;
-        $this->activeWorkTableRest1StartMinute = $item->rest1StartMinute;
+      if($this->rest1StartHour == $this->oldrest1StartHour && $this->rest1StartMinute == $this->oldrest1StartMinute){
+        $this->rest1StartHour = $item->rest1StartHour;
+        $this->rest1StartMinute = $item->rest1StartMinute;
+        $this->oldrest1StartHour = $item->rest1StartHour;
+        $this->oldrest1StartMinute = $item->rest1StartMinute;
+        $this->activerest1StartHour = $item->rest1StartHour;
+        $this->activerest1StartMinute = $item->rest1StartMinute;
       } else {
-        $this->oldWorkTableRest1StartHour = $this->workTableRest1StartHour;
-        $this->oldWorkTableRest1StartMinute = $this->workTableRest1StartMinute;
-        $this->activeWorkTableRest1StartHour = $this->workTableRest1StartHour;
-        $this->activeWorkTableRest1StartMinute = $this->workTableRest1StartMinute;
+        $this->oldrest1StartHour = $this->rest1StartHour;
+        $this->oldrest1StartMinute = $this->rest1StartMinute;
+        $this->activerest1StartHour = $this->rest1StartHour;
+        $this->activerest1StartMinute = $this->rest1StartMinute;
       }
 
-      if($this->workTableRest1EndHour == $this->oldWorkTableRest1EndHour && $this->workTableRest1EndMinute == $this->oldWorkTableRest1EndMinute){
-        $this->workTableRest1EndHour = $item->rest1EndHour;
-        $this->workTableRest1EndMinute = $item->rest1EndMinute;
-        $this->oldWorkTableRest1EndHour = $item->rest1EndHour;
-        $this->oldWorkTableRest1EndMinute = $item->rest1EndMinute;
-        $this->activeWorkTableRest1EndHour = $item->rest1EndHour;
-        $this->activeWorkTableRest1EndMinute = $item->rest1EndMinute;
+      if($this->rest1EndHour == $this->oldrest1EndHour && $this->rest1EndMinute == $this->oldrest1EndMinute){
+        $this->rest1EndHour = $item->rest1EndHour;
+        $this->rest1EndMinute = $item->rest1EndMinute;
+        $this->oldrest1EndHour = $item->rest1EndHour;
+        $this->oldrest1EndMinute = $item->rest1EndMinute;
+        $this->activerest1EndHour = $item->rest1EndHour;
+        $this->activerest1EndMinute = $item->rest1EndMinute;
       } else {
-        $this->oldWorkTableRest1EndHour = $this->workTableRest1EndHour;
-        $this->oldWorkTableRest1EndHour = $this->workTableRest1EndHour;
-        $this->activeWorkTableRest1EndMinute = $this->workTableRest1EndMinute;
-        $this->activeWorkTableRest1EndMinute = $this->workTableRest1EndMinute;
+        $this->oldrest1EndHour = $this->rest1EndHour;
+        $this->oldrest1EndHour = $this->rest1EndHour;
+        $this->activerest1EndMinute = $this->rest1EndMinute;
+        $this->activerest1EndMinute = $this->rest1EndMinute;
       }
 
-      if($this->workTableRest2StartHour == $this->oldWorkTableRest2StartHour && $this->workTableRest2StartMinute == $this->oldWorkTableRest2StartMinute){
-        $this->workTableRest2StartHour = $item->rest2StartHour;
-        $this->workTableRest2StartMinute = $item->rest2StartMinute;
-        $this->oldWorkTableRest2StartHour = $item->rest2StartHour;
-        $this->oldWorkTableRest2StartMinute = $item->rest2StartMinute;
-        $this->activeWorkTableRest2StartHour = $item->rest2StartHour;
-        $this->activeWorkTableRest2StartMinute = $item->rest2StartMinute;
+      if($this->rest2StartHour == $this->oldrest2StartHour && $this->rest2StartMinute == $this->oldrest2StartMinute){
+        $this->rest2StartHour = $item->rest2StartHour;
+        $this->rest2StartMinute = $item->rest2StartMinute;
+        $this->oldrest2StartHour = $item->rest2StartHour;
+        $this->oldrest2StartMinute = $item->rest2StartMinute;
+        $this->activerest2StartHour = $item->rest2StartHour;
+        $this->activerest2StartMinute = $item->rest2StartMinute;
       } else {
-        $this->oldWorkTableRest2StartHour = $this->workTableRest2StartHour;
-        $this->oldWorkTableRest2StartMinute = $this->workTableRest2StartMinute;
-        $this->activeWorkTableRest2StartHour = $this->workTableRest2StartHour;
-        $this->activeWorkTableRest2StartMinute = $this->workTableRest2StartMinute;
+        $this->oldrest2StartHour = $this->rest2StartHour;
+        $this->oldrest2StartMinute = $this->rest2StartMinute;
+        $this->activerest2StartHour = $this->rest2StartHour;
+        $this->activerest2StartMinute = $this->rest2StartMinute;
       }
 
-      if($this->workTableRest2EndHour == $this->oldWorkTableRest2EndHour && $this->workTableRest2EndMinute == $this->oldWorkTableRest2EndMinute){
-        $this->workTableRest2EndHour = $item->rest2EndHour;
-        $this->workTableRest2EndMinute = $item->rest2EndMinute;
-        $this->oldWorkTableRest2EndHour = $item->rest2EndHour;
-        $this->oldWorkTableRest2EndMinute = $item->rest2EndMinute;
-        $this->activeWorkTableRest2EndHour = $item->rest2EndHour;
-        $this->activeWorkTableRest2EndMinute = $item->rest2EndMinute;
+      if($this->rest2EndHour == $this->oldrest2EndHour && $this->rest2EndMinute == $this->oldrest2EndMinute){
+        $this->rest2EndHour = $item->rest2EndHour;
+        $this->rest2EndMinute = $item->rest2EndMinute;
+        $this->oldrest2EndHour = $item->rest2EndHour;
+        $this->oldrest2EndMinute = $item->rest2EndMinute;
+        $this->activerest2EndHour = $item->rest2EndHour;
+        $this->activerest2EndMinute = $item->rest2EndMinute;
       } else {
-        $this->oldWorkTableRest2EndHour = $this->workTableRest2EndHour;
-        $this->oldWorkTableRest2EndMinute = $this->workTableRest2EndMinute;
-        $this->activeWorkTableRest2EndHour = $this->workTableRest2EndHour;
-        $this->activeWorkTableRest2EndMinute = $this->workTableRest2EndMinute;
+        $this->oldrest2EndHour = $this->rest2EndHour;
+        $this->oldrest2EndMinute = $this->rest2EndMinute;
+        $this->activerest2EndHour = $this->rest2EndHour;
+        $this->activerest2EndMinute = $this->rest2EndMinute;
       }
 
-      if($this->workTableRest3StartHour == $this->oldWorkTableRest3StartHour && $this->workTableRest3StartMinute == $this->oldWorkTableRest3StartMinute){
-        $this->workTableRest3StartHour = $item->rest3StartHour;
-        $this->workTableRest3StartMinute = $item->rest3StartMinute;
-        $this->oldWorkTableRest3StartHour = $item->rest3StartHour;
-        $this->oldWorkTableRest3StartMinute = $item->rest3StartMinute;
-        $this->activeWorkTableRest3StartHour = $item->rest3StartHour;
-        $this->activeWorkTableRest3StartMinute = $item->rest3StartMinute;
+      if($this->rest3StartHour == $this->oldrest3StartHour && $this->rest3StartMinute == $this->oldrest3StartMinute){
+        $this->rest3StartHour = $item->rest3StartHour;
+        $this->rest3StartMinute = $item->rest3StartMinute;
+        $this->oldrest3StartHour = $item->rest3StartHour;
+        $this->oldrest3StartMinute = $item->rest3StartMinute;
+        $this->activerest3StartHour = $item->rest3StartHour;
+        $this->activerest3StartMinute = $item->rest3StartMinute;
       } else {
-        $this->oldWorkTableRest3StartHour = $this->workTableRest3StartHour;
-        $this->oldWorkTableRest3StartMinute = $this->workTableRest3StartMinute;
-        $this->activeWorkTableRest3StartHour = $this->workTableRest3StartHour;
-        $this->activeWorkTableRest3StartMinute = $this->workTableRest3StartMinute;
+        $this->oldrest3StartHour = $this->rest3StartHour;
+        $this->oldrest3StartMinute = $this->rest3StartMinute;
+        $this->activerest3StartHour = $this->rest3StartHour;
+        $this->activerest3StartMinute = $this->rest3StartMinute;
       }
 
-      if($this->workTableRest3EndHour == $this->oldWorkTableRest3EndHour && $this->workTableRest3EndMinute == $this->oldWorkTableRest3EndMinute){
-        $this->workTableRest3EndHour = $item->rest3EndHour;
-        $this->workTableRest3EndMinute = $item->rest3EndMinute;
-        $this->oldWorkTableRest3EndHour = $item->rest3EndHour;
-        $this->oldWorkTableRest3EndMinute = $item->rest3EndMinute;
-        $this->activeWorkTableRest3EndHour = $item->rest3EndHour;
-        $this->activeWorkTableRest3EndMinute = $item->rest3EndMinute;
+      if($this->rest3EndHour == $this->oldrest3EndHour && $this->rest3EndMinute == $this->oldrest3EndMinute){
+        $this->rest3EndHour = $item->rest3EndHour;
+        $this->rest3EndMinute = $item->rest3EndMinute;
+        $this->oldrest3EndHour = $item->rest3EndHour;
+        $this->oldrest3EndMinute = $item->rest3EndMinute;
+        $this->activerest3EndHour = $item->rest3EndHour;
+        $this->activerest3EndMinute = $item->rest3EndMinute;
       } else {
-        $this->oldWorkTableRest3EndHour = $this->workTableRest3EndHour;
-        $this->oldWorkTableRest3EndMinute = $this->workTableRest3EndMinute;
-        $this->activeWorkTableRest3EndHour = $this->workTableRest3EndHour;
-        $this->activeWorkTableRest3EndMinute = $this->workTableRest3EndMinute;
+        $this->oldrest3EndHour = $this->rest3EndHour;
+        $this->oldrest3EndMinute = $this->rest3EndMinute;
+        $this->activerest3EndHour = $this->rest3EndHour;
+        $this->activerest3EndMinute = $this->rest3EndMinute;
       }
 
         $this->calculationWorkTime();
@@ -310,84 +310,84 @@ class WorkTable extends Component
       }
     }
 
-    public function goingWorkHourChange()
+    public function startHourChange()
     {
-      $this->activeGoingWorkHour = $this->goingWorkHour;
+      $this->activestartHour = $this->startHour;
       $this->calculationWorkTime();
     }
-    public function goingWorkMinuteChange()
+    public function startMinuteChange()
     {
-      $this->activeGoingWorkMinute= $this->goingWorkMinute;
+      $this->activestartMinute= $this->startMinute;
       $this->calculationWorkTime();
     }
-    public function leavingWorkHourChange()
+    public function endHourChange()
     {
-      $this->activeLeavingWorkHour = $this->leavingWorkHour;
+      $this->activeendHour = $this->endHour;
       $this->calculationWorkTime();
     }
-    public function leavingWorkMinuteChange()
+    public function endMinuteChange()
     {
-      $this->activeLeavingWorkMinute= $this->leavingWorkMinute;
+      $this->activeendMinute= $this->endMinute;
       $this->calculationWorkTime();
     }
-    public function workTableRest1StartHourChange()
+    public function rest1StartHourChange()
     {
-      $this->activeWorkTableRest1StartHour = $this->workTableRest1StartHour;
+      $this->activerest1StartHour = $this->rest1StartHour;
       $this->calculationWorkTime();
     }
-    public function workTableRest1StartMinuteChange()
+    public function rest1StartMinuteChange()
     {
-      $this->activeWorkTableRest1StartMinute = $this->workTableRest1StartMinute;
+      $this->activerest1StartMinute = $this->rest1StartMinute;
       $this->calculationWorkTime();
     }
-    public function workTableRest1EndHourChange()
+    public function rest1EndHourChange()
     {
-      $this->activeWorkTableRest1EndHour = $this->workTableRest1EndHour;
+      $this->activerest1EndHour = $this->rest1EndHour;
       $this->calculationWorkTime();
     }
-    public function workTableRest1EndMinuteChange()
+    public function rest1EndMinuteChange()
     {
-      $this->activeWorkTableRest1EndMinute = $this->workTableRest1EndMinute;
+      $this->activerest1EndMinute = $this->rest1EndMinute;
       $this->calculationWorkTime();
     }
-    public function workTableRest2StartHourChange()
+    public function rest2StartHourChange()
     {
-      $this->activeWorkTableRest2StartHour = $this->workTableRest2StartHour;
+      $this->activerest2StartHour = $this->rest2StartHour;
       $this->calculationWorkTime();
     }
-    public function workTableRest2StartMinuteChange()
+    public function rest2StartMinuteChange()
     {
-      $this->activeWorkTableRest2StartMinute = $this->workTableRest2StartMinute;
+      $this->activerest2StartMinute = $this->rest2StartMinute;
       $this->calculationWorkTime();
     }
-    public function workTableRest2EndHourChange()
+    public function rest2EndHourChange()
     {
-      $this->activeWorkTableRest2EndHour = $this->workTableRest2EndHour;
+      $this->activerest2EndHour = $this->rest2EndHour;
       $this->calculationWorkTime();
     }
-    public function workTableRest2EndMinuteChange()
+    public function rest2EndMinuteChange()
     {
-      $this->activeWorkTableRest2EndMinute = $this->workTableRest2EndMinute;
+      $this->activerest2EndMinute = $this->rest2EndMinute;
       $this->calculationWorkTime();
     }
-    public function workTableRest3StartHourChange()
+    public function rest3StartHourChange()
     {
-      $this->activeWorkTableRest3StartHour = $this->workTableRest3StartHour;
+      $this->activerest3StartHour = $this->rest3StartHour;
       $this->calculationWorkTime();
     }
-    public function workTableRest3StartMinuteChange()
+    public function rest3StartMinuteChange()
     {
-      $this->activeWorkTableRest3StartMinute = $this->workTableRest3StartMinute;
+      $this->activerest3StartMinute = $this->rest3StartMinute;
       $this->calculationWorkTime();
     }
-    public function workTableRest3EndHourChange()
+    public function rest3EndHourChange()
     {
-      $this->activeWorkTableRest3EndHour = $this->workTableRest3EndHour;
+      $this->activerest3EndHour = $this->rest3EndHour;
       $this->calculationWorkTime();
     }
-    public function workTableRest3EndMinuteChange()
+    public function rest3EndMinuteChange()
     {
-      $this->activeWorkTableRest3EndMinute = $this->workTableRest3EndMinute;
+      $this->activerest3EndMinute = $this->rest3EndMinute;
       $this->calculationWorkTime();
     }
 
@@ -395,32 +395,32 @@ class WorkTable extends Component
     {
       $this->calcWorkHour = 0;
 
-      $ah = $this->activeLeavingWorkHour;
-      $am = $this->activeLeavingWorkMinute;
-      $bh = $this->activeGoingWorkHour;
-      $bm = $this->activeGoingWorkMinute;
+      $ah = $this->activeendHour;
+      $am = $this->activeendMinute;
+      $bh = $this->activestartHour;
+      $bm = $this->activestartMinute;
 
       if(is_numeric($ah) && is_numeric($am) && is_numeric($bh) && is_numeric($bm)){
         $this->calcWorkHour += $this->commonCalc($ah,$am,$bh,$bm);
 
-        $ah = $this->activeWorkTableRest1EndHour;
-        $am = $this->activeWorkTableRest1EndMinute;
-        $bh = $this->activeWorkTableRest1StartHour;
-        $bm = $this->activeWorkTableRest1StartMinute;
+        $ah = $this->activerest1EndHour;
+        $am = $this->activerest1EndMinute;
+        $bh = $this->activerest1StartHour;
+        $bm = $this->activerest1StartMinute;
         if(is_numeric($ah) && is_numeric($am) && is_numeric($bh) && is_numeric($bm)){
           $this->calcWorkHour -= $this->commonCalc($ah,$am,$bh,$bm);
         }
-        $ah = $this->activeWorkTableRest2EndHour;
-        $am = $this->activeWorkTableRest2EndMinute;
-        $bh = $this->activeWorkTableRest2StartHour;
-        $bm = $this->activeWorkTableRest2StartMinute;
+        $ah = $this->activerest2EndHour;
+        $am = $this->activerest2EndMinute;
+        $bh = $this->activerest2StartHour;
+        $bm = $this->activerest2StartMinute;
         if(is_numeric($ah) && is_numeric($am) && is_numeric($bh) && is_numeric($bm)){
           $this->calcWorkHour -= $this->commonCalc($ah,$am,$bh,$bm);
         }
-        $ah = $this->activeWorkTableRest3EndHour;
-        $am = $this->activeWorkTableRest3EndMinute;
-        $bh = $this->activeWorkTableRest3StartHour;
-        $bm = $this->activeWorkTableRest3StartMinute;
+        $ah = $this->activerest3EndHour;
+        $am = $this->activerest3EndMinute;
+        $bh = $this->activerest3StartHour;
+        $bm = $this->activerest3StartMinute;
         if(is_numeric($ah) && is_numeric($am) && is_numeric($bh) && is_numeric($bm)){
           $this->calcWorkHour -= $this->commonCalc($ah,$am,$bh,$bm);
         }

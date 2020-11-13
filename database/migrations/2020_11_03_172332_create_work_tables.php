@@ -15,24 +15,23 @@ class CreateWorkTables extends Migration
     {
         Schema::connection('mysql_two')->create('work_tables', function (Blueprint $table) {
           $table->bigIncrements('workTableId');
-          $table->date('workTableWorkDay');
-          $table->bigInteger('workTableUserId')->unsigned();
-          $table->string('goingWorkHour',4)->nullable();
-          $table->string('goingWorkMinute',4)->nullable();
-          $table->string('leavingWorkHour',4)->nullable();
-          $table->string('leavingWorkMinute',4)->nullable();
-          $table->string('workTableRest1StartHour',4)->nullable();
-          $table->string('workTableRest1StartMinute',4)->nullable();
-          $table->string('workTableRest1EndHour',4)->nullable();
-          $table->string('workTableRest1EndMinute',4)->nullable();
-          $table->string('workTableRest2StartHour',4)->nullable();
-          $table->string('workTableRest2StartMinute',4)->nullable();
-          $table->string('workTableRest2EndHour',4)->nullable();
-          $table->string('workTableRest2EndMinute',4)->nullable();
-          $table->string('workTableRest3StartHour',4)->nullable();
-          $table->string('workTableRest3StartMinute',4)->nullable();
-          $table->string('workTableRest3EndHour',4)->nullable();
-          $table->string('workTableRest3EndMinute',4)->nullable();
+          $table->bigInteger('shiftTableId')->unsigned();
+          $table->string('startHour',2)->nullable();
+          $table->string('startMinute',2)->nullable();
+          $table->string('endHour',2)->nullable();
+          $table->string('endMinute',2)->nullable();
+          $table->string('rest1StartHour',2)->nullable();
+          $table->string('rest1StartMinute',2)->nullable();
+          $table->string('rest1EndHour',2)->nullable();
+          $table->string('rest1EndMinute',2)->nullable();
+          $table->string('rest2StartHour',2)->nullable();
+          $table->string('rest2StartMinute',2)->nullable();
+          $table->string('rest2EndHour',2)->nullable();
+          $table->string('rest2EndMinute',2)->nullable();
+          $table->string('rest3StartHour',2)->nullable();
+          $table->string('rest3StartMinute',2)->nullable();
+          $table->string('rest3EndHour',2)->nullable();
+          $table->string('rest3EndMinute',2)->nullable();
           $table->unsignedTinyInteger('lateEarlyLeave')->nullable();
           $table->string('specialReason',255)->nullable();
           $table->string('remarks',255)->nullable();
@@ -42,8 +41,10 @@ class CreateWorkTables extends Migration
           $table->integer('deleted_by')->unsigned()->nullable();
           $table->integer('restored_by')->unsigned()->nullable();
 
-          $table->unique(['workTableWorkDay','workTableUserId']);
-
+          $table->foreign('shiftTableId')
+                ->references('shiftTableId')->on('shift_tables')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

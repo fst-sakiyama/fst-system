@@ -75,14 +75,12 @@ class WorkTableController extends Controller
         $firstDay = Carbon::create($year,$month,1)->firstOfMonth();
         $lastDay = Carbon::create($year,$month,1)->lastOfMonth();
 
-        $workTables = DB::connection('mysql_two')->table('shift_tables')
-                      ->join('master_shifts','shift_tables.shiftId','=','master_shifts.shiftId')
-                      ->leftJoin('work_tables',function($join){
-                          $join->on('shift_tables.workDay','=','work_tables.workTableWorkDay');
-                          $join->on('shift_tables.userId','=','work_tables.workTableUserId');
-                      })->whereBetween('shift_tables.workDay',[$firstDay,$lastDay])
-                        ->where('shift_tables.userId',$userId)
-                        ->get();
+
+        $workTables = ShiftTable::where(function($query) use($userId,$firstDay,$lastDay){
+                        $query->where('userId',$userId)
+                              ->whereBetween('workDay',[$firstDay,$lastDay]);
+                        })->join('master_shifts','shift_tables.shiftId','=','master_shifts.shiftId')
+                          ->get();
 
         $items = [];
         $status = '';
@@ -94,7 +92,8 @@ class WorkTableController extends Controller
 
         foreach($workTables as $workTable)
         {
-          $items += array(Carbon::create($workTable->workDay)->timestamp=>$workTable);
+          $dt = new Carbon($workTable->workDay);
+          $items += array($dt->timestamp=>$workTable);
         }
          // dd($items);
 
@@ -229,26 +228,28 @@ class WorkTableController extends Controller
 
     public function doEdit(Request $request)
     {
-      $editDate = Carbon::createFromTimestamp($request->d)->format('Y-m-d');
-      $userId = $request->uid;
+        $editDate = Carbon::createFromTimestamp($request->d);
+        $subEditDate = $editDate->copy();
+        $userId = $request->uid;
+        // for($i=0;$i<5;$i++){
+        //   dump($subEditDate->subDay());
+        // }
+        // dd($editDate->format('Y-m-d'));
+        // テスト用
+        // $userId = 1;
 
-      // テスト用
-      // $userId = 1;
-
-      $workTable = DB::connection('mysql_two')->table('shift_tables')
-                    ->join('master_shifts','shift_tables.shiftId','=','master_shifts.shiftId')
-                    ->leftJoin('work_tables',function($join){
-                        $join->on('shift_tables.workDay','=','work_tables.workTableWorkDay');
-                        $join->on('shift_tables.userId','=','work_tables.workTableUserId');
-                    })->whereDate('shift_tables.workDay',$editDate)
-                      ->where('shift_tables.userId',$userId)
-                      ->first();
+        $workTable = ShiftTable::where(function($query) use($editDate,$userId){
+                            $query->whereDate('workDay',$editDate)
+                                  ->where('userId',$userId);
+                          })->join('master_shifts','shift_tables.shiftId','=','master_shifts.shiftId')
+                            ->first();
 
         $masterShifts = MasterShift::all();
         $masterShift = MasterShift::select('shiftId','shiftName')->get()->pluck('shiftName','shiftId');
 
         $teamId = User::find($userId)->own_department;
-        $teamProjects = TeamProject::where('workingTeamId',$teamId)->get();
+        $teamProjects = TeamProject::where('workingTeamId',$teamId)->orderBy('projectId')->get();
+
 
         return view('work_table.edit',compact('userId','masterShifts','masterShift','workTable','teamProjects'));
     }

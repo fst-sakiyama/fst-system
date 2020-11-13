@@ -10,6 +10,7 @@
 
 @section('pageJs')
 <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+<script type="text/javascript" src="{{asset('js/add_nl2br.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/add_customFileInput.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/add_jquery.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/add_cookie.js')}}"></script>

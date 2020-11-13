@@ -89,6 +89,8 @@ Route::group(['middleware' => ['auth', 'can:user-higher']], function () {
     Route::get('/projects_detail','ProjectsDetailController@index')->name('project_detail');
 
     // ファイルアップロード関連
+    Route::post('/file_posts/pr_detail','FilePostsController@pr_detail')->name('file_posts.pr_detail');
+    Route::post('/file_posts/detail','FilePostsController@detail')->name('file_posts.detail');
     Route::post('/file_posts/pr_change','FilePostsController@pr_change')->name('file_posts.pr_change');
     Route::post('/file_posts/change','FilePostsController@change')->name('file_posts.change');
     Route::post('/file_posts/pr_del','FilePostsController@pr_del')->name('file_posts.pr_del');

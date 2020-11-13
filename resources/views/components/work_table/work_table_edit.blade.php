@@ -4,6 +4,7 @@
   $week = array( "日", "月", "火", "水", "木", "金", "土" );
   $d = $date->format('Y年m月d日');
   $w = '('.$week[$date->dayOfWeek].')';
+  $prevId = null;
 @endphp
 
 <div class="contents">
@@ -38,7 +39,7 @@
                     {{ Form::hidden('workDay',$workTable->workDay )}}
                     {{ Form::hidden('userId',$workTable->userId) }}
 
-
+                    @php $workTable->workTable ? $workTable = $workTable->workTable : $workTable ; @endphp
                     <livewire:work-table :workTable=$workTable :masterShift=$masterShift>
 
 
@@ -79,34 +80,43 @@
                 </div>
               </div>
 
-              <table class="table table-sm table-hover" style="table-layout:fixed;">
-                <thead style="display:block;">
-                  <tr>
-                    <th class="clientName">顧客名</th>
-                    <th class="projectName">案件名</th>
-                    <th class="workLoad">工数(分)</th>
-                  </tr>
-                </thead>
-                <tbody style="display:block;overflow-y:scroll;height:600px;">
-                  @foreach($teamProjects as $teamProject)
-
+              <div style="height:600px; overflow-y:scroll">
+                <table class="table table-sm table-hover">
+                  <thead>
                     <tr>
-                      <td class="clientName">
-                        {{ $teamProject->project->client->clientName }}
-                      </td>
-                      <td class="projectName">
-                        {{ $teamProject->project->projectName }}
-                      </td>
-                      <td class="workLoad">
-
-                        <livewire:work-load :teamProject=$teamProject>
-
-                      </td>
+                      <th class="projectName" style="width:60%;">案件名</th>
+                      <th class="workLoad" style="width:40%;">工数(分)</th>
                     </tr>
+                  </thead>
+                  <tbody>
 
-                  @endforeach
-                </tbody>
-              </table>
+                    @foreach($teamProjects as $teamProject)
+                      @php $nowId = $teamProject->project->client->clientId; @endphp
+
+                      @if(is_null($prevId) || $teamProject->project->client->clientId !== $prevId)
+                        <tr>
+                          <td class="table-dark h5" colspan="2">
+                            {{ $teamProject->project->client->clientName }}
+                          </td>
+                        </tr>
+                      @endif
+
+                      <tr class="">
+                        <td class="projectName">
+                          {{ $teamProject->project->projectName }}
+                        </td>
+                        <td class="workLoad">
+
+                          <livewire:work-load :teamProject=$teamProject>
+
+                        </td>
+                      </tr>
+
+                      @php $prevId = $nowId; @endphp
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
 
             </div>
           </div>

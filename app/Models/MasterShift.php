@@ -17,12 +17,7 @@ class MasterShift extends Model
 
     public function shifts()
     {
-        return $this->hasMany('ShiftTable','shiftId','shiftId');
+        return $this->hasMany('App\Models\ShiftTable','shiftId','shiftId');
     }
-
-    // public function works()
-    // {
-    //     return $this->hasMany('WorkTable','shiftId','shiftId');
-    // }
 
 }

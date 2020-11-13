@@ -178,6 +178,28 @@ class FilePostsController extends Controller
         //
     }
 
+    public function pr_detail(Request $request)
+    {
+      $item = MasterProject::find($request->id);
+      $item->project_detail = $request->project_detail;
+      $item->save();
+      $item = MasterProject::find($request->id);
+      $project_detail = $item->project_detail;
+
+      return response()->json(['project_detail'=>$project_detail]);
+    }
+
+    public function detail(Request $request)
+    {
+      $item = TeamProject::find($request->id);
+      $item->project_detail = $request->project_detail;
+      $item->save();
+      $item = TeamProject::find($request->id);
+      $project_detail = $item->project_detail;
+
+      return response()->json(['project_detail'=>$project_detail]);
+    }
+
     public function pr_change(Request $request)
     {
       $item = ProjectsFilePost::find($request->id);

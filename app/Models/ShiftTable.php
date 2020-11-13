@@ -27,6 +27,16 @@ class ShiftTable extends Model
 
     public function shift()
     {
-      return $this->belongTo('MasterShift','shiftId','shiftId');
+      return $this->belongTo('App\Models\MasterShift','shiftId','shiftId');
+    }
+
+    public function workTable()
+    {
+      return $this->hasOne('App\Models\WorkTable','shiftTableId','shiftTableId');
+    }
+
+    public function workLoad()
+    {
+      return $this->hasOne('App\Models\WorkLoad','shiftTableId','shiftTableId');
     }
 }

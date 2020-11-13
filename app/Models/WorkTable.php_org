@@ -10,14 +10,15 @@ class WorkTable extends Model
 {
     use HasFactory;
     use AuthorObservable;
-
+    
     protected $connection='mysql_two';
     protected $primaryKey='workTableId';
+    protected $dates=['workDay'];
     protected $guarded=array('workTableId');
 
     public function shift()
     {
-        return $this->belongsTo('App\Models\ShiftTable','shiftTableId','shiftTableId');
+        return $this->belongTo('MasterShift','shiftId','shiftId');
     }
 
     public function created_by()
