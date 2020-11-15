@@ -238,6 +238,10 @@ class WorkTableController extends Controller
         // テスト用
         // $userId = 1;
 
+        // $test = TeamProject::where('workingTeamId',3)->select('teamProjectId','projectId')->get()->toArray();
+        // $res = array_search(100,array_column($test,'teamProjectId'));
+        // dd($res);
+
         $workTable = ShiftTable::where(function($query) use($editDate,$userId){
                             $query->whereDate('workDay',$editDate)
                                   ->where('userId',$userId);
@@ -324,14 +328,11 @@ class WorkTableController extends Controller
       $firstDay = Carbon::create($year,$month,1)->firstOfMonth();
       $lastDay = Carbon::create($year,$month,1)->lastOfMonth();
 
-      $workTables = DB::connection('mysql_two')->table('shift_tables')
-                    ->join('master_shifts','shift_tables.shiftId','=','master_shifts.shiftId')
-                    ->leftJoin('work_tables',function($join){
-                        $join->on('shift_tables.workDay','=','work_tables.workTableWorkDay');
-                        $join->on('shift_tables.userId','=','work_tables.workTableUserId');
-                    })->whereBetween('shift_tables.workDay',[$firstDay,$lastDay])
-                      ->where('shift_tables.userId',$userId)
-                      ->get();
+      $workTables = ShiftTable::where(function($query) use($userId,$firstDay,$lastDay){
+                      $query->where('userId',$userId)
+                            ->whereBetween('workDay',[$firstDay,$lastDay]);
+                      })->join('master_shifts','shift_tables.shiftId','=','master_shifts.shiftId')
+                        ->get();
 
       $items = [];
       $status = '';
@@ -343,7 +344,8 @@ class WorkTableController extends Controller
 
       foreach($workTables as $workTable)
       {
-        $items += array(Carbon::create($workTable->workDay)->timestamp=>$workTable);
+        $dt = new Carbon($workTable->workDay);
+        $items += array($dt->timestamp=>$workTable);
       }
 
       $view = view('work_table.export',compact('userId','status','dates','items','holidays','calendar','firstDay'));
