@@ -14,6 +14,16 @@
       <div class="card">
         <h5 class="card-header">{{$d.$w}} -勤務情報の編集</h5>
 
+        @if(Session::has('message'))
+        <div id='message' class="row">
+          <div class="col">
+            <div class="alert alert-danger mb-3">
+              {{ Session::get('message') }}
+            </div>
+          </div>
+        </div>
+        @endif
+
         <div class="row">
           <div class="col">
             <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
