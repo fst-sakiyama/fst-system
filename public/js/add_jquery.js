@@ -54,9 +54,4 @@ $('#modalTable1,#modalTable2').on('show.bs.modal',function(event){
   modal.find('.modalHeader').text(array[1]+'-'+array[3]);
   modal.find('.modalBody').html(array[4]);
   modal.find('.modalFooter').text(array[5]);
-
-});
-
-$('.submit-button').on('click',function(){
-  // $(this).css('pointer-events','none');
 });

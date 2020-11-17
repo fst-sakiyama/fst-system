@@ -14,15 +14,13 @@
       <div class="card">
         <h5 class="card-header">{{$d.$w}} -勤務情報の編集</h5>
 
-        @if(Session::has('message'))
-        <div id='message' class="row">
+        <div id='messageBlock' class="row d-none">
           <div class="col">
-            <div class="alert alert-danger mb-3">
-              {{ Session::get('message') }}
+            <div id='message' class="alert alert-danger m-3">
+
             </div>
           </div>
         </div>
-        @endif
 
         <div class="row">
           <div class="col">
@@ -43,15 +41,22 @@
             <div class="row">
               <div class="col">
 
-                <div class="card">
+                <div style="height:600px; overflow-y:scroll">
 
-                    {{ Form::open(['route'=>'work_table.store','name'=>'workTable_form']) }}
-                    {{ Form::hidden('workDay',$workTable->workDay )}}
-                    {{ Form::hidden('userId',$workTable->userId) }}
+                  <div class="card">
 
-                    @php $workTable->workTable ? $workTable = $workTable->workTable : $workTable ; @endphp
-                    <livewire:work-table :workTable=$workTable :masterShift=$masterShift>
+                      {{ Form::open(['route'=>'work_table.store','name'=>'workTable_form']) }}
+                      {{ Form::hidden('workDay',$workTable->workDay )}}
+                      {{ Form::hidden('userId',$workTable->userId) }}
+                      {{ Form::hidden('shiftTableId',$shiftTableId) }}
+                      {{ Form::hidden('nonOpe',$nonOpe) }}
 
+                      @php $workTable->workTable ? $workTable = $workTable->workTable : $workTable ; @endphp
+
+                      <livewire:work-table :workTable=$workTable :masterShift=$masterShift>
+
+
+                  </div>
 
                 </div>
 
@@ -94,18 +99,19 @@
                 <table class="table table-sm table-hover">
                   <thead>
                     <tr>
-                      <th class="projectName" style="width:60%;">案件名</th>
-                      <th class="workLoad" style="width:40%;">工数(分)</th>
+                      <th class="projectName" style="width:50%;">案件名</th>
+                      <th class="workLoad" style="width:20%;">工数(分)</th>
+                      <th class="memo" style="width:30%;">メモ</th>
                     </tr>
                   </thead>
                   <tbody>
 
                     @foreach($teamProjects as $teamProject)
-                      @php $nowId = $teamProject->project->client->clientId; @endphp
+                      @php $nowId = $teamProject->project->client->clientId; $teamProjectId = $teamProject->teamProjectId; @endphp
 
                       @if(is_null($prevId) || $teamProject->project->client->clientId !== $prevId)
                         <tr>
-                          <td class="table-dark h5" colspan="2">
+                          <td class="table-dark h5" colspan="3">
                             {{ $teamProject->project->client->clientName }}
                           </td>
                         </tr>
@@ -117,7 +123,12 @@
                         </td>
                         <td class="workLoad">
 
-                          <livewire:work-load :teamProject=$teamProject>
+                          <livewire:work-load :teamProjectId=$teamProjectId :nonOpe=$nonOpe :workLoads=$workLoads>
+
+                        </td>
+                        <td class="memo">
+
+                          <livewire:work-load-memo :teamProjectId=$teamProjectId :nonOpe=$nonOpe :workLoads=$workLoads>
 
                         </td>
                       </tr>
@@ -135,7 +146,7 @@
 
         <div class="card-footer d-flex justify-content-center align-middle">
 
-          {{ Form::button('編集を登録する',['class'=>'btn btn-primary','type'=>'submit']) }}
+          {{ Form::button('編集を登録する',['class'=>'btn btn-primary','type'=>'submit','id'=>'workSubmit']) }}
           {{ Form::close() }}
 
         </div>

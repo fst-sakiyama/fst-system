@@ -4,25 +4,24 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 
-class WorkLoad extends Component
+class WorkLoadMemo extends Component
 {
     public $teamProjectId;
     public $nonOpe;
-    public $workLoad;
+    public $memo;
 
     public function mount($teamProjectId,$nonOpe,$workLoads)
     {
         $this->nonOpe = $nonOpe;
         $this->teamProjectId = $teamProjectId;
         if(isset($workLoads[$teamProjectId])){
-          $this->workLoad = $workLoads[$teamProjectId][0];
+          $this->memo = $workLoads[$teamProjectId][1];
         }else{
-          $this->workLoad = '';
+          $this->memo = '';
         }
     }
-
     public function render()
     {
-        return view('livewire.work-load');
+        return view('livewire.work-load-memo');
     }
 }

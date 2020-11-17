@@ -2,14 +2,14 @@
 
 return array(
   'minutes' => array(
-    'null' => '-',
+    null => '-',
     0 => 0,
     15 => 15,
     30 => 30,
     45 => 45,
   ),
   'hour' => array(
-    'null' => '-',
+    null => '-',
     0 => 0,
     1 => 1,
     2 => 2,

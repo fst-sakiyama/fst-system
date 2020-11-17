@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\MasterShift;
+use App\Models\ShiftTable;
 
 class WorkTable extends Component
 {
@@ -70,28 +71,22 @@ class WorkTable extends Component
     public function mount($workTable,$masterShift)
     {
       $this->workDay = $workTable->workDay;
-      $this->shiftId = $workTable->shiftId;
-
-      if(isset($workTable->startHour) && isset($workTable->startMinute)){
-        $this->startHour = $workTable->startHour;
-        $this->startMinute = $workTable->startMinute;
-      } else {
-        $this->startHour = $workTable->startHour;
-        $this->startMinute = $workTable->startMinute;
+      if($workTable->shiftId){
+        $this->shiftId = $workTable->shiftId;
+      }else{
+        $this->shiftId = ShiftTable::find($workTable->shiftTableId)->shiftId;
       }
+
+        $this->startHour = $workTable->startHour;
+        $this->startMinute = $workTable->startMinute;
 
       $this->oldstartHour = $this->startHour;
       $this->oldstartMinute = $this->startMinute;
       $this->activestartHour = $this->startHour;
       $this->activestartMinute = $this->startMinute;
 
-      if(isset($workTable->endHour) && isset($workTable->endMinute)){
         $this->endHour = $workTable->endHour;
         $this->endMinute = $workTable->endMinute;
-      } else {
-        $this->endHour = $workTable->endHour;
-        $this->endMinute = $workTable->endMinute;
-      }
 
       $this->oldendHour = $this->endHour;
       $this->oldendMinute = $this->endMinute;
@@ -100,17 +95,11 @@ class WorkTable extends Component
 
       // dd($workTable->rest1StartHour.' '.$workTable->rest1StartMinute.' '.$workTable->rest1EndHour.' '.$workTable->rest1EndMinute);
 
-      if(isset($workTable->rest1StartHour) && isset($workTable->rest1StartMinute) && isset($workTable->rest1EndHour) && isset($workTable->rest1EndMinute)){
+
         $this->rest1StartHour = $workTable->rest1StartHour;
         $this->rest1StartMinute = $workTable->rest1StartMinute;
         $this->rest1EndHour = $workTable->rest1EndHour;
         $this->rest1EndMinute = $workTable->rest1EndMinute;
-      } else {
-        $this->rest1StartHour = $workTable->rest1StartHour;
-        $this->rest1StartMinute = $workTable->rest1StartMinute;
-        $this->rest1EndHour = $workTable->rest1EndHour;
-        $this->rest1EndMinute = $workTable->rest1EndMinute;
-      }
 
       $this->oldrest1StartHour = $this->rest1StartHour;
       $this->oldrest1StartMinute = $this->rest1StartMinute;
@@ -121,17 +110,10 @@ class WorkTable extends Component
       $this->activerest1EndHour = $this->rest1EndHour;
       $this->activerest1EndMinute = $this->rest1EndMinute;
 
-      if(isset($workTable->rest2StartHour) && isset($workTable->rest2StartMinute) && isset($workTable->rest2EndHour) && isset($workTable->rest2EndMinute)){
-        $this->rest2StartHour = $workTable->rest2StartHour;
-        $this->rest2StartMinute = $workTable->rest2StartMinute;
-        $this->rest2EndtHour = $workTable->rest2EndHour;
-        $this->rest2EndMinute = $workTable->rest2EndMinute;
-      } else {
         $this->rest2StartHour = $workTable->rest2StartHour;
         $this->rest2StartMinute = $workTable->rest2StartMinute;
         $this->rest2EndHour = $workTable->rest2EndHour;
         $this->rest2EndMinute = $workTable->rest2EndMinute;
-      }
 
       $this->oldrest2StartHour = $this->rest2StartHour;
       $this->oldrest2StartMinute = $this->rest2StartMinute;
@@ -142,17 +124,10 @@ class WorkTable extends Component
       $this->activerest2EndHour = $this->rest2EndHour;
       $this->activerest2EndMinute = $this->rest2EndMinute;
 
-      if(isset($workTable->rest3StartHour) && isset($workTable->rest3StartMinute) && isset($workTable->rest3EndHour) && isset($workTable->rest3EndMinute)){
         $this->rest3StartHour = $workTable->rest3StartHour;
         $this->rest3StartMinute = $workTable->rest3StartMinute;
         $this->rest3EndtHour = $workTable->rest3EndHour;
         $this->rest3EndMinute = $workTable->rest3EndMinute;
-      } else {
-        $this->rest3StartHour = $workTable->rest3StartHour;
-        $this->rest3StartMinute = $workTable->rest3StartMinute;
-        $this->rest3EndHour = $workTable->rest3EndHour;
-        $this->rest3EndMinute = $workTable->rest3EndMinute;
-      }
 
       $this->oldrest3StartHour = $this->rest3StartHour;
       $this->oldrest3StartMinute = $this->rest3StartMinute;

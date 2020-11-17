@@ -6,7 +6,7 @@
 
 @include('components.common.header')
 
-@include('components.work_table.work_table_index',['userId'=>$userId,'status'=>$status,'dates'=>$dates,'items'=>$items,'holidays'=>$holidays,'calendar'=>$calendar,'firstDay'=>$firstDay])
+@include('components.work_table.work_table_index',['userId'=>$userId,'status'=>$status,'dates'=>$dates,'items'=>$items,'holidays'=>$holidays,'calendar'=>$calendar,'firstDay'=>$firstDay,'nonOpe'=>$nonOpe])
 
 @section('pageJs')
 <script type="text/javascript" src="{{asset('js/add_jquery.js')}}"></script>

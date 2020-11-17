@@ -22,12 +22,12 @@ class ShiftTable extends Model
 
     public function employee()
     {
-      return $this->belongTo('App\User','id','userId');
+      return $this->belongsTo('App\User','id','userId');
     }
 
     public function shift()
     {
-      return $this->belongTo('App\Models\MasterShift','shiftId','shiftId');
+      return $this->belongsTo('App\Models\MasterShift','shiftId','shiftId');
     }
 
     public function workTable()

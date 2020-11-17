@@ -17,8 +17,8 @@ class CreateWorkLoadsTable extends Migration
           $table->bigIncrements('workLoadId');
           $table->bigInteger('shiftTableId')->unsigned();
           $table->integer('teamProjectId')->unsigned();
-          $table->integer('workLoad')->unsigned();
-          $table->string('memo');
+          $table->integer('workLoad')->unsigned()->nullable();
+          $table->string('memo')->nullable();
           $table->timestamps();
 
           $table->foreign('shiftTableId')

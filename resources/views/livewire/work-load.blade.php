@@ -1,3 +1,3 @@
 <div class="form-group-sm">
-  {{ Form::text('projectId['.$projectId.']',null,['class'=>'col-md-4 calcWorkMin form-control text-right','wire:model'=>'modelTest'])}}
+  {{ Form::text('teamProjectId[0]['.$teamProjectId.']',$workLoad,['class'=>'col-md-4 calcWorkMin form-control text-right','id'=>'workLoad'.$teamProjectId,$teamProjectId === $nonOpe ? 'disabled' : ''])}}
 </div>

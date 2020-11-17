@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Models\ShiftTable;
 use App\Models\WorkTable;
+use App\Models\WorkLoad;
 use App\Models\MasterShift;
 use App\Models\MasterProject;
 use App\Models\TeamProject;
@@ -53,6 +54,12 @@ class WorkTableController extends Controller
         // $month = 10;
         // $userId = 1;
 
+        // 無稼働時間のプロジェクトIDを取得する
+        $item = MasterProject::where('projectName','=','無稼働時間')->first()->projectId;
+        // ユーザの所属チームを取得する
+        $team = User::find($userId)->own_department;
+        // 無稼働時間のチームプロジェクトIDを取得する
+        $nonOpe = TeamProject::where('projectId','=',$item)->where('workingTeamId','=',$team)->first()->teamProjectId;
 
         $calendar = new Calendar;
         $dates = $calendar->getCalendarDates($year,$month);
@@ -75,7 +82,6 @@ class WorkTableController extends Controller
         $firstDay = Carbon::create($year,$month,1)->firstOfMonth();
         $lastDay = Carbon::create($year,$month,1)->lastOfMonth();
 
-
         $workTables = ShiftTable::where(function($query) use($userId,$firstDay,$lastDay){
                         $query->where('userId',$userId)
                               ->whereBetween('workDay',[$firstDay,$lastDay]);
@@ -95,9 +101,8 @@ class WorkTableController extends Controller
           $dt = new Carbon($workTable->workDay);
           $items += array($dt->timestamp=>$workTable);
         }
-         // dd($items);
 
-        return view('work_table.index',compact('userId','status','dates','items','holidays','calendar','firstDay'));
+        return view('work_table.index',compact('userId','status','dates','items','holidays','calendar','firstDay','nonOpe'));
     }
 
     /**
@@ -118,79 +123,69 @@ class WorkTableController extends Controller
      */
     public function store(Request $request)
     {
-        $items = $request->projectId;
-        foreach($items as $key => $value){
-          if($value){
-            dump($key.' '.$value);
-          }
-        }
-        dd($request);
-        if($request->goingWorkHour < $request->workTableRest3StartHour && $request->leavingWorkHour > $request->workTableRest3StartHour){
-
-        } else {
-          return redirect()->back()->with('message','勤務時間外に休憩しています')->withInput();
-        }
-
-        if(is_null($request->workTableRest1StartHour) || is_null($request->workTableRest1StartMinute) || is_null($request->workTableRest1EndHour) || is_null($request->workTableRest1EndMinute)){
-          $request->workTableRest1StartHour = null;
-          $request->workTableRest1StartMinute = null;
-          $request->workTableRest1EndHour= null;
-          $request->workTableRest1EndMinute = null;
-        }
-
-        if(is_null($request->workTableRest2StartHour) || is_null($request->workTableRest2StartMinute) || is_null($request->workTableRest2EndHour) || is_null($request->workTableRest2EndMinute)){
-          $request->workTableRest2StartHour = null;
-          $request->workTableRest2StartMinute = null;
-          $request->workTableRest2EndHour= null;
-          $request->workTableRest2EndMinute = null;
-        }
-
-        if(is_null($request->workTableRest3StartHour) || is_null($request->workTableRest3StartMinute) || is_null($request->workTableRest3EndHour) || is_null($request->workTableRest3EndMinute)){
-          $request->workTableRest3StartHour = null;
-          $request->workTableRest3StartMinute = null;
-          $request->workTableRest3EndHour= null;
-          $request->workTableRest3EndMinute = null;
-        }
-
         // dd($request);
 
         DB::beginTransaction();
 
         try{
+          // シフト表テーブルにシフトIDを登録
+          $item = ShiftTable::find($request->shiftTableId);
+          $item->shiftId = $request->shiftId;
+          $item->save();
+
+          // 実労働テーブルに実労働時間を記録
           WorkTable::updateOrcreate(
             [
-              'workTableWorkDay' => $request->workDay,
-              'workTableUserId' => $request->userId
+              'shiftTableId' => $request->shiftTableId,
             ],
             [
-              'workTableWorkDay' => $request->workDay,
-              'workTableUserId' => $request->userId,
-              'goingWorkHour' => $request->goingWorkHour,
-              'goingWorkMinute' => $request->goingWorkMinute,
-              'leavingWorkHour' => $request->leavingWorkHour,
-              'leavingWorkMinute' => $request->leavingWorkMinute,
-              'workTableRest1StartHour' => $request->workTableRest1StartHour,
-              'workTableRest1StartMinute' => $request->workTableRest1StartMinute,
-              'workTableRest1EndHour' => $request->workTableRest1EndHour,
-              'workTableRest1EndMinute' => $request->workTableRest1EndMinute,
-              'workTableRest2StartHour' => $request->workTableRest2StartHour,
-              'workTableRest2StartMinute' => $request->workTableRest2StartMinute,
-              'workTableRest2EndHour' => $request->workTableRest2EndHour,
-              'workTableRest2EndMinute' => $request->workTableRest2EndMinute,
-              'workTableRest3StartHour' => $request->workTableRest3StartHour,
-              'workTableRest3StartMinute' => $request->workTableRest3StartMinute,
-              'workTableRest3EndHour' => $request->workTableRest3EndHour,
-              'workTableRest3EndMinute' => $request->workTableRest3EndMinute,
+              'startHour' => $request->startHour,
+              'startMinute' => $request->startMinute,
+              'endHour' => $request->endHour,
+              'endMinute' => $request->endMinute,
+              'rest1StartHour' => $request->rest1StartHour,
+              'rest1StartMinute' => $request->rest1StartMinute,
+              'rest1EndHour' => $request->rest1EndHour,
+              'rest1EndMinute' => $request->rest1EndMinute,
+              'rest2StartHour' => $request->rest2StartHour,
+              'rest2StartMinute' => $request->rest2StartMinute,
+              'rest2EndHour' => $request->rest2EndHour,
+              'rest2EndMinute' => $request->rest2EndMinute,
+              'rest3StartHour' => $request->rest3StartHour,
+              'rest3StartMinute' => $request->rest3StartMinute,
+              'rest3EndHour' => $request->rest3EndHour,
+              'rest3EndMinute' => $request->rest3EndMinute,
               'lateEarlyLeave' => $request->lateEarlyLeave,
               'specialReason' => $request->specialReason,
-              'remarks' => $request->remarks
+              'remarks' => $request->remarks,
             ]
           );
 
-          $item = ShiftTable::whereDate('workDay','=',$request->workDay)
-                    ->where('userId','=',$request->userId)->first();
-          $item->shiftId = $request->shiftId;
-          $item->save();
+          // 工数表から現在登録済みのデータがあれば削除しておく
+          WorkLoad::where('shiftTableId','=',$request->shiftTableId)->delete();
+
+          // 無稼働時間があれば登録
+          if($request->subCalcWorkMin>0){
+            $item = new WorkLoad();
+            $item->shiftTableId = $request->shiftTableId;
+            $item->teamProjectId = $request->nonOpe;
+            $item->workLoad = $request->subCalcWorkMin;
+            $item->save();
+          }
+
+          // 工数を登録
+          $items = $request->teamProjectId;
+          foreach($items[0] as $key => $value0){
+            $value1 = $items[1][$key];
+            if($value0 || $value1){
+              $item = new WorkLoad();
+              $item->shiftTableId = $request->shiftTableId;
+              $item->teamProjectId = $key;
+              $item->workLoad = $value0;
+              $item->memo = $value1;
+              $item->save();
+            }
+          }
 
           DB::commit();
 
@@ -231,6 +226,15 @@ class WorkTableController extends Controller
         $editDate = Carbon::createFromTimestamp($request->d);
         $subEditDate = $editDate->copy();
         $userId = $request->uid;
+        $shiftTableId = $request->sid;
+
+        // 無稼働時間のプロジェクトIDを取得する
+        $item = MasterProject::where('projectName','=','無稼働時間')->first()->projectId;
+        // ユーザの所属チームを取得する
+        $team = User::find($userId)->own_department;
+        // 無稼働時間のチームプロジェクトIDを取得する
+        $nonOpe = TeamProject::where('projectId','=',$item)->where('workingTeamId','=',$team)->first()->teamProjectId;
+
         // for($i=0;$i<5;$i++){
         //   dump($subEditDate->subDay());
         // }
@@ -254,8 +258,15 @@ class WorkTableController extends Controller
         $teamId = User::find($userId)->own_department;
         $teamProjects = TeamProject::where('workingTeamId',$teamId)->orderBy('projectId')->get();
 
+        $workLoads = array();
+        $tempWorkLoads = WorkLoad::where('shiftTableId',$shiftTableId)->get();
+        foreach($tempWorkLoads as $temp){
+          $id = $temp->teamProjectId;
+          $workLoads[$id][0] = $temp->workLoad;
+          $workLoads[$id][1] = $temp->memo;
+        }
 
-        return view('work_table.edit',compact('userId','masterShifts','masterShift','workTable','teamProjects'));
+        return view('work_table.edit',compact('nonOpe','userId','shiftTableId','masterShifts','masterShift','workTable','teamProjects','workLoads'));
     }
 
     /**
