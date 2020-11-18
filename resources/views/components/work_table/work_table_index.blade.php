@@ -100,10 +100,17 @@
             @endif
             >
 
-              @php $item = $items[$date->timestamp]; $item->workTable ? $item=$item->workTable : $item; @endphp
-              @php $wl = App\Models\WorkLoad::where('shiftTableId',$item->shiftTableId)->where('teamProjectId',$nonOpe)->first(); @endphp
+              @php
+                $item = $items[$date->timestamp]; $item->workTable ? $item=$item->workTable : $item;
+                $wl = App\Models\WorkLoad::where('shiftTableId',$item->shiftTableId);
+                $cnt = $wl->count();
+                $wl = $wl->where('teamProjectId',$nonOpe)->first();
+                $sh = create_time(init_value($item->startHour),init_value($item->startMinute));
+                $eh = create_time(init_value($item->endHour),init_value($item->endMinute));
+              @endphp
+
               <td class="text-center">
-                <a href="{{ route('work_table.doEdit',['d'=>$date->timestamp,'uid'=>$userId,'sid'=>$item->shiftTableId]) }}" class="btn btn-sm py-0  @if($wl){{'btn-danger'}}@else{{'btn-primary'}}@endif" style="font-size:12px;"><i class="fa fa-edit" aria-hidden="true"></i> 編集</a>
+                <a href="{{ route('work_table.doEdit',['d'=>$date->timestamp,'uid'=>$userId,'sid'=>$item->shiftTableId]) }}" class="btn btn-sm py-0  @if($wl){{'btn-danger'}}@elseif(!$wl) @if($sh == '-' && $eh == '-'){{'btn-primary'}}@elseif($cnt>0){{'btn-primary'}}@else{{'btn-danger'}}@endif  @endif" style="font-size:12px;"><i class="fa fa-edit" aria-hidden="true"></i> 編集</a>
               </td>
 
               <td class="text-center">
@@ -113,11 +120,11 @@
               <td class="text-center">{{ $item->shiftName ? $item->shiftName : $item->shift->shift->shiftName }}</td>
 
               <td class="text-center">
-                {{ create_time(init_value($item->startHour),init_value($item->startMinute)) }}
+                {{ $sh }}
               </td>
 
               <td class="text-center">
-                {{ create_time(init_value($item->endHour),init_value($item->endMinute)) }}
+                {{ $eh }}
               </td>
 
               <td class="text-center">

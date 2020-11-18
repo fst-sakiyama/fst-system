@@ -41,6 +41,6 @@ class CreateWorkLoadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('work_loads');
+        Schema::connection('mysql_two')->dropIfExists('work_loads');
     }
 }

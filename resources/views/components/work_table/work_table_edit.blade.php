@@ -100,7 +100,8 @@
                   <thead>
                     <tr>
                       <th class="projectName" style="width:50%;">案件名</th>
-                      <th class="workLoad" style="width:20%;">工数(分)</th>
+                      <th class="beforWorkLoad" style="width:8%;">前勤務</th>
+                      <th class="workLoad" style="width:12%;">工数(分)</th>
                       <th class="memo" style="width:30%;">メモ</th>
                     </tr>
                   </thead>
@@ -110,25 +111,38 @@
                       @php $nowId = $teamProject->project->client->clientId; $teamProjectId = $teamProject->teamProjectId; @endphp
 
                       @if(is_null($prevId) || $teamProject->project->client->clientId !== $prevId)
-                        <tr>
-                          <td class="table-dark h5" colspan="3">
+                        <tr class="table-primary h5" data-link={{$nowId}} style="cursor:pointer;">
+                          <td class="projectName">
                             {{ $teamProject->project->client->clientName }}
+                          </td>
+                          <td class="beforWorkLoad">
+                            {{ Form::text('tempbf',null,['id'=>'before'.$nowId,'class'=>'text-right form-control input-sm','disabled']) }}
+                          </td>
+                          <td class="workLoad">
+                            {{ Form::text('tempwl',null,['id'=>'workLoadSum'.$nowId,'class'=>'text-right form-control input-sm','disabled']) }}
+                          </td>
+                          <td id='workLoadMemo{{$nowId}}' class="align-middle small pl-3 memo">
                           </td>
                         </tr>
                       @endif
 
-                      <tr class="">
+                      <tr class="slideRow{{$nowId}} d-none">
                         <td class="projectName">
                           {{ $teamProject->project->projectName }}
                         </td>
-                        <td class="workLoad">
+                        <td class="beforWorkLoad">
 
-                          <livewire:work-load :teamProjectId=$teamProjectId :nonOpe=$nonOpe :workLoads=$workLoads>
+                          <livewire:before-work-load :teamProjectId=$teamProjectId :before=$before :nowId=$nowId>
+
+                        </td>
+                        <td class="workLoad text-right">
+
+                          <livewire:work-load :teamProjectId=$teamProjectId :nonOpe=$nonOpe :workLoads=$workLoads :nowId=$nowId>
 
                         </td>
                         <td class="memo">
 
-                          <livewire:work-load-memo :teamProjectId=$teamProjectId :nonOpe=$nonOpe :workLoads=$workLoads>
+                          <livewire:work-load-memo :teamProjectId=$teamProjectId :nonOpe=$nonOpe :workLoads=$workLoads :nowId=$nowId>
 
                         </td>
                       </tr>

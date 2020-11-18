@@ -9,8 +9,9 @@ class WorkLoadMemo extends Component
     public $teamProjectId;
     public $nonOpe;
     public $memo;
+    public $nowId;
 
-    public function mount($teamProjectId,$nonOpe,$workLoads)
+    public function mount($teamProjectId,$nonOpe,$workLoads,$nowId)
     {
         $this->nonOpe = $nonOpe;
         $this->teamProjectId = $teamProjectId;
@@ -19,6 +20,7 @@ class WorkLoadMemo extends Component
         }else{
           $this->memo = '';
         }
+        $this->nowID = $nowId;
     }
     public function render()
     {

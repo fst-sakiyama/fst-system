@@ -116,3 +116,84 @@ function restCheck(val1,val2,val3,val4,val5,val6){
     return '休憩時刻の入力が不完全です。'
   }
 };
+
+
+
+$(".auto-resize").attr("rows", 1).on("input", e => {
+  $(e.target).height(0).innerHeight(e.target.scrollHeight);
+});
+
+
+
+$(document).ready(function(){
+  $('.auto-resize').each(function(){
+    var str = $(this).val();
+
+    if (str) {
+      var increase = 0;
+
+      // 改行毎に文章を抽出
+      var line = str.match(/.*\n/g);
+      if (line) {
+        $.each( line, function(i, val){
+          // 改行毎に行追加
+          increase += 1;
+
+          // 1行あたり30文字を超えていたら行追加
+          val_byte = getByte(val);
+          if (val_byte > 26) {
+            increase += Math.round(val_byte / 26);
+          }
+        });
+      } else {
+        // 1行あたり30文字を超えていたら行追加
+        val_byte = getByte(str);
+        if (val_byte > 26) {
+          increase += Math.round(val_byte / 26);
+        }
+      }
+
+      $(this).attr('rows', 1 + increase);
+    } else {
+      // 空の場合は初期値をセット
+      $(this).attr('rows', 1);
+    }
+
+  });
+
+  /**
+   * バイト数計算
+   * @param {string} val
+   * @return {int}
+   */
+  function getByte(val)
+  {
+    var val_byte = 0;
+    for (var i = 0; i < val.length; i++){
+      if (escape(val.charAt(i)).length <= 3) {
+        // 半角は1
+        val_byte += 1;
+      } else {
+        // 全角は2
+        val_byte += 2;
+      }
+    }
+
+    return val_byte;
+  }
+});
+
+
+
+$('tr[data-link]').addClass('clickable')
+  .click(function(e){
+    var val=$(this).data('link');
+    var str=$('.slideRow'+val).attr('class');
+    if($('.slideRow'+val).hasClass('d-none')){
+      $('.slideRow'+val).removeClass('d-none');
+      $('.slideRow'+val).addClass('d-table-row');
+    } else {
+      $('.slideRow'+val).removeClass('d-table-row');
+      $('.slideRow'+val).addClass('d-none');
+    }
+});

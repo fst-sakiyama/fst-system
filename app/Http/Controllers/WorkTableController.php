@@ -54,13 +54,6 @@ class WorkTableController extends Controller
         // $month = 10;
         // $userId = 1;
 
-        // 無稼働時間のプロジェクトIDを取得する
-        $item = MasterProject::where('projectName','=','無稼働時間')->first()->projectId;
-        // ユーザの所属チームを取得する
-        $team = User::find($userId)->own_department;
-        // 無稼働時間のチームプロジェクトIDを取得する
-        $nonOpe = TeamProject::where('projectId','=',$item)->where('workingTeamId','=',$team)->first()->teamProjectId;
-
         $calendar = new Calendar;
         $dates = $calendar->getCalendarDates($year,$month);
         // $dates = $calendar->getCalendarDates($year,9);
@@ -90,10 +83,11 @@ class WorkTableController extends Controller
 
         $items = [];
         $status = '';
+        $nonOpe = '';
 
         if(empty($workTables[0])){
           $status = "シフト表が作成されておりません。\n管理者にご確認ください。";
-          return view('work_table.index',compact('userId','status','dates','items','holidays','calendar','firstDay'));
+          return view('work_table.index',compact('userId','status','dates','items','holidays','calendar','firstDay','nonOpe'));
         }
 
         foreach($workTables as $workTable)
@@ -101,6 +95,13 @@ class WorkTableController extends Controller
           $dt = new Carbon($workTable->workDay);
           $items += array($dt->timestamp=>$workTable);
         }
+
+        // 無稼働時間のプロジェクトIDを取得する
+        $item = MasterProject::where('projectName','無稼働時間')->first()->projectId;
+        // ユーザの所属チームを取得する
+        $team = User::find($userId)->own_department;
+        // 無稼働時間のチームプロジェクトIDを取得する
+        $nonOpe = TeamProject::where('projectId',$item)->where('workingTeamId',$team)->first()->teamProjectId;
 
         return view('work_table.index',compact('userId','status','dates','items','holidays','calendar','firstDay','nonOpe'));
     }
@@ -123,8 +124,6 @@ class WorkTableController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
-
         DB::beginTransaction();
 
         try{
@@ -266,7 +265,24 @@ class WorkTableController extends Controller
           $workLoads[$id][1] = $temp->memo;
         }
 
-        return view('work_table.edit',compact('nonOpe','userId','shiftTableId','masterShifts','masterShift','workTable','teamProjects','workLoads'));
+        $before=array();
+        for($i=0;$i<5;$i++){
+          $sid = ShiftTable::where(function($query) use($subEditDate,$userId){
+                              $query->whereDate('workDay',$subEditDate->subDay()->format('Y-m-d'))
+                                    ->where('userId',$userId);
+                            })->first()->shiftTableId;
+          $temp = WorkLoad::where('shiftTableId',$sid)->whereNotNull('workLoad');
+          if($temp->count()){
+            $results = $temp->get();
+            foreach($results as $result){
+              $id = $result->teamProjectId;
+              $before[$id] = $result->workLoad;
+            }
+            break;
+          }
+        }
+
+        return view('work_table.edit',compact('nonOpe','userId','shiftTableId','masterShifts','masterShift','workTable','teamProjects','workLoads','before'));
     }
 
     /**
