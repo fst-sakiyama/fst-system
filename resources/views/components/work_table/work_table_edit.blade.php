@@ -100,7 +100,7 @@
                   <thead>
                     <tr>
                       <th class="projectName" style="width:50%;">案件名</th>
-                      <th class="beforWorkLoad" style="width:8%;">前勤務</th>
+                      <th class="beforWorkLoad text-center" style="width:8%;">{{ isset($before[0]) ? $before[0]->format('m/d') : '-' }}</th>
                       <th class="workLoad" style="width:12%;">工数(分)</th>
                       <th class="memo" style="width:30%;">メモ</th>
                     </tr>
@@ -116,7 +116,9 @@
                             {{ $teamProject->project->client->clientName }}
                           </td>
                           <td class="beforWorkLoad">
+                            @if(isset($before[0]))
                             {{ Form::text('tempbf',null,['id'=>'before'.$nowId,'class'=>'text-right form-control input-sm','disabled']) }}
+                            @endif
                           </td>
                           <td class="workLoad">
                             {{ Form::text('tempwl',null,['id'=>'workLoadSum'.$nowId,'class'=>'text-right form-control input-sm','disabled']) }}
@@ -132,7 +134,9 @@
                         </td>
                         <td class="beforWorkLoad">
 
+                          @if(isset($before[0]))
                           <livewire:before-work-load :teamProjectId=$teamProjectId :before=$before :nowId=$nowId>
+                          @endif
 
                         </td>
                         <td class="workLoad text-right">

@@ -54,6 +54,11 @@ Route::group(['middleware' => ['auth', 'can:user-higher']], function () {
         'index','store'
     ]);
 
+    // 工数表関連
+    Route::resource('/work_load',WorkLoadController::class)->only([
+        'index'
+    ]);
+
     // ファイル表示関連
     Route::get('/file_show', 'FileShowController@show')->name('file_show.show');
     Route::get('/file_addShow', 'FileShowController@addShow')->name('file_addShow.addShow');

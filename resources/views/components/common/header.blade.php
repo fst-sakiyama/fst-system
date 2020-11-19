@@ -29,6 +29,7 @@
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="{{ route('work_table.index') }}">勤務表</a>
                   <a class="dropdown-item" href="{{ route('shift_table.index') }}">シフト表</a>
+                  <a class="dropdown-item" href="{{ route('work_load.index') }}">工数表</a>
                 @can('ope-only')
                   <a class="dropdown-item" href="{{asset('/take_over?dispDate=')}}{{$dispDate->timestamp}}">監視引継ぎページ</a>
                 @endcan

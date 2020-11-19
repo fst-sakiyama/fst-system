@@ -71,7 +71,7 @@
                     </div>
 
                     <div id='pr_textarea{{$masterProject->projectId}}' class="form-group text-center d-none mb-1 ml-1">
-                      {{ Form::textarea('project_detail',$masterProject->project_detail,['class'=>'form-control','style'=>'resize:none;']) }}
+                      {{ Form::textarea('project_detail',$masterProject->project_detail,['class'=>'form-control','style'=>'resize:none;','id'=>'pr_txt'.$masterProject->projectId]) }}
                     </div>
 
                     <div id='pr_messageFolder{{$masterProject->projectId}}' class="row my-1 d-none">
@@ -209,7 +209,7 @@
                     </div>
 
                     <div id='textarea{{$teamProject->teamProjectId}}' class="form-group text-center d-none mb-1 ml-1">
-                      {{ Form::textarea('project_detail',$teamProject->project_detail,['class'=>'form-control','style'=>'resize:none;']) }}
+                      {{ Form::textarea('project_detail',$teamProject->project_detail,['class'=>'form-control','style'=>'resize:none;','id'=>'txt'.$teamProject->teamProjectId]) }}
                     </div>
 
                     <div id='messageFolder{{$teamProject->teamProjectId}}' class="row my-1 d-none">

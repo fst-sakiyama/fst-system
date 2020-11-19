@@ -15,11 +15,11 @@ class WorkLoad extends Model
 
     public function shiftTable()
     {
-      return $this->belongTo('App\Models\ShiftTable','shiftTableId','shiftTableId');
+      return $this->belongsTo('App\Models\ShiftTable','shiftTableId','shiftTableId');
     }
 
     public function teamProject()
     {
-      return $this->belongTo('App\Models\TeamProject','teamProjectId','teamProjectId');
+      return $this->belongsTo('App\Models\TeamProject','teamProjectId','teamProjectId');
     }
 }

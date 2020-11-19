@@ -255,7 +255,9 @@ class WorkTableController extends Controller
         $masterShift = MasterShift::select('shiftId','shiftName')->get()->pluck('shiftName','shiftId');
 
         $teamId = User::find($userId)->own_department;
-        $teamProjects = TeamProject::where('workingTeamId',$teamId)->orderBy('projectId')->get();
+        $teamProjects = TeamProject::where('workingTeamId',$teamId)
+                        ->join('master_projects','team_projects.projectId','=','master_projects.projectId')
+                        ->orderBy('master_projects.clientId')->get();
 
         $workLoads = array();
         $tempWorkLoads = WorkLoad::where('shiftTableId',$shiftTableId)->get();
@@ -270,14 +272,20 @@ class WorkTableController extends Controller
           $sid = ShiftTable::where(function($query) use($subEditDate,$userId){
                               $query->whereDate('workDay',$subEditDate->subDay()->format('Y-m-d'))
                                     ->where('userId',$userId);
-                            })->first()->shiftTableId;
-          $temp = WorkLoad::where('shiftTableId',$sid)->whereNotNull('workLoad');
-          if($temp->count()){
-            $results = $temp->get();
-            foreach($results as $result){
-              $id = $result->teamProjectId;
-              $before[$id] = $result->workLoad;
+                            })->first();
+          if($sid){ // 勤務表が作成されていない
+            $sid = $sid->shiftTableId;
+            $temp = WorkLoad::where('shiftTableId',$sid)->whereNotNull('workLoad');
+            if($temp->count()){
+              $results = $temp->get();
+              foreach($results as $result){
+                $id = $result->teamProjectId;
+                $before[$id] = $result->workLoad;
+              }
+              $before[0] = $result->shiftTable->workDay;
+              break;
             }
+          }else{
             break;
           }
         }
