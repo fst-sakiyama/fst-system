@@ -86,7 +86,7 @@ class WorkTableController extends Controller
         $nonOpe = '';
 
         if(empty($workTables[0])){
-          $status = "シフト表が作成されておりません。\n管理者にご確認ください。";
+          $status = "シフト表が作成されていないため、勤務表は存在しません。\n管理者にご確認ください。";
           return view('work_table.index',compact('userId','status','dates','items','holidays','calendar','firstDay','nonOpe'));
         }
 

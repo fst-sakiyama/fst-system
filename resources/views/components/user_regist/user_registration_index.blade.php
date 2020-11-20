@@ -43,7 +43,10 @@
                 @if($item->role != '1')
 
                 <tr id="{{$item->id}}">
-                  <td><a href="{{ route('work_table.index',['uid'=>$item->id]) }}"><div class="btn btn-sm btn-primary py-0">勤務表</div></a></td>
+                  <td>
+                      <a href="{{ route('work_table.index',['uid'=>$item->id]) }}"><div class="btn btn-sm btn-primary py-0">勤務表</div></a><br>
+                      <a href="{{ route('work_load.index',['uid'=>$item->id]) }}"><div class="btn btn-sm btn-secondary py-0 mt-1">工数表</div></a>
+                  </td>
                   <td>{{ $item->name }}</td>
                   <td>{{ $item->email }}</td>
                   <td>{{ $item->master_role->roleName }}</td>

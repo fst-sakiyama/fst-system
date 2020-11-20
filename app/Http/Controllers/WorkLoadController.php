@@ -42,9 +42,9 @@ class WorkLoadController extends Controller
         }
 
         // テスト用年月
-        $year = 2020;
-        $month = 11;
-        $userId = 4;
+        // $year = 2020;
+        // $month = 11;
+        // $userId = 4;
 
         $calendar = new Calendar;
         $dates = $calendar->getCalendarDates($year,$month);
@@ -68,6 +68,21 @@ class WorkLoadController extends Controller
         $lastDay = Carbon::create($year,$month,1)->lastOfMonth();
 
         $workLoads = array();
+        $workLoads = array();
+        $tempId = '';
+        $teamProjects = array();
+        $status = '';
+
+        $workTables = ShiftTable::where(function($query) use($userId,$firstDay,$lastDay){
+                        $query->where('userId',$userId)
+                              ->whereBetween('workDay',[$firstDay,$lastDay]);
+                        }) ->get();
+
+
+        if(empty($workTables[0])){
+            $status = "シフト表が作成されていないため、工数表は存在しません。\n管理者にご確認ください。";
+            return view('work_load.index',compact('status','dates','holidays','calendar','firstDay','workLoads','teamProjects','userId'));
+        }
 
         for($i=$firstDay->copy();$i<=$lastDay;$i->addDay()){
             $sid = ShiftTable::where(function($query) use($i,$userId){
@@ -82,7 +97,8 @@ class WorkLoadController extends Controller
                     $results = $temp->get();
                     foreach($results as $result){
                       $id = $result->teamProjectId;
-                      $workLoads[$t][$id] = $result->workLoad;
+                      $workLoads[$t][$id][0] = $result->workLoad;
+                      $workLoads[$t][$id][1] = $result->memo;
                     }
                 }
             }
@@ -93,7 +109,7 @@ class WorkLoadController extends Controller
                         ->join('master_projects','team_projects.projectId','=','master_projects.projectId')
                         ->orderBy('master_projects.clientId')->get();
 
-        return view('work_load.index',compact('dates','holidays','calendar','firstDay','workLoads','teamProjects'));
+        return view('work_load.index',compact('status','dates','holidays','calendar','firstDay','workLoads','teamProjects','userId'));
     }
 
     /**
