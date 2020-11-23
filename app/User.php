@@ -55,6 +55,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\ShiftTable','id','userId');
     }
 
+    public function viewShiftTables()
+    {
+        return $this->hasMany('App\Models\ViewWorkTable','id','userId');
+    }
+
     public function created_by()
     {
         return $this->belongsTo('App\User', 'created_by');

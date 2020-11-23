@@ -18,6 +18,11 @@ class WorkLoad extends Model
       return $this->belongsTo('App\Models\ShiftTable','shiftTableId','shiftTableId');
     }
 
+    public function viewShiftTable()
+    {
+      return $this->belongsTo('App\Models\ViewWorkTable','shiftTableId','shiftTableId');
+    }
+
     public function teamProject()
     {
       return $this->belongsTo('App\Models\TeamProject','teamProjectId','teamProjectId');

@@ -27,6 +27,10 @@ class MasterProject extends Model
   {
     return $this->hasMany('App\Models\TeamProject','projectId','projectId');
   }
+  public function filePosts()
+  {
+    return $this->hasMany('App\Models\ProjectsFilePost','projectId','projectId');
+  }
 
   public function created_by()
   {
