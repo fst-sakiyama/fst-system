@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use App\Classes\Calendar;
 use App\Classes\HolidaySetting;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class dummyController extends Controller
 {
@@ -24,6 +25,27 @@ class dummyController extends Controller
      */
     public function index($year,$month)
     {
+        // $tableName = 'view_work_table2';
+        // $columns = Schema::connection('mysql_two')->getColumnListing($tableName);
+        //
+        // $columnTypes = [];
+        // foreach ($columns as $column) {
+        //     // カラムタイプを取得
+        //     $columnTypes[$column] = Schema::connection('mysql_two')->getConnection()->getDoctrineColumn($tableName, $column)->toArray()['type'];
+        //     dump($columnTypes[$column]);
+        // }
+
+        $res1 = DB::connection('mysql_two')->table('view_work_table1');
+        $res = DB::connection('mysql_two')->table('view_work_table2')->unionAll($res1)->get();
+        dd($res);
+        $res = ShiftTable::has('workTable')
+                ->join('work_tables AS t1','shift_tables.shiftTableId','=','t1.shiftTableId')
+                ->select('shift_tables.*','t1.startHour','t1.startMinute','t1.endHour','t1.endMinute','t1.rest1StartHour','t1.rest1StartMinute','t1.rest1EndHour','t1.rest1EndMinute','t1.rest2StartHour','t1.rest2StartMinute','t1.rest2EndHour','t1.rest2EndMinute','t1.rest3StartHour','t1.rest3StartMinute','t1.rest3EndHour','t1.rest3EndMinute','t1.lateEarlyLeave','t1.specialReason','t1.remarks');
+        $sql = ShiftTable::doesntHave('workTable')
+                ->join('master_shifts AS t2','shift_tables.shiftId','=','t2.shiftId')
+                ->select('shift_tables.*','t2.startHour','t2.startMinute','t2.endHour','t2.endMinute','t2.rest1StartHour','t2.rest1StartMinute','t2.rest1EndHour','t2.rest1EndMinute','t2.rest2StartHour','t2.rest2StartMinute','t2.rest2EndHour','t2.rest2EndMinute','t2.rest3StartHour','t2.rest3StartMinute','t2.rest3EndHour','t2.rest3EndMinute',DB::raw('null AS `lateEarlyLeave`'),DB::raw('null AS `specialReason`'),DB::raw('null AS `remarks`'))
+                ->UnionAll($res)->toSql();
+        dd($sql);
         $tests = ViewWorkTable::whereBetween('workDay',['2020-10-01','2020-10-02'])->get();
         foreach($tests as $test){
           dump($test->workLoads);
