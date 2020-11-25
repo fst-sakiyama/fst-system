@@ -8,7 +8,8 @@ use App\Models\TakeoverTheOperation;
 use App\Models\ShiftTable;
 use App\Models\MasterShift;
 use App\Models\ViewShiftWorkLoad;
-use App\Models\ViewWorkTable;
+use App\Models\ViewWorkTable1;
+use App\Models\ViewWorkTable2;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Classes\Calendar;
@@ -34,6 +35,11 @@ class dummyController extends Controller
         //     $columnTypes[$column] = Schema::connection('mysql_two')->getConnection()->getDoctrineColumn($tableName, $column)->toArray()['type'];
         //     dump($columnTypes[$column]);
         // }
+        //予定
+        $res = ViewWorkTable1::whereNull('lateEarlyLeave')
+                ->has('viewShiftWorkLoad')
+                ->get();
+        dd($res);
 
         $res1 = DB::connection('mysql_two')->table('view_work_table1');
         $res = DB::connection('mysql_two')->table('view_work_table2')->unionAll($res1)->get();

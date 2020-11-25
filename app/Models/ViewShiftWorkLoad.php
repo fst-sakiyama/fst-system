@@ -13,8 +13,13 @@ class ViewShiftWorkLoad extends Model
     protected $primaryKey = 'shiftId';
     protected $guarded = array('shiftId');
 
-    public function shiftLoad()
+    public function viewWorkTable1()
     {
-      return $this->belongsTo('App\Models\MasterShift','shiftId','shiftId');
+      return $this->belongsTo('App\Models\ViewWorkTable1','shiftId','shiftId');
+    }
+
+    public function viewWorkTable2()
+    {
+      return $this->belongsTo('App\Models\ViewWorkTable2','shiftId','shiftId');
     }
 }
