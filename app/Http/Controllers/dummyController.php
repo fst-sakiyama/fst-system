@@ -27,20 +27,31 @@ class dummyController extends Controller
     public function index($year,$month)
     {
         // $tableName = 'view_work_table2';
-        // $columns = Schema::connection('mysql_two')->getColumnListing($tableName);
-        //
+
         // $columnTypes = [];
         // foreach ($columns as $column) {
         //     // カラムタイプを取得
-        //     $columnTypes[$column] = Schema::connection('mysql_two')->getConnection()->getDoctrineColumn($tableName, $column)->toArray()['type'];
-        //     dump($columnTypes[$column]);
+        //     // $columnTypes[$column] = Schema::connection('mysql_two')->getConnection()->getDoctrineColumn($tableName, $column)->toArray()['type'];
+        //     // dump($columnTypes[$column]);
         // }
-        //予定
-        $res = ViewWorkTable1::whereNull('lateEarlyLeave')
-                ->has('viewShiftWorkLoad')
-                ->get();
-        dd($res);
 
+        //予定工数と実工数▼▼▼▼▼▼▼▼▼▼
+            // $res1 = ViewWorkTable1::whereNull('lateEarlyLeave')
+            //         ->join('view_shift_work_loads','view_work_table1.shiftId','=','view_shift_work_loads.shiftId')
+            //         ->join('view_table_work_loads','view_work_table1.shiftTableId','=','view_table_work_loads.shiftTableId')
+            //         ->select(['view_work_table1.userId AS userId','view_shift_work_loads.workLoad AS planWorkLoad','view_table_work_loads.workLoad AS realWorkLoad']);
+            // $res2 = ViewWorkTable1::whereNotNull('lateEarlyLeave')
+            //         ->join('view_table_work_loads','view_work_table1.shiftTableId','=','view_table_work_loads.shiftTableId')
+            //         ->select(['view_work_table1.userId AS userId','view_table_work_loads.workLoad AS planWorkLoad','view_table_work_loads.workLoad AS realWorkLoad']);
+            // $sql = ViewWorkTable2::join('view_shift_work_loads','view_work_table2.shiftId','=','view_shift_work_loads.shiftId')
+            //         ->select(['view_work_table2.userId AS userId','view_shift_work_loads.workLoad AS planWorkLoad','view_shift_work_loads.workLoad AS realWorkLoad'])
+            //         ->unionAll($res1)->unionAll($res2)->toSql();
+            // $res = DB::connection('mysql_two')->table(DB::raw('('.$sql.') AS t'))
+            //         ->select('t.userId',DB::raw('sum(t.planWorkLoad) AS planWorkLoad,sum(t.realWorkLoad) AS realWorkLoad'))
+            //         ->groupBy('t.userId')
+            //         ->get();
+            // dd($res);
+        // ここまで▲▲▲▲▲▲▲▲▲▲
         $res1 = DB::connection('mysql_two')->table('view_work_table1');
         $res = DB::connection('mysql_two')->table('view_work_table2')->unionAll($res1)->get();
         dd($res);
