@@ -42,6 +42,7 @@
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{{ route('user.index') }}">ユーザー一覧</a>
                   <a class="dropdown-item" href="{{ route('master_shifts.index') }}">シフト一覧</a>
+                  <a class="dropdown-item" href="{{ route('paid_leave.index') }}">有給取得確認</a>
                 @endcan
                 @can('system-only')
                   <div class="dropdown-divider"></div>

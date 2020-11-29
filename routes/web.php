@@ -184,7 +184,9 @@ Route::group(['middleware' => ['auth', 'can:system-only']], function () {
     // ----- 現在準備中のもの -----
     Route::post('/user_regist/order_of_row','UserRegistrationController@order_of_row')->name('user.order_of_row');
 
-
+    Route::resource('/paid_leave',PaidLeaveController::class)->only([
+        'index'
+    ]);
 
 
     // --------------------------

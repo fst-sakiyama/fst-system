@@ -22,7 +22,7 @@ class ShiftTable extends Model
 
     public function employee()
     {
-      return $this->belongsTo('App\User','id','userId');
+      return $this->belongsTo('App\User','userId');
     }
 
     public function shift()

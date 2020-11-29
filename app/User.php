@@ -55,6 +55,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\ShiftTable','id','userId');
     }
 
+    public function paidLeave()
+    {
+        return $this->hasOne('App\Models\PaidLeave','id','userId');
+    }
+
     public function viewShiftTables()
     {
         return $this->hasMany('App\Models\ViewWorkTable','id','userId');

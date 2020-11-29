@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Models\PaidLeave;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,9 @@ class PaidLeaveController extends Controller
      */
     public function index()
     {
-        //
+        $items = User::orderBy('order_of_row')->get();
+
+        return view('paid_leave.index',compact('items'));
     }
 
     /**
