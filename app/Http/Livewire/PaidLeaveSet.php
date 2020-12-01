@@ -21,7 +21,7 @@ class PaidLeaveSet extends Component
         if(isset($res)){
             $this->dispPaidleave = $res->dispPaidLeave;
             $grantDate = $res->grantDate;
-            if(isset($grantDate)){
+            if($grantDate){
                 $dt=new Carbon($grantDate);
                 $grantDateLastDay=$dt->addYear();
                 $today=Carbon::today();
@@ -30,8 +30,10 @@ class PaidLeaveSet extends Component
                     $res->save();
                     $grantDate = $grantDateLastDay;
                 }
+                $this->grantDate = $grantDate->format('Y-m-d');
+            }else{
+                $this->grantDate = '';
             }
-            $this->grantDate = $grantDate->format('Y-m-d');
         }else{
             $this->dispPaidleave = 0;
             $this->grantDate = '';

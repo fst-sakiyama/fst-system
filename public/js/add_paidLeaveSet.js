@@ -1,5 +1,23 @@
 $(document).ready(function(){
 
+    $('[id^=dispPaidLeave]').on('change',function(){
+        var id=$(this).attr('id').replace('dispPaidLeave','');
+        var contents=$(this).prop('checked') + 0;
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: 'ajax_change?id=' + id,
+            type: 'POST',
+            data: { 'id' : id , 'dispPaidLeave' : contents },
+        }).done(function (results){
+            // 成功したときのコールバック
+        }).fail(function(jqXHR, textStatus, errorThrown){
+            // 失敗したときのコールバック
+            alert('fail');
+        });
+    });
+
     $('[id^=grantDate]').on('blur',function(){
         var id=$(this).attr('id').replace('grantDate','');
         return setTimeout(function(){
@@ -23,7 +41,7 @@ $(document).ready(function(){
         var contents=$.trim($('#grantDate'+id).val());
         var orgContents=$.trim($('#grantDateBlock'+id).text());
 
-        if(contents == '' || contents === orgContents ){
+        if( contents === orgContents ){
             cancel(id);
             return toggleGrantDate(id);
         }

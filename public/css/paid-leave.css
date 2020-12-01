@@ -1,3 +1,12 @@
-.md {
-    vertical-align: middle;
+.thumbnails {
+  display: flex;
+  justify-content: start;
+}
+
+.thumbnail {
+  position: relative;
+  /* width: 50px; */
+  height: 35px;
+  /* border-radius: 8px; */
+  overflow: hidden;
 }

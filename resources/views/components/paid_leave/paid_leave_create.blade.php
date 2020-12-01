@@ -2,7 +2,7 @@
 
 <div class="contents">
   <div class="container container-top">
-    <h1>@include('components.returnButton')</h1>
+    <h1>@include('components.returnLinkButton',['item'=>'/paid_leave'])</h1>
     <div class="col">
       <div class="card">
         <div class="card-header">

@@ -18,7 +18,7 @@ class PaidLeaveController extends Controller
     public function index()
     {
         // 現在の有給はmaster_shiftsのid 9(有給) 10(半給) 19(半給宅)
-        $items = PaidLeave::select('paid_leaves.*')
+        $items = PaidLeave::where('dispPaidLeave',1)->select('paid_leaves.*')
                 ->join('users','paid_leaves.userId','=','users.id')
                 ->orderBy('users.order_of_row')
                 ->get();
@@ -28,21 +28,30 @@ class PaidLeaveController extends Controller
         foreach($items as $item){
             $cnt = 0;
             $id = $item->userId;
-            $dt = $item->grantDate;
-            if($dt->copy()->addYear() <= $today){
-                $paidLeave[$id][1]=-1;
-                $paidLeave[$id][3]=-1;
+            $tempDt = $item->grantDate;
+            if(!$tempDt){
+                $paidLeave[$id][0]=null;
+                $paidLeave[$id][1]=null;
+                $paidLeave[$id][2]=null;
+                $paidLeave[$id][3]=null;
             }else{
-                $firstDay = $dt->copy()->subYear()->format('Y-m-d');
-                $lastDay = $dt->copy()->subDay()->format('Y-m-d');
+                if($tempDt->copy()->addYear() <= $today){
+                    $tempDt = $tempDt->copy()->addYear();
+                    $res = PaidLeave::where('userId',$id)->first();
+                    $res->grantDate = $dt;
+                    $res->save();
+                }
+                $dt = $tempDt;
+                $firstDay = $dt->copy()->subYear();
+                $lastDay = $dt->copy()->subDay();
 
-                $paidLeave[$id][0]=$firstDay.'～';
+                $paidLeave[$id][0]=$firstDay;
                 $paidLeave[$id][1]=$this->cntPaidLeave($id,$firstDay,$lastDay);
 
-                $firstDay = $dt->copy()->format('Y-m-d');
-                $lastDay = $dt->copy()->addYear()->subDay()->format('Y-m-d');
+                $firstDay = $dt->copy();
+                $lastDay = $dt->copy()->addYear()->subDay();
 
-                $paidLeave[$id][2]=$firstDay.'～';
+                $paidLeave[$id][2]=$firstDay;
                 $paidLeave[$id][3]=$this->cntPaidLeave($id,$firstDay,$lastDay);
             }
         }
@@ -53,16 +62,17 @@ class PaidLeaveController extends Controller
     function cntPaidLeave($id,$firstDay,$lastDay)
     {
         $cnt = 0;
-
-        $cnt += ShiftTable::where(function($query) use($id,$firstDay,$lastDay){
+        $f = $firstDay->format('Y-m-d');
+        $l = $lastDay->format('Y-m-d');
+        $cnt += ShiftTable::where(function($query) use($id,$f,$l){
             $query->where('userId',$id)
-                    ->whereBetween('workDay',[$firstDay,$lastDay])
+                    ->whereBetween('workDay',[$f,$l])
                     ->where('shiftId',9);
         })->count() * 2;
 
-        $cnt += ShiftTable::where(function($query) use($id,$firstDay,$lastDay){
+        $cnt += ShiftTable::where(function($query) use($id,$f,$l){
             $query->where('userId',$id)
-                    ->whereBetween('workDay',[$firstDay,$lastDay])
+                    ->whereBetween('workDay',[$f,$l])
                     ->where('shiftId',10)
                     ->orWhere('shiftId',19);
         })->count();
@@ -96,12 +106,25 @@ class PaidLeaveController extends Controller
 
     public function ajax_store(Request $request)
     {
+        if(!$request->grantDate){
+            $request->grantDate = null;
+        }
         $res = PaidLeave::updateOrCreate(
             ['userId'=>$request->id],
             ['userId'=>$request->id,'dispPaidLeave'=>1,'grantDate'=>$request->grantDate]
         );
 
         return response()->json(['grantDate'=>$res->grantDate]);
+    }
+
+    public function ajax_change(Request $request)
+    {
+        $res = PaidLeave::updateOrCreate(
+            ['userId'=>$request->id],
+            ['userId'=>$request->id,'dispPaidLeave'=>$request->dispPaidLeave]
+        );
+
+        return response()->json(['grantDate'=>$res->dispPaidLeave]);
     }
 
     /**
