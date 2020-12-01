@@ -190,6 +190,9 @@ Route::group(['middleware' => ['auth', 'can:system-only']], function () {
         'index','create'
     ]);
 
+    Route::resource('/live_monitaring_plan',LiveMonitaringPlanController::class)->only([
+        'index'
+    ]);
 
     // --------------------------
 

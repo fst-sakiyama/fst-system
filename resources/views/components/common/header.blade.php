@@ -32,6 +32,7 @@
                   <a class="dropdown-item" href="{{ route('shift_table.index') }}">シフト表</a>
                 @can('ope-only')
                   <a class="dropdown-item" href="{{asset('/take_over?dispDate=')}}{{$dispDate->timestamp}}">監視引継ぎページ</a>
+                  <a class="dropdown-item" href="{{asset('/live_monitaring_plan')}}">ライブ予定確認ページ</a>
                 @endcan
                 <a class="dropdown-item" href="{{asset('/master_clients')}}">顧客一覧ページ</a>
                 <a class="dropdown-item" href="{{asset('/master_projects')}}">案件一覧ページ</a>
