@@ -42,8 +42,9 @@
               <th style="width:50%;">有給消化状況</th>
             </tr>
           </thead>
-          <tbody>
+
             @foreach($items as $item)
+            <tbody>
               @if($item->role != '1' && isset($item->dispPaidLeave))
                 @php $id = $item->userId; @endphp
                 <tr>
@@ -95,8 +96,9 @@
                     </td>
                 </tr>
               @endif
+            </tbody>
             @endforeach
-          </tbody>
+
         </table>
 
       </div>
