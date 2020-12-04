@@ -103,11 +103,11 @@
   <div class="row mb-0 mr-1 float-right">
     <div class="small">
       @empty(!($item->created_by))
-        作成者：{{ app\User::find($item->created_by)->name }}
+        作成者：{{ userCheck($item->created_by) }}
       @endempty
       @empty(!($item->updated_by))
         @if(($item->created_at) != ($item->updated_at))
-          <br>更新者：{{ app\User::find($item->updated_by)->name }}
+          <br>更新者：{{ userCheck($item->updated_by) }}
         @endif
       @endempty
     </div>

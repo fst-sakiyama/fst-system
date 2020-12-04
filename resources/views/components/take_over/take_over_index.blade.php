@@ -7,6 +7,13 @@
   $prevDate = $dt->copy()->subDay();
   $todayDate = Carbon\Carbon::now();
   $nextDate = $dt->copy()->addDay();
+
+    function userCheck($id)
+    {
+        $user = app\User::find($id);
+        $user = isset($user) ? $user->name : '不明' ;
+        return $user;
+    }
 @endphp
 
 <div class="contents">

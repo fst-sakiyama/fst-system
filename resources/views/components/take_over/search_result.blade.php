@@ -1,5 +1,14 @@
 @section('content')
 
+@php
+    function userCheck($id)
+    {
+        $user = app\User::find($id);
+        $user = isset($user) ? $user->name : '不明' ;
+        return $user;
+    }
+@endphp
+
 <div class="contents">
   <div class="container container-top">
     <div class="col">

@@ -15,7 +15,8 @@ class FilePosts extends Component
         $this->fileName = $item->fileName;
         $this->created_at = $item->created_at;
         $this->updated_at = $item->updated_at;
-        $this->userName = User::find($item->updated_by)->name;
+        $user = User::find($item->updated_by);
+        $this->userName = isset($user) ? $user->name : '不明' ;
         $this->filePostId = $id;
     }
 

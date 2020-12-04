@@ -32,7 +32,7 @@
                 <div class="row ml-1">
                   <div class="col-10">
                     <div class="small">
-                      作成者：{{ app\User::find($requestPlate->created_by)->name }}
+                      作成者：{{ userCheck($requestPlate->created_by) }}
                     </div>
                   </div>
                 </div>
@@ -64,7 +64,7 @@
                   <div class="row ml-1">
                     <div class="col-10">
                       <div class="small">
-                        作成者：{{ app\User::find($reply->created_by)->name }}
+                        作成者：{{ userCheck($reply->created_by) }}
                       </div>
                     </div>
                   </div>

@@ -58,11 +58,11 @@
       <div class="row mb-0 mr-1 float-right">
         <div class="small">
           @empty(!($takeOverTheOperation->created_by))
-            作成者：{{ app\User::find($takeOverTheOperation->created_by)->name }}
+            作成者：{{ userCheck($takeOverTheOperation->created_by) }}
           @endempty
           @empty(!($takeOverTheOperation->updated_by))
             @if(($takeOverTheOperation->created_at) != ($takeOverTheOperation->updated_at))
-              <br>更新者：{{ app\User::find($takeOverTheOperation->updated_by)->name }}
+              <br>更新者：{{ userCheck($takeOverTheOperation->updated_by) }}
             @endif
           @endempty
         </div>

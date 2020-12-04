@@ -27,7 +27,7 @@ class FileShowController extends Controller
 
     public function infoShow(Request $request)
     {
-      $item = FstSystemInformation::where('id',$request->id)->first();
+      $item = FstSystemInformation::find($request->id);
 
       return $this->commonShow($item);
     }
@@ -35,6 +35,7 @@ class FileShowController extends Controller
     public function projectsFileShow(Request $request)
     {
       $item = ProjectsFilePost::where('projectsFilePostId',$request->id)->first();
+      
       return $this->commonShow($item);
     }
 

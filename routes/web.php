@@ -190,6 +190,8 @@ Route::group(['middleware' => ['auth', 'can:system-only']], function () {
     // ----- 現在準備中のもの -----
     Route::post('/user_regist/order_of_row','UserRegistrationController@order_of_row')->name('user.order_of_row');
 
+    Route::get('/live_monitaring_plan/master_show','LiveMonitaringPlanController@masterShow')->name('live_monitaring_plan.masterShow');
+    Route::get('/live_monitaring_plan/master_create','LiveMonitaringPlanController@masterCreate')->name('live_monitaring_plan.masterCreate');
     Route::resource('/live_monitaring_plan',LiveMonitaringPlanController::class)->only([
         'index'
     ]);

@@ -2,8 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MasterRegLiveShow;
+use App\Models\RegLiveShowDetail;
+use App\Models\RegLivePlan;
 use App\Models\LiveMonitaringPlan;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use App\Classes\Calendar;
+use App\Classes\HolidaySetting;
 
 class LiveMonitaringPlanController extends Controller
 {
@@ -14,8 +21,19 @@ class LiveMonitaringPlanController extends Controller
      */
     public function index()
     {
-        $items = LiveMonitaringPlan::all();
+        // $items = LiveMonitaringPlan::all();
 
+        // 1:定例　2:振替　3:臨時
+        $maxCreatedAt = RegLivePlan::where('classification','<>',3)->max('created_at');
+        if($maxCreatedAt){
+            $today = new Carbon('today');
+            $diffD = $maxCreatedAt->diffInDays($today);
+            if($diffD > 10){
+
+            }
+            dd($diffD);
+        }
+        $items = null;
         return view('live_monitaring_plan.index',compact('items'));
     }
 
@@ -38,6 +56,20 @@ class LiveMonitaringPlanController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+    public function masterShow()
+    {
+        $items = MasterRegLiveShow::all();
+
+        return view('live_monitaring_plan.masterShow',compact('items'));
+    }
+
+    public function masterCreate()
+    {
+        $items = MasterRegLiveShow::all();
+
+        return view('live_monitaring_plan.masterCreate',compact('items'));
     }
 
     /**

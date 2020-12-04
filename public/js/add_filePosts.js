@@ -48,7 +48,7 @@ $(document).ready(function(){
     });
 
     function pr_cancel(id){
-      var orgContents=$.trim($('#pr_text'+id).html());
+      var orgContents=$.trim($('#pr_text'+id).text());
       var re = /<br *\/?>/gi;
       orgContents = orgContents.replace(re,'\n');
       $('#pr_txt'+id).val(orgContents);

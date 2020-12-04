@@ -59,6 +59,7 @@ class UserRegistrationController extends Controller
     }
 
     User::create([
+        'own_department' => $request->own_department,
         'name' => $request->name,
         'email' => $request->email,
         'role' => $request->role,
