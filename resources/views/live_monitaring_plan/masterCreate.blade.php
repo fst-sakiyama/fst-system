@@ -2,6 +2,10 @@
 
 @section('title','定例ライブマスタ新規作成')
 
+@section('pageCss')
+<link rel="stylesheet" href="{{asset('/css/live-monitor.css')}}">
+@endsection
+
 @include('components.common.head')
 
 @include('components.common.header')

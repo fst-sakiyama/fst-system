@@ -11,17 +11,17 @@
   <div class="container container-top">
     <div class="row">
         <div class="col text-left">
-          <a href="{{ route('work_load.index',['year'=>$prevMonth->format('Y'),'month'=>$prevMonth->format('m')])}}">
+          <a href="{{ route('work_load.index',['year'=>$prevMonth->format('Y'),'month'=>$prevMonth->format('m'),'uid'=>$userId])}}">
             <i class="fa fa-lg fa-chevron-circle-left" style="color:#65ab31;"><small>{{ $prevMonth->format('Y年m月') }}</small></i>
           </a>
         </div>
         <div class="col text-center">
-          <a href="{{ route('work_load.index') }}">
+          <a href="{{ route('work_load.index',['uid'=>$userId]) }}">
             <i class="fa fa-lg fa-angle-left" style="color:#65ab31;"><small>当月へ</small></i><i class="fa fa-lg fa-angle-right" style="color:#65ab31;"></i>
           </a>
         </div>
         <div class="col text-right">
-          <a href="{{ route('work_load.index',['year'=>$nextMonth->format('Y'),'month'=>$nextMonth->format('m')]) }}">
+          <a href="{{ route('work_load.index',['year'=>$nextMonth->format('Y'),'month'=>$nextMonth->format('m'),'uid'=>$userId])}}">
             <i class="fa fa-lg fa-chevron-circle-right" style="color:#65ab31;"><small>{{ $nextMonth->format('Y年m月') }}</small></i>
           </a>
         </div>

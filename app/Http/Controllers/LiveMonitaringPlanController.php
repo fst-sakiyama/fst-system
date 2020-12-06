@@ -72,6 +72,11 @@ class LiveMonitaringPlanController extends Controller
         return view('live_monitaring_plan.masterCreate',compact('items'));
     }
 
+    public function masterStore(Request $request)
+    {
+        dd($request);
+    }
+
     /**
      * Display the specified resource.
      *
