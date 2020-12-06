@@ -18,7 +18,7 @@ class CreateFstSystemInformationTable extends Migration
             $table->integer('classification')->unsigned();
             $table->text('information');
             $table->string('fileName')->nullable();
-            $table->string('fileUrl')->nullable();
+            $table->string('fileURL')->nullable();
             $table->timestamps();
         });
     }
