@@ -16,6 +16,9 @@
             return sprintf('%02d',$str1).':'.sprintf('%02d',$str2);
         }
     }
+
+    $weekday = array('日', '月', '火', '水', '木', '金', '土');
+    $forHoliday = array('','実施する','中止する','翌平日に実施');
 @endphp
 
 <div class="contents">
@@ -39,26 +42,22 @@
                         </div>
                     </div>
 
-                  <table class="table table-sm table-hover">
+                  <table class="table table-sm">
                       <thead>
                           <tr>
                               <th>ラベル</th>
-                              <th>開催日</th>
-                              <th>開始時刻</th>
                               <th>ライブ名</th>
+                              <th>開始時刻</th>
                           </tr>
                       </thead>
                       <tbody>
-                          @if($items)
-                          @foreach($items as $item)
-                          <tr>
-                              <td>{{ $item->classification }}</td>
-                              <td>{{ $item->eventDay->format('Y-m-d') }}</td>
-                              <td>{{ init_value($item->liveShow->startHour,$item->liveShow->startMinute) }}</td>
-                              <td>{{ $item->liveName }}</td>
-                          </tr>
+                          @foreach($regLive as $live)
+                              <tr>
+                                  <td>{{ $live->classification }}</td>
+                                  <td>{{ $live->liveShow->regLive->liveName }}</td>
+                                  <td>{{ init_value($live->liveShow->startHour,$live->liveShow->startMinute) }}</td>
+                              </tr>
                           @endforeach
-                          @endif
                       </tbody>
                   </table>
               </div>

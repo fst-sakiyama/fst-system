@@ -19,24 +19,71 @@ class LiveMonitaringPlanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $items = LiveMonitaringPlan::all();
+        $today = new Carbon('today');
 
+        if($request->day){
+            $day = $request->day;
+        }else{
+            $day = $today;
+        }
+        // $items = LiveMonitaringPlan::all();
         // 1:定例　2:振替　3:臨時
         $maxCreatedAt = RegLivePlan::where('classification','<>',3)->max('created_at');
         if($maxCreatedAt){
-            $today = new Carbon('today');
-            $diffD = $maxCreatedAt->diffInDays($today);
-            if($diffD > 10){
-
+            $maxDay = new Carbon($maxCreatedAt);
+            $diffD = $maxDay->diffInDays($today);
+            if($diffD > 15){
+                $this->createLivePlan();
             }
-            dd($diffD);
+        }else{
+            $this->createLivePlan();
         }
+        $regLive = RegLivePlan::whereDate('eventDay',$day)->get();
         $items = null;
-        return view('live_monitaring_plan.index',compact('items'));
+        return view('live_monitaring_plan.index',compact('items','regLive'));
     }
 
+    public function createLivePlan()
+    {
+        $dt = new Carbon('yesterday');
+        // $dt = new Carbon('2020-12-25');
+        $year = $dt->format('Y');
+        $holidaySet = new HolidaySetting;
+        $holidaySet->loadHoliday($dt->format('Y'));
+
+        // forHolidays= 1:実施 2:中止 3:振替
+        for($i = 0; $i < 20; $i++){
+            $dt->addDay();
+            if($year !== $dt->format('Y')){
+                $holidaySet->loadHoliday($dt->format('Y'));
+            }
+            $holidayBool = $holidaySet->isHoliday($dt);
+            $this->regLivePlanRegist($dt,$holidayBool);
+        }
+    }
+
+    public function regLivePlanRegist($dt,$holidayBool)
+    {
+        $items = RegLiveShowDetail::where('weekDay',$dt->weekDay())->get();
+        foreach($items as $item){
+            $d = $dt->copy();
+            $classificationNum = 1; // 定例
+            if($holidayBool){
+                if($item->regLive->forHolidays == 3){ // 振替だったら
+                    $classificationNum = 2; // 振替
+                    $d->addDay();
+                }else{
+                    continue;
+                }
+            }
+            RegLivePlan::updateOrCreate(
+                ['eventDay'=>$d->format('Y-m-d'),'regLiveDetailId'=>$item->regLiveDetailId],
+                ['classification'=>$classificationNum,'eventDay'=>$d->format('Y-m-d'),'regLiveDetailId'=>$item->regLiveDetailId]
+            );
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -74,7 +121,29 @@ class LiveMonitaringPlanController extends Controller
 
     public function masterStore(Request $request)
     {
-        dd($request);
+        DB::beginTransaction();
+        try{
+            $item = new MasterRegLiveShow;
+            $item->liveName = $request->liveName;
+            $item->forHolidays = $request->forHolidays;
+            $item->save();
+            $regLiveId = $item->regLiveId;
+            for($i=0;$i<count($request->weekDay);$i++){
+                if(isset($request->weekDay[$i]) && isset($request->startHour[$i]) && isset($request->startMinute[$i])){
+                    $item = new RegLiveShowDetail;
+                    $item->regLiveId = $regLiveId;
+                    $item->weekDay = $request->weekDay[$i];
+                    $item->startHour = $request->startHour[$i];
+                    $item->startMinute = $request->startMinute[$i];
+                    $item->save();
+                }
+            }
+            DB::commit();
+        }catch(\Exception $e){
+            DB::rollback();
+            dd('エラーが発生しました');
+        }
+        return redirect()->route('live_monitaring_plan.masterShow');
     }
 
     /**
