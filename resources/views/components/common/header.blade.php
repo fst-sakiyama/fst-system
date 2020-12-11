@@ -64,6 +64,8 @@
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ route('study_session.index01') }}">勉強会用ページ</a>
               </div>
           </li>
 

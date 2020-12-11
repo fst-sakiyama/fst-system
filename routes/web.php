@@ -197,6 +197,9 @@ Route::group(['middleware' => ['auth', 'can:system-only']], function () {
         'index'
     ]);
 
+        // ----- 勉強会用 -----
+        Route::get('/study_session','StudySessionController@index01')->name('study_session.index01');
+
     // --------------------------
 
     // トップページマニュアル管理関連
