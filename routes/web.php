@@ -198,7 +198,10 @@ Route::group(['middleware' => ['auth', 'can:system-only']], function () {
     ]);
 
         // ----- 勉強会用 -----
-        Route::get('/study_session','StudySessionController@index01')->name('study_session.index01');
+        Route::get('/study_session','StudySessionController@index')->name('study_session.index');
+        Route::get('/study_session/test01','StudySessionController@test01')->name('study_session.test01');
+        Route::get('/study_session/test02','StudySessionController@test02')->name('study_session.test02');
+
 
     // --------------------------
 

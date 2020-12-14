@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\StudySession;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class StudySessionSeeder extends Seeder
 {
@@ -15,6 +16,8 @@ class StudySessionSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('study_sessions')->truncate();
+
         $now=Carbon::now();
         $studySession=new StudySession;
         $studySession::insert([

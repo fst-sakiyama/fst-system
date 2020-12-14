@@ -1,6 +1,6 @@
 @extends('layouts.system_top')
 
-@section('title','勉強会')
+@section('title','勉強会テスト02ページ')
 
 @include('components.common.head_livewire')
 
@@ -13,8 +13,8 @@
     <h1>@include('components.returnButton')</h1>
     <div class="col">
 
-        テスト
-        
+        <livewire:study-session-test>
+
     </div>
   </div>
 </div>

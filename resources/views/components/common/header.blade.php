@@ -65,7 +65,7 @@
                     @csrf
                 </form>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('study_session.index01') }}">勉強会用ページ</a>
+                <a class="dropdown-item" href="{{ route('study_session.index') }}">勉強会用ページ</a>
               </div>
           </li>
 
