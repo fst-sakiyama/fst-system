@@ -19,6 +19,8 @@
 
     $weekday = array('日', '月', '火', '水', '木', '金', '土');
     $forHoliday = array('','実施する','中止する','翌平日に実施');
+    $regLivePng = array('','live_regular.png','live_transfer.png','live_temporary.png');
+    $livePng = array('live_normal.png','live_DVR.png')
 @endphp
 
 <div class="contents">
@@ -31,8 +33,13 @@
 
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-10">
-                                <h5>定例ライブ予定</h5>
+                            <div class="col-6">
+                                <h5>定例ライブ予定（5日後まで）</h5>
+                            </div>
+                            <div class="col-2">
+                                <a href="{{ route('live_monitaring_plan.regLiveCreate') }}">
+                                    <button class="btn btn-sm btn-danger py-0">定例臨時登録</button>
+                                </a>
                             </div>
                             <div class="col-2">
                                 <a href="{{ route('live_monitaring_plan.masterShow') }}">
@@ -42,20 +49,24 @@
                         </div>
                     </div>
 
-                  <table class="table table-sm">
+                  <table class="table table-sm table-hover">
                       <thead>
                           <tr>
                               <th>ラベル</th>
                               <th>ライブ名</th>
+                              <th>開催日</th>
                               <th>開始時刻</th>
+                              <th>実施可否</th>
                           </tr>
                       </thead>
                       <tbody>
                           @foreach($regLive as $live)
                               <tr>
-                                  <td>{{ $live->classification }}</td>
+                                  <td><img alt='ラベル' src="{{ asset( 'images/'.$regLivePng[$live->classification] ) }}" width="80px"></td>
                                   <td>{{ $live->liveShow->regLive->liveName }}</td>
+                                  <td>{{ $live->eventDay->format('Y年m月d日').'（'.$weekday[$live->eventDay->dayOfWeek].'）'}}</td>
                                   <td>{{ init_value($live->liveShow->startHour,$live->liveShow->startMinute) }}</td>
+                                  <td><button class='btn btn-outline-danger btn-sm py-0'>中止</button></td>
                               </tr>
                           @endforeach
                       </tbody>
@@ -69,7 +80,16 @@
         <div class="col">
           <div class="card">
               <div class="card-header">
-                  <h5>ライブ予定</h5>
+                  <div class="row">
+                      <div class="col-6">
+                          <h5>ライブ予定</h5>
+                      </div>
+                      <div class="col-2">
+                          <a href="{{ route('live_monitaring_plan.liveCreate') }}">
+                              <button class="btn btn-sm btn-danger py-0">ライブ登録</button>
+                          </a>
+                      </div>
+                  </div>
               </div>
               <table class="table table-sm table-hover">
                   <thead>
@@ -87,13 +107,13 @@
                       @if($items)
                       @foreach($items as $item)
                       <tr>
-                          <td>{{ $item->dvr == 1 ? 'あり' : '' }}</td>
+                          <td><img alt='ラベル' src="{{ asset( 'images/'.$livePng[$item->dvr] ) }}" width="80px"></td>
                           <td>{{ $item->issueNo ? $item->issueNo : 'なし'}}</td>
                           <td>{{ $item->eventDay->format('Y-m-d') }}</td>
                           <td>{{ init_value($item->startHour,$item->startMinute) }}</td>
                           <td>{{ init_value($item->endHour,$item->endMinute) }}</td>
                           <td>{{ $item->liveName }}</td>
-                          <td>{{ $item->specialNote ? $item->specialNote : '' }}</td>
+                          <td>@if($item->specialNote){!! nl2br(e($item->specialNote)) !!}@endif</td>
                       </tr>
                       @endforeach
                       @endif

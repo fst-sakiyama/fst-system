@@ -6,6 +6,7 @@ use App\Models\MasterRegLiveShow;
 use App\Models\RegLiveShowDetail;
 use App\Models\RegLivePlan;
 use App\Models\LiveMonitaringPlan;
+use App\Models\LivePlan;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -40,8 +41,15 @@ class LiveMonitaringPlanController extends Controller
         }else{
             $this->createLivePlan();
         }
-        $regLive = RegLivePlan::whereDate('eventDay',$day)->get();
-        $items = null;
+        $regLive = RegLivePlan::select('reg_live_plans.*')
+                    ->join('reg_live_show_details','reg_live_plans.regLiveDetailId','=','reg_live_show_details.regLiveDetailId')
+                    ->whereBetween('eventDay',[$day,$day->copy()->addDays(5)])
+                    ->orderBy('eventDay')->orderBy('reg_live_show_details.startHour')->orderBy('reg_live_show_details.startMinute')
+                    ->get();
+        $items = LivePlan::orderBy('eventDay')
+                ->orderBy('startHour')
+                ->get();
+
         return view('live_monitaring_plan.index',compact('items','regLive'));
     }
 
@@ -144,6 +152,50 @@ class LiveMonitaringPlanController extends Controller
             dd('エラーが発生しました');
         }
         return redirect()->route('live_monitaring_plan.masterShow');
+    }
+
+    public function regLiveCreate()
+    {
+        $items = MasterRegLiveShow::select('regLiveId','liveName')
+                        ->get()
+                        ->pluck('liveName','regLiveId');
+
+        return view('live_monitaring_plan.regLiveCreate',compact('items'));
+    }
+
+    public function regLiveStore(Request $request)
+    {
+        DB::beginTransaction();
+        try{
+            $eventDay = new Carbon($request->eventDay);
+            $item = new RegLiveShowDetail;
+            $item->regLiveId = $request->regLiveId;
+            $item->weekDay = $eventDay->dayOfWeek;
+            $item->startHour = $request->startHour;
+            $item->startMinute = $request->startMinute;
+            $item->save();
+            $regLivePlans = new RegLivePlan;
+            $regLivePlans->classification = 3;
+            $regLivePlans->eventDay = $eventDay;
+            $regLivePlans->regLiveDetailId = $item->regLiveDetailId;
+            $regLivePlans->save();
+            DB::commit();
+        }catch(\Exception $e){
+            DB::rollback();
+            dd('エラーが発生しました');
+        }
+        return redirect()->route('live_monitaring_plan.index');
+    }
+
+    public function liveCreate()
+    {
+        return view('live_monitaring_plan.liveCreate');
+    }
+
+    public function liveStore(Request $request)
+    {
+        LivePlan::create($request->all());
+        return redirect()->route('live_monitaring_plan.index');
     }
 
     /**
