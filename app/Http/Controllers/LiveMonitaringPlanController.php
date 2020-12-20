@@ -46,8 +46,10 @@ class LiveMonitaringPlanController extends Controller
                     ->whereBetween('eventDay',[$day,$day->copy()->addDays(5)])
                     ->orderBy('eventDay')->orderBy('reg_live_show_details.startHour')->orderBy('reg_live_show_details.startMinute')
                     ->get();
-        $items = LivePlan::orderBy('eventDay')
-                ->orderBy('startHour')
+        $items = LivePlan::where('exe',1)->orderBy('eventDay')
+                ->orderBy('startHour')->orderBy('startMinute')
+                ->orderBy('endHour')->orderBy('endMinute')
+                ->orderBy('issueNo')
                 ->get();
 
         return view('live_monitaring_plan.index',compact('items','regLive'));

@@ -91,31 +91,41 @@
                       </div>
                   </div>
               </div>
+
+              @php $prevD=null; @endphp
+
               <table class="table table-sm table-hover">
                   <thead>
                       <tr>
-                          <th>dvr</th>
-                          <th>issueNo</th>
-                          <th>開催日</th>
-                          <th>開始時刻</th>
-                          <th>終了時刻</th>
-                          <th>ライブ名</th>
-                          <th>特記事項</th>
+                          <th style="width:10%;">dvr</th>
+                          <th style="width:8%;">No</th>
+                          <th style="width:8%;">開始</th>
+                          <th style="width:8%;">終了</th>
+                          <th style="width:26%;">ライブ名</th>
+                          <th style="width:40%;">特記事項</th>
                       </tr>
                   </thead>
                   <tbody>
                       @if($items)
-                      @foreach($items as $item)
-                      <tr>
-                          <td><img alt='ラベル' src="{{ asset( 'images/'.$livePng[$item->dvr] ) }}" width="80px"></td>
-                          <td>{{ $item->issueNo ? $item->issueNo : 'なし'}}</td>
-                          <td>{{ $item->eventDay->format('Y-m-d') }}</td>
-                          <td>{{ init_value($item->startHour,$item->startMinute) }}</td>
-                          <td>{{ init_value($item->endHour,$item->endMinute) }}</td>
-                          <td>{{ $item->liveName }}</td>
-                          <td>@if($item->specialNote){!! nl2br(e($item->specialNote)) !!}@endif</td>
-                      </tr>
-                      @endforeach
+                          @foreach($items as $item)
+                              @php $nowD = $item->eventDay; @endphp
+                              @if(is_null($prevD) || $item->eventDay != $prevD)
+                                  <tr>
+                                      <td colspan="6" class="table-dark h5">
+                                          {{ $item->eventDay->format('Y-m-d').'（'.$weekday[$item->eventDay->dayOfWeek].'）' }}
+                                      </td>
+                                  </tr>
+                              @endif
+                                  <tr>
+                                      <td><img alt='ラベル' src="{{ asset( 'images/'.$livePng[$item->dvr] ) }}" width="60px"></td>
+                                      <td>{{ $item->issueNo ? $item->issueNo : 'なし'}}</td>
+                                      <td>{{ init_value($item->startHour,$item->startMinute) }}</td>
+                                      <td>{{ init_value($item->endHour,$item->endMinute) }}</td>
+                                      <td>{{ $item->liveName }}</td>
+                                      <td>@if($item->specialNote){!! nl2br(e($item->specialNote)) !!}@endif</td>
+                                  </tr>
+                              @php $prevD = $nowD; @endphp
+                          @endforeach
                       @endif
                   </tbody>
               </table>

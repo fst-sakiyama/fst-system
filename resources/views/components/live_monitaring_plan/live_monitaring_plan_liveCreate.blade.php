@@ -36,37 +36,37 @@
 
                       <div class="form-group form-inline mt-5">
                           {{ Form::label('issueNo','issueNo',['class'=>'col-md-4 col-form-label']) }}
-                          {{ Form::text('issueNo',null,['class'=>'form-control col-md-1']) }}
+                          {{ Form::text('issueNo',null,['class'=>'form-control col-md-1','id'=>'issueNo']) }}
                       </div>
 
                       <div class="form-group form-inline">
                           {{ Form::label('eventDay','開催日',['class'=>'col-form-label col-4']) }}
-                          {{ Form::date('eventDay',\Carbon\Carbon::now(),['class'=>'form-control']) }}
+                          {{ Form::date('eventDay',\Carbon\Carbon::now(),['class'=>'form-control','id'=>'eventDay']) }}
                       </div>
 
                       <div class="form-group form-inline">
                           {{ Form::label('weekDay','開始終了時刻',['class'=>'col-form-label col-4']) }}
-                          {{ Form::select('startHour',Config::get('array.hour'),null,['class'=>'ml-3 custom-select','name'=>'startHour']) }}<span class="ml-1">時</span>
-                          {{ Form::select('startMinute',Config::get('array.minutes'),null,['class'=>'ml-2 custom-select','name'=>'startMinute']) }}<span class="ml-1">分</span>
+                          {{ Form::select('startHour',Config::get('array.hour'),null,['class'=>'ml-3 custom-select','name'=>'startHour','id'=>'startHour']) }}<span class="ml-1">時</span>
+                          {{ Form::select('startMinute',Config::get('array.minutes'),null,['class'=>'ml-2 custom-select','name'=>'startMinute','id'=>'startMinute']) }}<span class="ml-1">分</span>
                           <span class="mx-1">～</span>
-                          {{ Form::select('endHour',Config::get('array.hour'),null,['class'=>'ml-3 custom-select','name'=>'endHour']) }}<span class="ml-1">時</span>
-                          {{ Form::select('endMinute',Config::get('array.minutes'),null,['class'=>'ml-2 custom-select','name'=>'endMinute']) }}<span class="ml-1">分</span>
+                          {{ Form::select('endHour',Config::get('array.hour'),null,['class'=>'ml-3 custom-select','name'=>'endHour','id'=>'endHour']) }}<span class="ml-1">時</span>
+                          {{ Form::select('endMinute',Config::get('array.minutes'),null,['class'=>'ml-2 custom-select','name'=>'endMinute','id'=>'endMinute']) }}<span class="ml-1">分</span>
                       </div>
 
                       <div class="form-group form-inline mt-3">
                           {{ Form::label('liveName','ライブ名',['class'=>'col-md-4 col-form-label']) }}
-                          {{ Form::text('liveName',null,['placeholder'=>'ライブ名を入力してください','class'=>'form-control col-md-6']) }}
+                          {{ Form::text('liveName',null,['placeholder'=>'ライブ名を入力してください','class'=>'form-control col-md-6','id'=>'liveName']) }}
                       </div>
 
                       <div class="form-group form-inline mt-3">
                           {{ Form::label('specialNote','特記事項',['class'=>'col-md-4 col-form-label']) }}
-                          {{ Form::textarea('specialNote',null,['class'=>'form-control col-md-6']) }}
+                          {{ Form::textarea('specialNote',null,['class'=>'form-control col-md-6','id'=>'specialNote','rows'=>'5']) }}
                       </div>
 
                   </div>
 
                   <div class="card-footer text-center">
-                      {{ Form::button('登録',['class'=>'w-25 btn btn-primary','type'=>'submit','id'=>'regLiveSubmit']) }}
+                      {{ Form::button('登録',['class'=>'w-25 btn btn-primary','type'=>'submit','id'=>'liveSubmit']) }}
                       {{ Form::close() }}
                   </div>
 
