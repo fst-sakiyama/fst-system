@@ -35,7 +35,7 @@ class LiveMonitaringPlanController extends Controller
         if($maxCreatedAt){
             $maxDay = new Carbon($maxCreatedAt);
             $diffD = $maxDay->diffInDays($today);
-            if($diffD > 15){
+            if($diffD > 13){
                 $this->createLivePlan();
             }
         }else{
@@ -43,7 +43,7 @@ class LiveMonitaringPlanController extends Controller
         }
         $regLive = RegLivePlan::select('reg_live_plans.*')
                     ->join('reg_live_show_details','reg_live_plans.regLiveDetailId','=','reg_live_show_details.regLiveDetailId')
-                    ->whereBetween('eventDay',[$day,$day->copy()->addDays(5)])
+                    ->whereBetween('eventDay',[$day,$day->copy()->addDays(7)])
                     ->orderBy('eventDay')->orderBy('reg_live_show_details.startHour')->orderBy('reg_live_show_details.startMinute')
                     ->get();
         $items = LivePlan::where('exe',1)->orderBy('eventDay')
@@ -53,6 +53,24 @@ class LiveMonitaringPlanController extends Controller
                 ->get();
 
         return view('live_monitaring_plan.index',compact('items','regLive'));
+    }
+
+    public function ajax_stop(Request $request)
+    {
+        $id = $request->id;
+        $item = RegLivePlan::find($id);
+        $item->exe = 0;
+        $item->save();
+        return response()->json(['id'=>$item->regLivePlanId]);
+    }
+
+    public function ajax_open(Request $request)
+    {
+        $id = $request->id;
+        $item = RegLivePlan::find($id);
+        $item->exe = 1;
+        $item->save();
+        return response()->json(['id'=>$item->regLivePlanId]);
     }
 
     public function createLivePlan()

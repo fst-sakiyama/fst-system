@@ -34,7 +34,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-6">
-                                <h5>定例ライブ予定（5日後まで）</h5>
+                                <h5>定例ライブ予定（7日後まで）</h5>
                             </div>
                             <div class="col-2">
                                 <a href="{{ route('live_monitaring_plan.regLiveCreate') }}">
@@ -61,12 +61,15 @@
                       </thead>
                       <tbody>
                           @foreach($regLive as $live)
-                              <tr>
+                              <tr id="line{{$live->regLivePlanId}}" class="{{ ($live->exe) ? '' : 'decoLine' }}">
                                   <td><img alt='ラベル' src="{{ asset( 'images/'.$regLivePng[$live->classification] ) }}" width="80px"></td>
                                   <td>{{ $live->liveShow->regLive->liveName }}</td>
                                   <td>{{ $live->eventDay->format('Y年m月d日').'（'.$weekday[$live->eventDay->dayOfWeek].'）'}}</td>
                                   <td>{{ init_value($live->liveShow->startHour,$live->liveShow->startMinute) }}</td>
-                                  <td><button class='btn btn-outline-danger btn-sm py-0'>中止</button></td>
+                                  <td>
+                                      <button id='stop{{$live->regLivePlanId}}' class='btn btn-outline-danger btn-sm py-0 {{$live->exe ? '' : 'd-none'}}'>中止</button>
+                                      <button id='open{{$live->regLivePlanId}}' class='btn btn-outline-success btn-sm py-0 {{$live->exe ? 'd-none' : ''}}'>再開</button>                                        
+                                  </td>
                               </tr>
                           @endforeach
                       </tbody>
