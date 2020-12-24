@@ -12,6 +12,8 @@ $('[id^=stop]').on('click',function(){
         $('#line'+id).addClass('decoLine');
         $('#stop'+id).addClass('d-none');
         $('#open'+id).removeClass('d-none');
+        $('#imgLabel'+id).addClass('d-none');
+        $('#imgStop'+id).removeClass('d-none');
     }).fail(function(jqXHR, textStatus, errorThrown){
         // 失敗したときのコールバック
         alert(errorThrown);
@@ -32,6 +34,8 @@ $('[id^=open]').on('click',function(){
         $('#line'+id).removeClass('decoLine');
         $('#stop'+id).removeClass('d-none');
         $('#open'+id).addClass('d-none');
+        $('#imgLabel'+id).removeClass('d-none');
+        $('#imgStop'+id).addClass('d-none');
     }).fail(function(jqXHR, textStatus, errorThrown){
         // 失敗したときのコールバック
         alert(errorThrown);
