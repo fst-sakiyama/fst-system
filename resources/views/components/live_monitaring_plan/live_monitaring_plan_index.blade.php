@@ -29,6 +29,12 @@
 
         <div class="row">
             <div class="col">
+                <a href="{{ route('live_monitaring_plan.liveList') }}">ライブ記録</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
               <div class="card">
 
                     <div class="card-header">

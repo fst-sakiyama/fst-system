@@ -73,6 +73,23 @@ class LiveMonitaringPlanController extends Controller
         return response()->json(['id'=>$item->regLivePlanId]);
     }
 
+    public function liveList(Request $request)
+    {
+        $today = Carbon::now()->format('Y-m-d');
+        $regLives = RegLivePlan::whereDate('eventDay',$today)->get();
+        $items = LivePlan::all();
+
+        return view('live_monitaring_plan.liveList',compact('regLives','items'));
+    }
+
+    public function ajax_btnpush(Request $request)
+    {
+        $btnId = $request->btnId;
+        $id = $request->id;
+        $now = Carbon::now()->format('H:i');
+        return response()->json(['now'=>$now]);
+    }
+
     public function createLivePlan()
     {
         $dt = new Carbon('yesterday');

@@ -6,3 +6,59 @@
 /* .fontColor {
     color: black;
 } */
+
+.kadomaru {
+  width:50px;
+  font-size:8px;
+  color:#FFFFFF;
+  text-align:center;
+  display:block;
+  padding:0px;
+  /* background:#0000ff; */
+  border-radius: 8px;
+}
+
+.bigSize {
+    width: 120px;
+    color: #696969;
+    background: #ffff00;
+}
+
+.smallSize {
+    width: 30px;
+    color: #696969;
+    background: #ffc0cb;
+}
+
+.btn1 {
+    background:#6c757d;
+}
+
+.btn2 {
+    background:#007bff;
+}
+
+.btn3 {
+    background:#ffc107;
+}
+
+.btn4 {
+    background:#28a745;
+}
+
+.btn5 {
+    background:#17a2b8;
+}
+
+.abnormal {
+    background:#dc3545;
+    width: 100px;
+}
+
+.largeFont {
+    font-size: 14px;
+}
+
+.middleFont {
+    font-size: 12px;
+}

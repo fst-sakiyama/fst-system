@@ -199,6 +199,8 @@ Route::group(['middleware' => ['auth', 'can:system-only']], function () {
     Route::post('/live_monitaring_plan/live_create','LiveMonitaringPlanController@liveStore')->name('live_monitaring_plan.liveStore');
     Route::post('/live_monitaring_plan/ajax_stop','LiveMonitaringPlanController@ajax_stop')->name('live_monitaring_plan.ajax_stop');
     Route::post('/live_monitaring_plan/ajax_open','LiveMonitaringPlanController@ajax_open')->name('live_monitaring_plan.ajax_open');
+    Route::get('/live_monitaring_plan/live_list','LiveMonitaringPlanController@liveList')->name('live_monitaring_plan.liveList');
+    Route::post('/live_monitaring_plan/ajax_btnpush','LiveMonitaringPlanController@ajax_btnpush')->name('live_monitaring_plan.ajax_btnpush');
     Route::resource('/live_monitaring_plan',LiveMonitaringPlanController::class)->only([
         'index'
     ]);
