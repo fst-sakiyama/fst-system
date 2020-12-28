@@ -19,4 +19,8 @@ class RegLivePlan extends Model
         return $this->belongsTo('App\Models\RegLiveShowDetail','regLiveDetailId','regLiveDetailId');
     }
 
+    public function regLiveResults()
+    {
+        return $this->hasMany('App\Models\RegLiveResult','regLivePlanId','regLivePlanId');
+    }
 }

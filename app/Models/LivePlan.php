@@ -20,4 +20,14 @@ class LivePlan extends Model
         'endHour' => 'integer',
         'endMinute' => 'integer',
     ];
+
+    public function liveResults()
+    {
+        return $this->hasMany('App\Models\LiveResult','livePlanId','livePlanId');
+    }
+
+    public function liveAbnormalConditions()
+    {
+        return $this->hasMany('App\Models\LiveAbnormalCondition','livePlanId','livePlanId');
+    }
 }

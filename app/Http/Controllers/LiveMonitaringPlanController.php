@@ -7,6 +7,10 @@ use App\Models\RegLiveShowDetail;
 use App\Models\RegLivePlan;
 use App\Models\LiveMonitaringPlan;
 use App\Models\LivePlan;
+use App\Models\RegLiveResult;
+use App\Models\LiveResult;
+use App\Models\RegLiveAbnormalCondition;
+use App\Models\LiveAbnormalCondition;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -76,7 +80,9 @@ class LiveMonitaringPlanController extends Controller
     public function liveList(Request $request)
     {
         $today = Carbon::now()->format('Y-m-d');
-        $regLives = RegLivePlan::whereDate('eventDay',$today)->get();
+        $regLives = RegLivePlan::whereDate('eventDay',$today)
+                    ->where('exe',1)
+                    ->get();
         $items = LivePlan::all();
 
         return view('live_monitaring_plan.liveList',compact('regLives','items'));
@@ -85,9 +91,59 @@ class LiveMonitaringPlanController extends Controller
     public function ajax_btnpush(Request $request)
     {
         $btnId = $request->btnId;
+        $regId = $request->regId;
         $id = $request->id;
-        $now = Carbon::now()->format('H:i');
-        return response()->json(['now'=>$now]);
+        $now = Carbon::now();
+        $item = '';
+        if($regId){
+            $item = new RegLiveResult;
+            $item->regLivePlanId = $regId;
+        }else{
+            $item = new LiveResult;
+            $item->livePlanId = $id;
+        }
+        $item->liveWorkId = $btnId;
+        $item->confTime = $now->format('H:i:s');
+        $item->save();
+
+        return response()->json(['now'=>$now->format('H:i')]);
+    }
+
+    public function ajax_abnormalblur(Request $request)
+    {
+        $str = $_POST['str'];
+        $ts = $_POST['ts'];
+        $regId = $_POST['regId'];
+        $id = $_POST['id'];
+        $item = '';
+        if($regId){
+            $item = new RegLiveAbnormalCondition;
+            $item->regLivePlanId = $regId;
+        }else{
+            $item = new LiveAbnormalCondition;
+            $item->livePlanId = $id;
+        }
+        $item->confTime = $ts;
+        $item->stateContent = $str;
+        $item->save();
+
+        return response()->json(['str'=>$str]);
+    }
+
+    public function ajax_liveend(Request $request)
+    {
+        $regId = $_POST['regId'];
+        $id = $_POST['id'];
+        $item = '';
+        if($regId){
+            $item = RegLivePlan::find($regId);
+        }else{
+            $item = LivePlan::find($id);
+        }
+        $item->exe = 2;
+        $item->save();
+
+        return response()->json(['exe'=>$item->exe]);
     }
 
     public function createLivePlan()
@@ -128,6 +184,12 @@ class LiveMonitaringPlanController extends Controller
                 ['classification'=>$classificationNum,'eventDay'=>$d->format('Y-m-d'),'regLiveDetailId'=>$item->regLiveDetailId]
             );
         }
+    }
+
+    public function regLiveCorrect(Request $request)
+    {
+        $regId = $request->regId;
+        return view('live_monitaring_plan.regLiveCorrect',compact('regId'));
     }
     /**
      * Show the form for creating a new resource.
