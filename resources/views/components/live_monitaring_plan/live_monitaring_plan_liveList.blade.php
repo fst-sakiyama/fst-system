@@ -55,7 +55,7 @@
   <div class="container-fluid container-top">
 		<h1>@include('components.returnButton')</h1>
 
-        <div class="row">
+        <div class="row no-gutters">
 
             @foreach($regLives as $live)
             <div id="cardReg{{$live->regLivePlanId}}" class="col-2">
@@ -171,7 +171,7 @@
 
         </div>
 
-        <div class="row mt-3">
+        <div class="row mt-3 no-gutters">
 
             @foreach($items as $item)
             <div class="col-2">
