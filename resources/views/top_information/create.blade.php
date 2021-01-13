@@ -11,6 +11,7 @@
 @section('pageJs')
 <script type="text/javascript" src="{{asset('js/add_jquery.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/add_replyOpen.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/add_fileinput.js')}}"></script>
 @endsection
 
 @include('components.common.footer')
