@@ -1,5 +1,13 @@
 <?php
 
+/**
+ *  祝日判定を実施する
+ *
+ *  Yasumiを利用しています。
+ *  loadHolidayに年を渡して、その年の祝日をすべて取得
+ *  isHolidayに判定した日を渡して、その日が祝日であるかを判定
+ */
+
 namespace App\Classes;
 
 use Yasumi\Yasumi;

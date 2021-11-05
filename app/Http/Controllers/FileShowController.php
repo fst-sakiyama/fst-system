@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  Webでファイルを開く
+ *
+ *  PDFとtextとImageに対応
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -35,7 +41,7 @@ class FileShowController extends Controller
     public function projectsFileShow(Request $request)
     {
       $item = ProjectsFilePost::where('projectsFilePostId',$request->id)->first();
-      
+
       return $this->commonShow($item);
     }
 

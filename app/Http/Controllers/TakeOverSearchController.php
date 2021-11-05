@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  引き継ぎの全文検索用
+ *
+ *
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\TakeOverTheOperation;

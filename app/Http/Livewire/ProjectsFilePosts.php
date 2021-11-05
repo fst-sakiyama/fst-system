@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  ライブワイヤ　案件ファイルをアップロード
+ *
+ *
+ */
+
 namespace App\Http\Livewire;
 
 use Livewire\Component;

@@ -1,5 +1,14 @@
 <?php
 
+/**
+ *  S3にファイルをアップロードする
+ *
+ *  使用しているのはrestoreとdestroy
+ *  restor → add_file_postsテーブルからデータのみ削除。S3にファイルは残ったまま
+ *  destroy → add_file_postsテーブルからデータを削除し、S3からもファイルを削除する
+ *
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

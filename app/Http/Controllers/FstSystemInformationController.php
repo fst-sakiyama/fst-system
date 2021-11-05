@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  トップページのお知らせにファイルをアップロードする（開発者のみ）
+ *
+ *
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\FstSystemInformation;
@@ -118,7 +124,7 @@ class FstSystemInformationController extends Controller
         Storage::disk('s3')->delete('/info/'.$filename);
 
         $item->delete();
-        
+
         return redirect()->route('top');
     }
 }

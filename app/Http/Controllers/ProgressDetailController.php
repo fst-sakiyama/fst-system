@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  課題の詳細を管理する
+ *
+ *
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\FstSystemProgress;

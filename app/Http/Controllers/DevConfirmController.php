@@ -1,5 +1,12 @@
 <?php
 
+/**
+ *  開発者の課題管理
+ *
+ *  課題名をfst_system_progressテーブルに登録
+ *  課題の詳細をfst_system_progress_detailsテーブルに登録
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\FstSystemProgress;

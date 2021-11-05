@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  ライブワイヤ　ファイルアップロード
+ *
+ *
+ */
+
 namespace App\Http\Livewire;
 
 use Livewire\Component;

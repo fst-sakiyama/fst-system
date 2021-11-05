@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  ファイルをアップロードする
+ *
+ *  案件用のファイルをアップロードする
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

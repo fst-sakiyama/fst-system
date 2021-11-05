@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  パスワードの変更を実施する
+ *
+ *
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

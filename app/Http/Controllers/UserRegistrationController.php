@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  ユーザーの作成
+ *
+ *
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

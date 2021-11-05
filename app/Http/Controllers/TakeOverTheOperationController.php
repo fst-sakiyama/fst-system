@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  引き継ぎ内容を管理する
+ *
+ *  大元の引き継ぎとなるため、顧客や案件の入力が必須
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\TakeOverTheOperation;

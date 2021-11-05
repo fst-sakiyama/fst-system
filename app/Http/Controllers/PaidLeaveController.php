@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  有給確認用テーブル
+ *
+ *
+ */
+
 namespace App\Http\Controllers;
 
 use App\User;

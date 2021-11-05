@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  工数表を管理する
+ *
+ *
+ */
+
 namespace App\Http\Controllers;
 
 use App\User;

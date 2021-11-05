@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  ライブワイヤ　有給確認
+ *
+ *
+ */
+
 namespace App\Http\Livewire;
 
 use App\Models\PaidLeave;

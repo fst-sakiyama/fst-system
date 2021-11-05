@@ -1,5 +1,13 @@
 <?php
 
+/**
+ *  S3にファイルを保存する
+ *
+ *  テーブルに登録するのは、ファイル名とS3のURL
+ *  S3にはシステムで自動的に振られるファイル名で登録されている
+ *  S3上ではファイル名だけではファイルを推測できない、ので、このテーブルが飛ぶと大変です
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

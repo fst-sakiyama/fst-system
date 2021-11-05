@@ -1,5 +1,12 @@
 <?php
 
+/**
+ *  案件を登録する
+ *
+ *  案件としてmaster_projectsテーブルに登録される
+ *  対応するチームごとにチームプロジェクトIDが振られ、team_projectsテーブルに登録される
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\MasterClient;

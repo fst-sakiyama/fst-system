@@ -1,5 +1,12 @@
 <?php
 
+/**
+ *  すでにある引き継ぎ項目に追記を行う
+ *
+ *  doEdit → 書かれている引き継ぎ項目を終了に変更する
+ *
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\TakeOverTheOperation;

@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  ライブワイヤ　トップページの情報表示
+ *
+ *
+ */
+
 namespace App\Http\Livewire;
 
 use Livewire\Component;

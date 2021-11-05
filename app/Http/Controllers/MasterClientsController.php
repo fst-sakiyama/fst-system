@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  顧客の登録を行う
+ *
+ *
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\MasterClient;

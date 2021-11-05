@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  案件リストを表示する
+ *
+ *
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\MasterContractType;

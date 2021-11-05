@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  シフト表を表示する（各個人）
+ *
+ *
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\ShiftTable;

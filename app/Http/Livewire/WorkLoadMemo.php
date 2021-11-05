@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  ライブワイヤ　工数表のメモ管理
+ *
+ *
+ */
+
 namespace App\Http\Livewire;
 
 use Livewire\Component;

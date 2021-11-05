@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  削除されたファイル一覧を表示させる
+ *
+ *  実際に表示されるのは、file_postsテーブルとadd_file_postsテーブルの論理削除されたデータ
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

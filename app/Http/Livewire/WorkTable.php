@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  ライブワイヤ　勤務表の管理
+ *
+ *
+ */
+
 namespace App\Http\Livewire;
 
 use Livewire\Component;

@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  シフトマスタ（勤務名、時間、動労場所、労働形態など）一覧表示
+ *
+ *
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\MasterShift;

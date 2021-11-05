@@ -1,0 +1,2 @@
+<button type="button" class="btn btn-outline-primary mr-auto" onclick="history.back()">戻る</button>
+<?php /**PATH C:\xampp\htdocs\fst-system\resources\views/components/returnButton.blade.php ENDPATH**/ ?>
